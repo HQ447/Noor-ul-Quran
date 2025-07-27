@@ -1,22 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Reset() {
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const navigate = useNavigate();
-  const email = localStorage.getItem("reset_email");
+  const email = localStorage.getItem("Reset_email");
+
+  useEffect(() => {
+    if (!email) navigate("/forgot");
+  }, [email, navigate]);
 
   const handleSubmit = async (e) => {
-    const BASE_URL = `http://localhost:8000/`;
     e.preventDefault();
+    const BASE_URL = `http://localhost:8000`;
 
     if (password !== confirm) {
       alert("Passwords do not match");
       return;
     }
 
-    const res = await fetch(`${BASE_URL}/reset-password`, {
+    const res = await fetch(`${BASE_URL}/auth/reset-password`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
@@ -25,9 +29,10 @@ export default function Reset() {
     const data = await res.json();
     console.log(data);
 
-    if (data.success) {
-      localStorage.removeItem("reset_email");
-      navigate("/");
+    if (res.ok) {
+      console.log("Password reset");
+      localStorage.removeItem("Reset_email"); // cleanup
+      navigate("/admin-Login");
     } else {
       alert(data.message || "Reset failed");
     }

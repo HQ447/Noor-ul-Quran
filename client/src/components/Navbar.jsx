@@ -6,6 +6,7 @@ import { isTokenExpired } from "../../utils/authUtils";
 
 function Navbar() {
   const role = localStorage.getItem("role");
+  const name = localStorage.getItem("name");
   const navigate = useNavigate();
 
   function handleLogout() {
@@ -57,7 +58,7 @@ function Navbar() {
       <div className="flex gap-1">
         {role == "admin" ? (
           <div>
-            <p>ADmin Name</p> <button onClick={handleLogout}>Logout</button>{" "}
+            <p>{name}</p> <button onClick={handleLogout}>Logout</button>{" "}
             <button>Dashboard</button>
           </div>
         ) : role == "student" ? (

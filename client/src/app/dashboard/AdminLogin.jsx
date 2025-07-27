@@ -25,6 +25,7 @@ export default function AdminLogin() {
       navigate("/");
       localStorage.setItem("token", data.token);
       localStorage.setItem("role", data.user.role);
+      localStorage.setItem("name", data.user.name);
     }
     // Handle login logic here (token storage, redirect, etc.)
   };

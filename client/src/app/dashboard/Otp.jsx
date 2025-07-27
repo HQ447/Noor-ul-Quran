@@ -1,16 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Otp() {
   const [otp, setOtp] = useState("");
   const navigate = useNavigate();
-  const email = localStorage.getItem("reset_email");
+  const email = localStorage.getItem("Reset_email");
+
+  useEffect(() => {
+    if (!email) navigate("/forgot");
+  }, [email, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const BASE_URL = `http://localhost:8000/`;
+    const BASE_URL = `http://localhost:8000`;
 
-    const res = await fetch(`${BASE_URL}/verify-otp`, {
+    const res = await fetch(`${BASE_URL}/auth/verify-otp`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, otp }),
@@ -19,7 +23,8 @@ export default function Otp() {
     const data = await res.json();
     console.log(data);
 
-    if (data.success) {
+    if (res.ok) {
+      console.log("OTP verified");
       navigate("/reset");
     } else {
       alert(data.message || "Invalid OTP");

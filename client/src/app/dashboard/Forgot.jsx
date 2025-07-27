@@ -4,12 +4,14 @@ import { Link, useNavigate } from "react-router-dom";
 export default function Forgot() {
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
-  const BASE_URL = `http://localhost:8000/`;
+  const BASE_URL = `http://localhost:8000`;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const res = await fetch(`${BASE_URL}/forgor-password`, {
+    localStorage.setItem("Reset_email", email); // ✅ moved here
+
+    const res = await fetch(`${BASE_URL}/auth/forgot-password`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email }),
@@ -18,8 +20,8 @@ export default function Forgot() {
     const data = await res.json();
     console.log(data);
 
-    if (data.success) {
-      localStorage.setItem("reset_email", email);
+    if (res.ok) {
+      console.log("OTP sent");
       navigate("/otp");
     } else {
       alert(data.message || "Something went wrong");

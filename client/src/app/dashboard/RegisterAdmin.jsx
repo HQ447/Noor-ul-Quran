@@ -1,15 +1,18 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function RegisterAdmin() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [secret, setSecret] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const [confirmPassword, setConfirmPassword] = useState("");
-  const BASE_URL = `http://localhost:8000/`;
+  const BASE_URL = `http://localhost:8000`;
 
   const handleSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
 
     if (password !== confirmPassword) {
@@ -17,7 +20,7 @@ export default function RegisterAdmin() {
       return;
     }
 
-    const res = await fetch(`${BASE_URL}/register-admin`, {
+    const res = await fetch(`${BASE_URL}/auth/register-admin`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name, email, secret, password }),
@@ -25,6 +28,12 @@ export default function RegisterAdmin() {
 
     const data = await res.json();
     console.log(data);
+    if (res.ok) {
+      setLoading(false);
+      navigate("/admin-Login");
+    } else {
+      setLoading(false);
+    }
     // Handle registration logic here
   };
 
@@ -97,7 +106,7 @@ export default function RegisterAdmin() {
           type="submit"
           className="w-full py-2 text-white bg-green-600 rounded hover:bg-green-700"
         >
-          Register
+          {loading ? "Creating Account..." : "Create Account"}
         </button>
 
         <p className="mt-4 text-sm text-center">

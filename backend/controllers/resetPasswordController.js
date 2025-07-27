@@ -1,17 +1,17 @@
-// controllers/auth/resetPasswordController.js
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 
 export const resetPasswordController = async (req, res) => {
   try {
-    const { email, otp, newPassword } = req.body;
+    const { email, password } = req.body;
 
+    console.log("reset pass req :", req.body);
     const user = await User.findOne({ email });
-    if (!user || user.otp !== otp || user.otpExpiry < Date.now()) {
-      return res.status(400).json({ message: "Invalid or expired OTP" });
+    if (!user) {
+      return res.status(400).json({ message: "User not found" });
     }
 
-    user.password = await bcrypt.hash(newPassword, 10);
+    user.password = await bcrypt.hash(password, 10);
     user.otp = null;
     user.otpExpiry = null;
 
