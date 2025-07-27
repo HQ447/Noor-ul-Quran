@@ -38,14 +38,14 @@ function App() {
         <Route path={"/profile"} element={<Profile darkmode={darkmode} />} />
       </Routes>
       <Footer darkmode={darkmode} />
-      <div className="fixed bottom-7 right-7 z-50">
-        <ReactWhatsapp number="+923445330016" message="Assalam O Alikum!">
+      <div className="fixed z-50 bottom-7 right-7">
+        <ReactWhatsapp number="+923445330016" message="Assalam  O Alikum!">
           <img
             src={
               "https://upload.wikimedia.org/wikipedia/commons/5/5e/WhatsApp_icon.png"
             }
             alt="loading error"
-            className=" w-14  hover:scale-105 transition-all"
+            className="transition-all  w-14 hover:scale-105"
           />
         </ReactWhatsapp>
         <a
@@ -57,7 +57,7 @@ function App() {
               "https://static.vecteezy.com/system/resources/previews/018/930/476/non_2x/facebook-logo-facebook-icon-transparent-free-png.png"
             }
             alt="error 404"
-            className="w-14 cursor-pointer hover:scale-105 transition-all"
+            className="transition-all cursor-pointer w-14 hover:scale-105"
           />
         </a>
       </div>
