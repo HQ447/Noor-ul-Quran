@@ -1,8 +1,30 @@
 import React from "react";
 import heroIcon from "../assets/header-logo.png";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
+import { useEffect } from "react";
+import { isTokenExpired } from "../../utils/authUtils";
 
 function Navbar() {
+  const role = localStorage.getItem("role");
+  const navigate = useNavigate();
+
+  function handleLogout() {
+    localStorage.clear();
+    navigate("/");
+  }
+  useEffect(() => {
+    const checkTokenExpiry = () => {
+      const token = localStorage.getItem("token");
+      if (token && isTokenExpired(token)) {
+        handleLogout();
+        navigate("/");
+      }
+    };
+
+    const interval = setInterval(checkTokenExpiry, 1000);
+    return () => clearInterval(interval);
+  }, [navigate]);
+
   return (
     <div className="flex items-center justify-between px-12 py-3 border">
       <div className="flex items-center gap-2">
@@ -33,18 +55,29 @@ function Navbar() {
         </NavLink>
       </div>
       <div className="flex gap-1">
-        <NavLink
-          to={"register-student"}
-          className="px-3 py-2 text-sm text-white bg-green-500 rounded-md"
-        >
-          Register Now
-        </NavLink>
-        <NavLink
-          to={"admin-Login"}
-          className="px-3 py-2 text-sm text-white bg-blue-500 rounded-md"
-        >
-          Admin Login
-        </NavLink>
+        {role == "admin" ? (
+          <div>
+            <p>ADmin Name</p> <button onClick={handleLogout}>Logout</button>{" "}
+            <button>Dashboard</button>
+          </div>
+        ) : role == "student" ? (
+          <p>Registered Successfull</p>
+        ) : (
+          <div>
+            <NavLink
+              to={"register-student"}
+              className="px-3 py-2 text-sm text-white bg-green-500 rounded-md"
+            >
+              Register Now
+            </NavLink>
+            <NavLink
+              to={"admin-Login"}
+              className="px-3 py-2 text-sm text-white bg-blue-500 rounded-md"
+            >
+              Admin Login
+            </NavLink>
+          </div>
+        )}
       </div>
     </div>
   );

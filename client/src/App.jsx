@@ -12,6 +12,9 @@ import Books from "./app/main/Books/Books";
 import RegStudent from "./app/main/student Reg/RegStudent";
 import AdminLogin from "./app/dashboard/AdminLogin";
 import RegisterAdmin from "./app/dashboard/RegisterAdmin";
+import Reset from "./app/dashboard/Reset";
+import Otp from "./app/dashboard/Otp";
+import Forgot from "./app/dashboard/Forgot";
 
 function App() {
   return (
@@ -30,6 +33,10 @@ function App() {
 
         <Route path="/admin-Login" element={<AdminLogin />} />
         <Route path="/admin-Register" element={<RegisterAdmin />} />
+        <Route path="/forgot" element={<Forgot />} />
+        <Route path="/otp" element={<Otp />} />
+        <Route path="/reset" element={<Reset />} />
+
         <Route path="/admin-dashboard" element={<Dashboard />}></Route>
       </Routes>
     </div>
