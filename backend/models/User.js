@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema(
     country: { type: String },
     course: { type: String },
     startDate: { type: Date },
-    password: { type: String, required: true },
+    password: { type: String },
     role: { type: String, required: true },
     status: {
       type: String,
@@ -21,5 +21,4 @@ const userSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
 export default mongoose.model("User", userSchema);
