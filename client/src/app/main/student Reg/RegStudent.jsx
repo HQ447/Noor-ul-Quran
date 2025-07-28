@@ -10,6 +10,7 @@ const RegStudent = () => {
     course: "",
     startDate: "",
   });
+  const BASE_URL = `http://localhost:8000/auth`;
 
   const countries = [
     "Afghanistan",
@@ -61,7 +62,7 @@ const RegStudent = () => {
     });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     // Basic validation
     if (
       !formData.name ||
@@ -74,8 +75,22 @@ const RegStudent = () => {
       alert("Please fill in all required fields");
       return;
     }
-    console.log("Registration Data:", formData);
-    alert("Registration submitted successfully! جزاك الله خيراً");
+    try {
+      const res = await fetch(`${BASE_URL}/register-student`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      if (!res.ok) {
+        throw new Error("Failed to register student");
+      }
+      console.log("Registration Data:", formData);
+      alert("Registration submitted successfully! جزاك الله خيراً");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

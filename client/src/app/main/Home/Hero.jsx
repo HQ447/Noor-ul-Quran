@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Gift } from "lucide-react";
+import { NavLink } from "react-router";
 
 export default function Hero() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -152,11 +153,14 @@ export default function Hero() {
           </div>
 
           <div className="mt-8 lg:mt-10">
-            <button className="inline-flex items-center gap-3 px-8 py-4 text-sm font-semibold text-white transition-all duration-300 transform border rounded-full shadow-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 hover:shadow-2xl hover:-translate-y-1 md:px-10 md:py-5 md:text-base border-emerald-400/20">
+            <NavLink
+              to={"/register-student"}
+              className="inline-flex items-center gap-3 px-8 py-4 text-sm font-semibold text-white transition-all duration-300 transform border rounded-full shadow-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 hover:shadow-2xl hover:-translate-y-1 md:px-10 md:py-5 md:text-base border-emerald-400/20"
+            >
               <Gift className="w-5 h-5 text-emerald-200" />
               Book Free Trial Class
               <span className="text-xs text-emerald-200">إن شاء الله</span>
-            </button>
+            </NavLink>
           </div>
         </div>
 
