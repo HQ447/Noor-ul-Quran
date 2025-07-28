@@ -6,7 +6,7 @@ import Faqs from "./Faqs";
 
 function Home() {
   return (
-    <div>
+    <div className="px-2 sm:px-6 lg:px-13">
       <Hero />
       <ChooseUs />
       <Testimonial />
