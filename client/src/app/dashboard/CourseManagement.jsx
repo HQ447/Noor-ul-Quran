@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Plus, X, Star } from "lucide-react";
 import { IoTrashBinSharp } from "react-icons/io5";
+import NotFound from "../main/Not Found/NotFound";
 const BASE_URL = "http://localhost:8000/admin";
 
 const IslamicPattern = () => (
@@ -29,7 +30,11 @@ const CourseManagement = () => {
 
   const fetchCourses = async () => {
     try {
-      const res = await fetch(`${BASE_URL}/courses`);
+      const res = await fetch(`${BASE_URL}/courses`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       const data = await res.json();
       setCourses(data);
     } catch (err) {
@@ -42,6 +47,7 @@ const CourseManagement = () => {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
 
@@ -67,6 +73,9 @@ const CourseManagement = () => {
     try {
       const res = await fetch(`${BASE_URL}/create-course`, {
         method: "POST",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
         body: formData,
       });
 
@@ -86,6 +95,8 @@ const CourseManagement = () => {
     fetchCourses();
   }, []);
 
+  const token = localStorage.getItem("token");
+  if (!token) return <NotFound />;
   return (
     <div className="relative min-h-screen p-6 bg-emerald-50">
       <IslamicPattern />

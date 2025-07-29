@@ -41,7 +41,11 @@ const StudentManagement = () => {
 
   const fetchStudents = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/students`);
+      const response = await fetch(`${BASE_URL}/students`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       const result = await response.json();
 
       const studentList = Array.isArray(result)
@@ -63,6 +67,7 @@ const StudentManagement = () => {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
         body: JSON.stringify({ status: "registered" }),
       });
@@ -88,6 +93,7 @@ const StudentManagement = () => {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
 

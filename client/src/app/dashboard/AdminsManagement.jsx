@@ -25,7 +25,11 @@ export const AdminsManagement = () => {
   useEffect(() => {
     const fetchAdmins = async () => {
       try {
-        const response = await fetch("http://localhost:8000/admin/getAdmins");
+        const response = await fetch("http://localhost:8000/admin/getAdmins", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
         const data = await response.json();
         setAdmins(data.admins || []); // assuming your API returns { admins: [...] }
       } catch (error) {

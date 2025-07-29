@@ -7,15 +7,21 @@ import deleteStudent from "../controllers/deleteStudent.js";
 import deleteCourse from "../controllers/deleteCourse.js";
 import getAllStudents from "../controllers/getStudents.js";
 import upload from "../middlewares/upload.js";
+import { tokenVerifier } from "../middlewares/tokenVerifier.js";
 
 const router = express.Router();
 
-router.get("/getAdmins", getAdmins);
-router.post("/create-course", upload.single("thumbnail"), addCourse);
-router.get("/courses", getCourses);
-router.put("/updateStatus/:id", updateStatus);
-router.delete("/deleteStudent/:id", deleteStudent);
-router.delete("/deleteCourse/:id", deleteCourse);
-router.get("/students", getAllStudents);
+router.get("/getAdmins", tokenVerifier, getAdmins);
+router.post(
+  "/create-course",
+  tokenVerifier,
+  upload.single("thumbnail"),
+  addCourse
+);
+router.get("/courses", tokenVerifier, getCourses);
+router.put("/updateStatus/:id", tokenVerifier, updateStatus);
+router.delete("/deleteStudent/:id", tokenVerifier, deleteStudent);
+router.delete("/deleteCourse/:id", tokenVerifier, deleteCourse);
+router.get("/students", tokenVerifier, getAllStudents);
 
 export default router;

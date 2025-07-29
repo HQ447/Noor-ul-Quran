@@ -13,7 +13,11 @@ const Books = () => {
   });
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/books")
+    fetch("http://localhost:8000/api/books", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
       .then((res) => res.json())
       .then((data) => setBooks(data.books || []));
   }, []);
@@ -28,6 +32,9 @@ const Books = () => {
 
     const res = await fetch("http://localhost:8000/api/add-book", {
       method: "POST",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
       body: formData,
     });
 
