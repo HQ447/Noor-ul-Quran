@@ -1,20 +1,5 @@
-import React, { useState } from "react";
-import {
-  Users,
-  BookOpen,
-  UserCheck,
-  Settings,
-  BarChart3,
-  Search,
-  Plus,
-  Trash2,
-  Check,
-  X,
-  Upload,
-  Edit,
-  Moon,
-  Star,
-} from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { Star } from "lucide-react";
 import { NavLink } from "react-router";
 
 // Islamic Pattern Component
@@ -34,29 +19,25 @@ const IslamicPattern = () => (
 );
 
 export const AdminsManagement = () => {
-  const admins = [
-    {
-      id: 1,
-      name: "Muhammad Abdullah",
-      email: "admin1@example.com",
-      role: "Super Admin",
-      joinDate: "2023-01-01",
-    },
-    {
-      id: 2,
-      name: "Khadija Omar",
-      email: "admin2@example.com",
-      role: "Content Admin",
-      joinDate: "2023-06-15",
-    },
-    {
-      id: 3,
-      name: "Ali Hassan",
-      email: "admin3@example.com",
-      role: "Student Admin",
-      joinDate: "2023-08-20",
-    },
-  ];
+  const [admins, setAdmins] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchAdmins = async () => {
+      try {
+        const response = await fetch("http://localhost:8000/admin/getAdmins");
+        const data = await response.json();
+        setAdmins(data.admins || []); // assuming your API returns { admins: [...] }
+      } catch (error) {
+        console.error("Failed to fetch admins:", error);
+        setAdmins([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAdmins();
+  }, []);
 
   return (
     <div className="p-4 md:p-6">
@@ -89,39 +70,59 @@ export const AdminsManagement = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-emerald-100">
-              {admins.map((admin) => (
-                <tr
-                  key={admin.id}
-                  className="transition-colors hover:bg-emerald-50/30"
-                >
-                  <td className="px-3 py-4 md:px-6 whitespace-nowrap">
-                    <div className="flex items-center">
-                      <div className="flex items-center justify-center flex-shrink-0 w-8 h-8 mr-3 text-xs font-semibold text-white rounded-full bg-gradient-to-br from-purple-400 to-purple-600">
-                        {admin.name.charAt(0)}
-                      </div>
-                      <div className="min-w-0">
-                        <div className="text-sm font-medium truncate text-emerald-800">
-                          {admin.name}
-                        </div>
-                        <div className="text-xs truncate text-emerald-600 sm:hidden">
-                          {admin.email}
-                        </div>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="hidden px-3 py-4 text-sm md:px-6 whitespace-nowrap text-emerald-600 sm:table-cell">
-                    {admin.email}
-                  </td>
-                  <td className="px-3 py-4 md:px-6 whitespace-nowrap">
-                    <span className="inline-flex px-2 py-1 text-xs font-semibold text-purple-800 bg-purple-100 rounded-full">
-                      {admin.role}
-                    </span>
-                  </td>
-                  <td className="hidden px-3 py-4 text-sm md:px-6 whitespace-nowrap text-emerald-600 md:table-cell">
-                    {admin.joinDate}
+              {loading ? (
+                <tr>
+                  <td
+                    colSpan={4}
+                    className="px-6 py-4 text-center text-emerald-600"
+                  >
+                    Loading admins...
                   </td>
                 </tr>
-              ))}
+              ) : admins.length === 0 ? (
+                <tr>
+                  <td
+                    colSpan={4}
+                    className="px-6 py-4 text-center text-red-600"
+                  >
+                    No admins found.
+                  </td>
+                </tr>
+              ) : (
+                admins.map((admin) => (
+                  <tr
+                    key={admin._id}
+                    className="transition-colors hover:bg-emerald-50/30"
+                  >
+                    <td className="px-3 py-4 md:px-6 whitespace-nowrap">
+                      <div className="flex items-center">
+                        <div className="flex items-center justify-center flex-shrink-0 w-8 h-8 mr-3 text-xs font-semibold text-white rounded-full bg-gradient-to-br from-purple-400 to-purple-600">
+                          {admin.name?.charAt(0) || "A"}
+                        </div>
+                        <div className="min-w-0">
+                          <div className="text-sm font-medium truncate text-emerald-800">
+                            {admin.name}
+                          </div>
+                          <div className="text-xs truncate text-emerald-600 sm:hidden">
+                            {admin.email}
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="hidden px-3 py-4 text-sm md:px-6 whitespace-nowrap text-emerald-600 sm:table-cell">
+                      {admin.email}
+                    </td>
+                    <td className="px-3 py-4 md:px-6 whitespace-nowrap">
+                      <span className="inline-flex px-2 py-1 text-xs font-semibold text-purple-800 bg-purple-100 rounded-full">
+                        {admin.role}
+                      </span>
+                    </td>
+                    <td className="hidden px-3 py-4 text-sm md:px-6 whitespace-nowrap text-emerald-600 md:table-cell">
+                      {admin.createdAt?.substring(0, 10) || "N/A"}
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>
@@ -129,4 +130,5 @@ export const AdminsManagement = () => {
     </div>
   );
 };
+
 export default AdminsManagement;

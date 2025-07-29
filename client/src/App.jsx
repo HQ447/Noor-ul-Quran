@@ -21,6 +21,7 @@ import StudentManagement from "./app/dashboard/StudentManagement";
 import CourseManagement from "./app/dashboard/CourseManagement";
 import AdminsManagement from "./app/dashboard/AdminsManagement";
 import Settings from "./app/dashboard/Settings";
+import BooksManagement from "./app/dashboard/Books";
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
           <Route path="student-management" element={<StudentManagement />} />
           <Route path="course-management" element={<CourseManagement />} />
           <Route path="admin-management" element={<AdminsManagement />} />
+          <Route path="books" element={<BooksManagement />} />
           <Route path="settings" element={<Settings />} />
         </Route>
       </Routes>

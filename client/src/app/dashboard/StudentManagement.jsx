@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Users,
   BookOpen,
@@ -15,7 +15,9 @@ import {
   Moon,
   Star,
 } from "lucide-react";
-import { NavLink } from "react-router";
+import { IoTrashBinSharp } from "react-icons/io5";
+
+const BASE_URL = "http://localhost:8000";
 
 // Islamic Pattern Component
 const IslamicPattern = () => (
@@ -35,54 +37,72 @@ const IslamicPattern = () => (
 
 const StudentManagement = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [students, setStudents] = useState([
-    {
-      id: 1,
-      name: "Ahmed Hassan",
-      email: "ahmed@example.com",
-      status: "pending",
-      joinDate: "2024-01-15",
-    },
-    {
-      id: 2,
-      name: "Fatima Ali",
-      email: "fatima@example.com",
-      status: "registered",
-      joinDate: "2024-01-10",
-    },
-    {
-      id: 3,
-      name: "Omar Khan",
-      email: "omar@example.com",
-      status: "pending",
-      joinDate: "2024-01-20",
-    },
-    {
-      id: 4,
-      name: "Aisha Rahman",
-      email: "aisha@example.com",
-      status: "registered",
-      joinDate: "2024-01-05",
-    },
-    {
-      id: 5,
-      name: "Ibrahim Malik",
-      email: "ibrahim@example.com",
-      status: "pending",
-      joinDate: "2024-01-18",
-    },
-  ]);
+  const [students, setStudents] = useState([]);
 
-  const updateStudentStatus = (studentId, newStatus) => {
-    setStudents(
-      students.map((student) =>
-        student.id === studentId ? { ...student, status: newStatus } : student
-      )
-    );
+  const fetchStudents = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/auth/students`);
+      const result = await response.json();
+
+      const studentList = Array.isArray(result)
+        ? result
+        : result.students || [];
+
+      setStudents(studentList);
+    } catch (error) {
+      console.error("Error fetching students:", error);
+    }
+  };
+  useEffect(() => {
+    fetchStudents();
+  }, []);
+
+  const handleApprove = async (studentId) => {
+    try {
+      const res = await fetch(`${BASE_URL}/auth/updateStatus/${studentId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ status: "registered" }),
+      });
+
+      if (res.ok) {
+        setStudents((prev) =>
+          prev.map((student) =>
+            student._id === studentId || student.id === studentId
+              ? { ...student, status: "registered" }
+              : student
+          )
+        );
+      } else {
+        console.error("Failed to update student status");
+      }
+    } catch (error) {
+      console.error("Error updating student status:", error);
+    }
+  };
+  const handleDeleteStudent = async (studentId) => {
+    try {
+      const res = await fetch(`${BASE_URL}/auth/deleteStudent/${studentId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (res.ok) {
+        fetchStudents();
+      } else {
+        console.error("Failed to delete student ");
+      }
+    } catch (error) {
+      console.error("Error delete student :", error);
+    }
   };
 
   const filteredStudents = students.filter((student) =>
-    student.name.toLowerCase().includes(searchTerm.toLowerCase())
+    student.name?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -133,13 +153,13 @@ const StudentManagement = () => {
             <tbody className="divide-y divide-emerald-100">
               {filteredStudents.map((student) => (
                 <tr
-                  key={student.id}
+                  key={student._id || student.id}
                   className="transition-colors hover:bg-emerald-50/30"
                 >
                   <td className="px-3 py-4 md:px-6 whitespace-nowrap">
                     <div className="flex items-center">
                       <div className="flex items-center justify-center flex-shrink-0 w-8 h-8 mr-3 text-xs font-semibold text-white rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600">
-                        {student.name.charAt(0)}
+                        {student.name?.charAt(0)}
                       </div>
                       <div className="min-w-0">
                         <div className="text-sm font-medium truncate text-emerald-800">
@@ -166,20 +186,31 @@ const StudentManagement = () => {
                     </span>
                   </td>
                   <td className="hidden px-3 py-4 text-sm md:px-6 whitespace-nowrap text-emerald-600 md:table-cell">
-                    {student.joinDate}
+                    {student.joinDate
+                      ? new Date(student.joinDate).toLocaleString("en-GB", {
+                          day: "2-digit",
+                          month: "short",
+                          year: "numeric",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                          hour12: true,
+                        })
+                      : "N/A"}
                   </td>
-                  <td className="px-3 py-4 text-sm font-medium md:px-6 whitespace-nowrap">
+                  <td className="flex gap-2 px-3 py-4 text-sm font-medium md:px-6 whitespace-nowrap">
                     {student.status === "pending" && (
                       <button
-                        onClick={() =>
-                          updateStudentStatus(student.id, "registered")
-                        }
+                        onClick={() => handleApprove(student._id || student.id)}
                         className="flex items-center px-2 py-1 space-x-1 text-xs text-white transition-colors bg-green-600 rounded-lg hover:bg-green-700 md:px-3"
                       >
                         <Check className="w-3 h-3" />
                         <span className="hidden sm:inline">Approve</span>
                       </button>
                     )}
+                    <IoTrashBinSharp
+                      className="text-2xl text-red-600 transition-all cursor-pointer hover:scale-95"
+                      onClick={() => handleDeleteStudent(student._id)}
+                    />
                   </td>
                 </tr>
               ))}

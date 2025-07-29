@@ -1,25 +1,10 @@
-import React, { useState } from "react";
-import {
-  Users,
-  BookOpen,
-  UserCheck,
-  Settings,
-  BarChart3,
-  Search,
-  Plus,
-  Trash2,
-  Check,
-  X,
-  Upload,
-  Edit,
-  Moon,
-  Star,
-} from "lucide-react";
-import { NavLink } from "react-router";
+import React, { useEffect, useState } from "react";
+import { Plus, X, Star } from "lucide-react";
+import { IoTrashBinSharp } from "react-icons/io5";
+const BASE_URL = "http://localhost:8000/auth";
 
-// Islamic Pattern Component
 const IslamicPattern = () => (
-  <div className="absolute inset-0 opacity-5">
+  <div className="absolute inset-0 z-0 opacity-5">
     <div className="grid h-full grid-cols-8 gap-4">
       {[...Array(64)].map((_, i) => (
         <div
@@ -34,108 +19,136 @@ const IslamicPattern = () => (
 );
 
 const CourseManagement = () => {
-  const [showCourseModal, setShowCourseModal] = useState(false);
-  const [newCourse, setNewCourse] = useState({
+  const [courses, setCourses] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [form, setForm] = useState({
     title: "",
     description: "",
-    image: "",
+    thumbnail: null,
   });
-  const [courses, setCourses] = useState([
-    {
-      id: 1,
-      title: "Quran Recitation",
-      description: "Learn proper Tajweed and Quran recitation",
-      image: "🕌",
-    },
-    {
-      id: 2,
-      title: "Islamic History",
-      description: "Comprehensive Islamic history course",
-      image: "📚",
-    },
-    {
-      id: 3,
-      title: "Arabic Language",
-      description: "Classical Arabic language fundamentals",
-      image: "📖",
-    },
-    {
-      id: 4,
-      title: "Hadith Studies",
-      description: "Study of authentic Hadith collections",
-      image: "📜",
-    },
-  ]);
 
-  const addCourse = () => {
-    if (newCourse.title && newCourse.description) {
-      setCourses([
-        ...courses,
-        {
-          id: courses.length + 1,
-          ...newCourse,
-          image: newCourse.image || "📚",
+  const fetchCourses = async () => {
+    try {
+      const res = await fetch(`${BASE_URL}/courses`);
+      const data = await res.json();
+      setCourses(data);
+    } catch (err) {
+      console.error("Failed to fetch courses", err);
+    }
+  };
+  const handleDeleteCourse = async (courseId) => {
+    try {
+      const res = await fetch(`${BASE_URL}/deleteCourse/${courseId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
         },
-      ]);
-      setNewCourse({ title: "", description: "", image: "" });
-      setShowCourseModal(false);
+      });
+
+      if (res.ok) {
+        fetchCourses();
+      } else {
+        console.error("Failed to delete course");
+      }
+    } catch (error) {
+      console.error("Error deleting course", error);
     }
   };
 
-  const deleteCourse = (courseId) => {
-    setCourses(courses.filter((course) => course.id !== courseId));
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!form.title || !form.thumbnail) return;
+
+    const formData = new FormData();
+    formData.append("title", form.title);
+    formData.append("description", form.description);
+    formData.append("thumbnail", form.thumbnail);
+
+    try {
+      const res = await fetch(`${BASE_URL}/create-course`, {
+        method: "POST",
+        body: formData,
+      });
+
+      if (res.ok) {
+        await fetchCourses();
+        setShowModal(false);
+        setForm({ title: "", description: "", thumbnail: null });
+      } else {
+        console.error("Failed to add course");
+      }
+    } catch (err) {
+      console.error("Error submitting course", err);
+    }
   };
 
+  useEffect(() => {
+    fetchCourses();
+  }, []);
+
   return (
-    <div className="p-4 md:p-6">
-      <div className="flex flex-col mb-6 space-y-4 md:flex-row md:justify-between md:items-center md:space-y-0">
+    <div className="relative min-h-screen p-6 bg-emerald-50">
+      <IslamicPattern />
+
+      <div className="relative z-10 flex items-center justify-between mb-6">
         <div>
-          <h2 className="mb-2 text-xl font-bold md:text-2xl text-emerald-800">
+          <h2 className="text-xl font-bold md:text-2xl text-emerald-800">
             Course Management
           </h2>
-          <p className="text-sm text-emerald-600">
-            Manage Islamic courses and content
-          </p>
+          <p className="text-sm text-emerald-600">Manage all Islamic courses</p>
         </div>
         <button
-          onClick={() => setShowCourseModal(true)}
-          className="flex items-center self-start px-4 py-2 space-x-2 text-sm text-white transition-colors rounded-lg bg-emerald-600 hover:bg-emerald-700 md:self-auto"
+          onClick={() => setShowModal(true)}
+          className="flex items-center px-4 py-2 text-sm text-white transition-colors rounded-lg bg-emerald-600 hover:bg-emerald-700"
         >
-          <Plus className="w-4 h-4" />
-          <span>Add New Course</span>
+          <Plus className="w-4 h-4 mr-2" />
+          Add New Course
         </button>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:gap-6">
-        {courses.map((course) => (
-          <div
-            key={course.id}
-            className="p-4 transition-shadow border shadow-lg bg-white/80 backdrop-blur-sm rounded-xl md:p-6 border-emerald-200/20 hover:shadow-xl"
-          >
-            <div className="mb-4 text-center">
-              <div className="mb-3 text-3xl md:text-4xl">{course.image}</div>
-              <h3 className="mb-2 text-base font-semibold md:text-lg text-emerald-800">
-                {course.title}
-              </h3>
-              <p className="text-sm text-emerald-600">{course.description}</p>
-            </div>
-            <button
-              onClick={() => deleteCourse(course.id)}
-              className="flex items-center justify-center w-full px-4 py-2 space-x-2 text-sm text-red-700 transition-colors bg-red-100 rounded-lg hover:bg-red-200"
-            >
-              <Trash2 className="w-4 h-4" />
-              <span>Delete Course</span>
-            </button>
+      <div className="relative z-10">
+        {courses.length === 0 ? (
+          <div className="p-8 text-center bg-white shadow text-emerald-600 rounded-xl">
+            No courses available.
           </div>
-        ))}
+        ) : (
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {courses.map((course) => (
+              <div
+                key={course._id}
+                className="relative p-4 transition-shadow border shadow-lg bg-white/80 backdrop-blur-sm rounded-xl md:p-6 border-emerald-200/20 hover:shadow-xl"
+              >
+                <IoTrashBinSharp
+                  className="absolute text-2xl text-red-600 transition-all cursor-pointer top-2 right-3 hover:scale-95"
+                  onClick={() => handleDeleteCourse(course._id)}
+                />
+                <div className="mb-4 text-center">
+                  {course.thumbnail && (
+                    <img
+                      src={course.thumbnail}
+                      alt="thumbnail"
+                      className="object-cover mx-auto mb-2 shadow h-30"
+                    />
+                  )}
+                  <h3 className="mb-1 text-base font-semibold line-clamp-2 md:text-lg text-emerald-800">
+                    {course.title}
+                  </h3>
+                  <p className="text-sm text-emerald-600 line-clamp-4">
+                    {course.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
-      {/* Course Modal */}
-      {showCourseModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
-          <div className="relative w-full max-w-md p-6 bg-white rounded-xl">
+      {/* Modal */}
+      {showModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+          <div className="relative w-full max-w-md p-6 mx-2 bg-white shadow-lg rounded-xl">
             <button
-              onClick={() => setShowCourseModal(false)}
+              onClick={() => setShowModal(false)}
               className="absolute text-gray-500 top-4 right-4 hover:text-gray-700"
             >
               <X className="w-5 h-5" />
@@ -143,68 +156,67 @@ const CourseManagement = () => {
             <h3 className="mb-4 text-xl font-semibold text-emerald-800">
               Add New Course
             </h3>
-            <div className="space-y-4">
+            <form className="space-y-4" onSubmit={handleSubmit}>
               <div>
-                <label className="block mb-2 text-sm font-medium text-emerald-700">
-                  Course Title
+                <label className="block mb-1 text-sm font-medium text-emerald-700">
+                  Title
                 </label>
                 <input
                   type="text"
-                  value={newCourse.title}
-                  onChange={(e) =>
-                    setNewCourse({ ...newCourse, title: e.target.value })
-                  }
+                  value={form.title}
+                  onChange={(e) => setForm({ ...form, title: e.target.value })}
                   className="w-full px-3 py-2 text-sm border rounded-lg border-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                  placeholder="Enter course title..."
+                  required
                 />
               </div>
               <div>
-                <label className="block mb-2 text-sm font-medium text-emerald-700">
+                <label className="block mb-1 text-sm font-medium text-emerald-700">
                   Description
                 </label>
                 <textarea
-                  value={newCourse.description}
+                  value={form.description}
                   onChange={(e) =>
-                    setNewCourse({ ...newCourse, description: e.target.value })
+                    setForm({ ...form, description: e.target.value })
                   }
                   rows="3"
                   className="w-full px-3 py-2 text-sm border rounded-lg border-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                  placeholder="Enter course description..."
                 />
               </div>
               <div>
-                <label className="block mb-2 text-sm font-medium text-emerald-700">
-                  Course Icon (Emoji)
+                <label className="block mb-1 text-sm font-medium text-emerald-700">
+                  Thumbnail Image
                 </label>
                 <input
-                  type="text"
-                  value={newCourse.image}
+                  type="file"
+                  accept="image/*"
                   onChange={(e) =>
-                    setNewCourse({ ...newCourse, image: e.target.value })
+                    setForm({ ...form, thumbnail: e.target.files[0] })
                   }
-                  className="w-full px-3 py-2 text-sm border rounded-lg border-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                  placeholder="Enter emoji (e.g., 📚, 🕌, 📖)"
+                  className="w-full px-3 py-2 text-sm border rounded-lg border-emerald-200"
+                  required
                 />
               </div>
-              <div className="flex pt-4 space-x-3">
+              <div className="flex justify-end pt-4 space-x-3">
                 <button
-                  onClick={() => setShowCourseModal(false)}
-                  className="flex-1 px-4 py-2 text-sm text-gray-700 transition-colors bg-gray-200 rounded-lg hover:bg-gray-300"
+                  type="button"
+                  onClick={() => setShowModal(false)}
+                  className="px-4 py-2 text-sm text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300"
                 >
                   Cancel
                 </button>
                 <button
-                  onClick={addCourse}
-                  className="flex-1 px-4 py-2 text-sm text-white transition-colors rounded-lg bg-emerald-600 hover:bg-emerald-700"
+                  type="submit"
+                  className="px-4 py-2 text-sm text-white rounded-lg bg-emerald-600 hover:bg-emerald-700"
                 >
                   Add Course
                 </button>
               </div>
-            </div>
+            </form>
           </div>
         </div>
       )}
     </div>
   );
 };
+
 export default CourseManagement;

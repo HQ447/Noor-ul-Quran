@@ -66,6 +66,7 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
             { id: "", label: "Analytics", icon: BarChart3 },
             { id: "student-management", label: "Students", icon: Users },
             { id: "course-management", label: "Courses", icon: BookOpen },
+            { id: "books", label: "Library Management", icon: BookOpen },
             { id: "admin-management", label: "Admins", icon: UserCheck },
             { id: "settings", label: "Settings", icon: Settings },
           ].map(({ id, label, icon: Icon }) => (

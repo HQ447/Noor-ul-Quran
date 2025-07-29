@@ -103,7 +103,7 @@ const Analytics = () => {
   );
 
   return (
-    <div className="p-4  md:p-6">
+    <div className="p-4 md:p-6">
       <div className="mb-6">
         <h2 className="mb-2 text-xl font-bold md:text-2xl text-emerald-800">
           Analytics Dashboard
