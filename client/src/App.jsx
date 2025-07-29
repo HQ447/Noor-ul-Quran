@@ -15,6 +15,12 @@ import RegisterAdmin from "./app/dashboard/RegisterAdmin";
 import Reset from "./app/dashboard/Reset";
 import Otp from "./app/dashboard/Otp";
 import Forgot from "./app/dashboard/Forgot";
+import CourseDetail from "./app/main/course details/CourseDetail";
+import Analyics from "./app/dashboard/Analytics";
+import StudentManagement from "./app/dashboard/StudentManagement";
+import CourseManagement from "./app/dashboard/CourseManagement";
+import AdminsManagement from "./app/dashboard/AdminsManagement";
+import Settings from "./app/dashboard/Settings";
 
 function App() {
   return (
@@ -27,6 +33,7 @@ function App() {
           <Route path="/courses" element={<Courses />} />
           <Route path="/library" element={<Books />} />
           <Route path="/register-student" element={<RegStudent />} />
+          <Route path="/course-detail/:id" element={<CourseDetail />} />
 
           <Route path="/fee" element={<Fee />} />
         </Route>
@@ -37,7 +44,13 @@ function App() {
         <Route path="/otp" element={<Otp />} />
         <Route path="/reset" element={<Reset />} />
 
-        <Route path="/admin-dashboard" element={<Dashboard />}></Route>
+        <Route path="/admin-dashboard" element={<Dashboard />}>
+          <Route index element={<Analyics />} />
+          <Route path="student-management" element={<StudentManagement />} />
+          <Route path="course-management" element={<CourseManagement />} />
+          <Route path="admin-management" element={<AdminsManagement />} />
+          <Route path="settings" element={<Settings />} />
+        </Route>
       </Routes>
     </div>
   );
