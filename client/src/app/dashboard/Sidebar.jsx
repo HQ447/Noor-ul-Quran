@@ -9,7 +9,7 @@ import {
   Menu,
   X,
 } from "lucide-react";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import { useState } from "react";
 
 // Islamic Pattern Component
@@ -31,8 +31,12 @@ const IslamicPattern = () => (
 // Sidebar Component
 const Sidebar = ({ activeTab, setActiveTab }) => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const navigate = useNavigate();
   const toggleSidebar = () => setIsOpen(!isOpen);
+  function handleLogout() {
+    localStorage.clear();
+    navigate("/");
+  }
 
   return (
     <>
@@ -86,11 +90,23 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
           ))}
         </nav>
 
-        <div className="absolute hidden bottom-4 left-4 right-4 md:block lg:block">
+        <div className="absolute bottom-4 left-4 right-4 md:block lg:block">
           <div className="p-3 text-center rounded-lg bg-emerald-700/50">
             <Moon className="w-6 h-6 mx-auto mb-2 text-emerald-200" />
             <p className="text-xs text-emerald-200">اللَّهُمَّ بَارِكْ لَنَا</p>
             <p className="text-xs text-emerald-300">May Allah bless us</p>
+            <button
+              onClick={handleLogout}
+              className="px-6 py-1 mt-2 mr-1 text-xs rounded-md bg-amber-50"
+            >
+              Logout
+            </button>
+            <NavLink
+              to={"/"}
+              className="px-6 py-1 mt-2 text-xs rounded-md bg-amber-50"
+            >
+              Home
+            </NavLink>
           </div>
         </div>
       </div>

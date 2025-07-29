@@ -6,6 +6,8 @@ import connectDB from "./config/connectDB.js";
 import path from "path";
 import { fileURLToPath } from "url";
 import cors from "cors";
+import router from "./routes/bookRoutes.js";
+import adminRouter from "./routes/adminRoutes.js";
 
 dotenv.config();
 
@@ -25,6 +27,8 @@ app.use(express.json());
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/auth", authRouter);
+app.use("/admin", adminRouter);
+app.use("/api", router);
 
 // Test route
 app.get("/", (req, res) => res.send("Server is running 🚀"));

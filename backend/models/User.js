@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema(
     whatsapp: { type: String },
     country: { type: String },
     course: { type: String },
-    startDate: { type: Date },
+    joinDate: { type: Date },
     password: { type: String },
     role: { type: String, required: true },
     status: {

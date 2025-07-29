@@ -22,6 +22,7 @@ import CourseManagement from "./app/dashboard/CourseManagement";
 import AdminsManagement from "./app/dashboard/AdminsManagement";
 import Settings from "./app/dashboard/Settings";
 import BooksManagement from "./app/dashboard/Books";
+import NotFound from "./app/main/Not Found/NotFound";
 
 function App() {
   return (
@@ -38,7 +39,7 @@ function App() {
 
           <Route path="/fee" element={<Fee />} />
         </Route>
-
+        <Route path="/NotFound" element={<NotFound />}></Route>
         <Route path="/admin-Login" element={<AdminLogin />} />
         <Route path="/admin-Register" element={<RegisterAdmin />} />
         <Route path="/forgot" element={<Forgot />} />

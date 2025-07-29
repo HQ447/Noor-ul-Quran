@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 import { IoTrashBinSharp } from "react-icons/io5";
 
-const BASE_URL = "http://localhost:8000";
+const BASE_URL = "http://localhost:8000/admin";
 
 // Islamic Pattern Component
 const IslamicPattern = () => (
@@ -41,7 +41,7 @@ const StudentManagement = () => {
 
   const fetchStudents = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/auth/students`);
+      const response = await fetch(`${BASE_URL}/students`);
       const result = await response.json();
 
       const studentList = Array.isArray(result)
@@ -59,7 +59,7 @@ const StudentManagement = () => {
 
   const handleApprove = async (studentId) => {
     try {
-      const res = await fetch(`${BASE_URL}/auth/updateStatus/${studentId}`, {
+      const res = await fetch(`${BASE_URL}/updateStatus/${studentId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -84,7 +84,7 @@ const StudentManagement = () => {
   };
   const handleDeleteStudent = async (studentId) => {
     try {
-      const res = await fetch(`${BASE_URL}/auth/deleteStudent/${studentId}`, {
+      const res = await fetch(`${BASE_URL}/deleteStudent/${studentId}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

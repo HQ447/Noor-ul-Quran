@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Plus, X, Star } from "lucide-react";
 import { IoTrashBinSharp } from "react-icons/io5";
-const BASE_URL = "http://localhost:8000/auth";
+const BASE_URL = "http://localhost:8000/admin";
 
 const IslamicPattern = () => (
   <div className="absolute inset-0 z-0 opacity-5">
