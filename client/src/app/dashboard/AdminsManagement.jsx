@@ -100,9 +100,12 @@ export const AdminsManagement = () => {
                   >
                     <td className="px-3 py-4 md:px-6 whitespace-nowrap">
                       <div className="flex items-center">
-                        <div className="flex items-center justify-center flex-shrink-0 w-8 h-8 mr-3 text-xs font-semibold text-white rounded-full bg-gradient-to-br from-purple-400 to-purple-600">
-                          {admin.name?.charAt(0) || "A"}
-                        </div>
+                        <img
+                          src={admin.img ? admin.img : admin.name?.charAt(0)}
+                          alt={admin.name?.charAt(0) || "A"}
+                          className="flex items-center justify-center flex-shrink-0 w-8 h-8 mr-3 text-xs font-semibold text-white rounded-full bg-gradient-to-br from-purple-400 to-purple-600"
+                        />
+
                         <div className="min-w-0">
                           <div className="text-sm font-medium truncate text-emerald-800">
                             {admin.name}

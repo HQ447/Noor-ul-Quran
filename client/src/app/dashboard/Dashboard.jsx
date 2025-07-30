@@ -6,6 +6,7 @@ import NotFound from "../main/Not Found/NotFound";
 
 function Dashboard() {
   const role = localStorage.getItem("role");
+  const token = localStorage.getItem("token");
   const navigate = useNavigate();
 
   function handleLogout() {
@@ -15,17 +16,15 @@ function Dashboard() {
 
   useEffect(() => {
     const checkTokenExpiry = () => {
-      const token = localStorage.getItem("token");
       if (token && isTokenExpired(token)) {
         handleLogout();
-        navigate("/");
       }
     };
     const interval = setInterval(checkTokenExpiry, 1000);
     return () => clearInterval(interval);
   }, [navigate]);
 
-  if (!role) return <NotFound />;
+  if (!token) return <NotFound />;
 
   return (
     <div className="flex ">

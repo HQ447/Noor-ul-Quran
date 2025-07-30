@@ -1,20 +1,6 @@
-import {
-  Users,
-  BookOpen,
-  UserCheck,
-  Settings,
-  BarChart3,
-  Search,
-  Plus,
-  Trash2,
-  Check,
-  X,
-  Upload,
-  Edit,
-  Moon,
-  Star,
-} from "lucide-react";
-import { NavLink } from "react-router";
+import { Upload, Edit, Star } from "lucide-react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 // Islamic Pattern Component
 const IslamicPattern = () => (
@@ -33,6 +19,67 @@ const IslamicPattern = () => (
 );
 
 const Setting = () => {
+  const [admin, setAdmin] = useState({
+    name: "",
+    email: "",
+    bio: "",
+    img: "",
+  });
+  const [imageFile, setImageFile] = useState(null);
+  const [preview, setPreview] = useState(null);
+  const BASE_URL = "http://localhost:8000";
+  // Fetch current admin info on mount
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const { data } = await axios.get(`${BASE_URL}/admin/getAdminProfile`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setAdmin(data);
+        setPreview(data.img);
+      } catch (err) {
+        console.error("Failed to fetch profile:", err);
+      }
+    };
+    fetchProfile();
+  }, []);
+
+  const handleChange = (e) => {
+    setAdmin({ ...admin, [e.target.name]: e.target.value });
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setImageFile(file);
+    if (file) {
+      setPreview(URL.createObjectURL(file));
+    }
+  };
+
+  const handleUpdate = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const formData = new FormData();
+      formData.append("name", admin.name);
+      formData.append("email", admin.email);
+      formData.append("bio", admin.bio);
+      if (imageFile) formData.append("img", imageFile);
+
+      await axios.put(`${BASE_URL}/admin/updateProfile`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      alert("Profile updated successfully!");
+    } catch (err) {
+      console.error("Profile update failed:", err);
+      alert("Error updating profile");
+    }
+  };
+
   return (
     <div className="p-4 md:p-6">
       <div className="mb-6">
@@ -45,6 +92,7 @@ const Setting = () => {
       </div>
 
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 md:gap-6">
+        {/* Profile Info */}
         <div className="p-4 border shadow-lg bg-white/80 backdrop-blur-sm rounded-xl md:p-6 border-emerald-200/20">
           <h3 className="mb-4 text-base font-semibold md:text-lg text-emerald-800">
             Profile Information
@@ -52,51 +100,80 @@ const Setting = () => {
           <div className="space-y-4">
             <div className="flex items-center justify-center mb-6">
               <div className="relative">
-                <div className="flex items-center justify-center w-20 h-20 text-xl font-bold text-white rounded-full md:w-24 md:h-24 bg-gradient-to-br from-emerald-400 to-emerald-600 md:text-2xl">
-                  A
+                <div className="flex items-center justify-center w-20 h-20 overflow-hidden text-xl font-bold text-white rounded-full md:w-24 md:h-24 bg-gradient-to-br from-emerald-400 to-emerald-600 md:text-2xl">
+                  {preview ? (
+                    <img
+                      src={preview}
+                      alt="profile"
+                      className="object-cover w-full h-full"
+                    />
+                  ) : (
+                    admin?.name?.charAt(0).toUpperCase() || "A"
+                  )}
                 </div>
-                <button className="absolute p-2 text-white transition-colors rounded-full shadow-lg -bottom-2 -right-2 bg-emerald-600 hover:bg-emerald-700">
+                <label className="absolute p-2 text-white transition-colors rounded-full shadow-lg cursor-pointer -bottom-2 -right-2 bg-emerald-600 hover:bg-emerald-700">
                   <Upload className="w-3 h-3 md:w-4 md:h-4" />
-                </button>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                    className="hidden"
+                  />
+                </label>
               </div>
             </div>
+
             <div>
               <label className="block mb-2 text-sm font-medium text-emerald-700">
                 Full Name
               </label>
               <input
+                name="name"
                 type="text"
-                defaultValue="Admin User"
+                value={admin.name}
+                onChange={handleChange}
                 className="w-full px-3 py-2 text-sm border rounded-lg border-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-500"
               />
             </div>
+
             <div>
               <label className="block mb-2 text-sm font-medium text-emerald-700">
                 Email
               </label>
               <input
+                name="email"
                 type="email"
-                defaultValue="admin@islamic-platform.com"
+                value={admin.email}
+                onChange={handleChange}
                 className="w-full px-3 py-2 text-sm border rounded-lg border-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-500"
               />
             </div>
+
             <div>
               <label className="block mb-2 text-sm font-medium text-emerald-700">
                 Bio
               </label>
               <textarea
+                name="bio"
                 rows="3"
+                value={admin.bio}
+                onChange={handleChange}
                 placeholder="Tell us about yourself..."
                 className="w-full px-3 py-2 text-sm border rounded-lg border-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-500"
               />
             </div>
-            <button className="flex items-center justify-center w-full px-4 py-2 space-x-2 text-sm text-white transition-colors rounded-lg bg-emerald-600 hover:bg-emerald-700">
+
+            <button
+              onClick={handleUpdate}
+              className="flex items-center justify-center w-full px-4 py-2 space-x-2 text-sm text-white transition-colors rounded-lg bg-emerald-600 hover:bg-emerald-700"
+            >
               <Edit className="w-4 h-4" />
               <span>Update Profile</span>
             </button>
           </div>
         </div>
 
+        {/* Platform Settings (unchanged) */}
         <div className="p-4 border shadow-lg bg-white/80 backdrop-blur-sm rounded-xl md:p-6 border-emerald-200/20">
           <h3 className="mb-4 text-base font-semibold md:text-lg text-emerald-800">
             Platform Settings
@@ -110,6 +187,7 @@ const Setting = () => {
                 type="text"
                 defaultValue="Islamic Learning Platform"
                 className="w-full px-3 py-2 text-sm border rounded-lg border-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                disabled
               />
             </div>
             <div>
@@ -120,6 +198,7 @@ const Setting = () => {
                 type="email"
                 defaultValue="contact@islamic-platform.com"
                 className="w-full px-3 py-2 text-sm border rounded-lg border-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                disabled
               />
             </div>
             <div>
@@ -130,6 +209,7 @@ const Setting = () => {
                 rows="4"
                 defaultValue="A comprehensive Islamic learning platform dedicated to spreading knowledge and understanding of Islam through quality courses and resources."
                 className="w-full px-3 py-2 text-sm border rounded-lg border-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                disabled
               />
             </div>
             <div className="flex items-center justify-between p-3 rounded-lg bg-emerald-50/50">
@@ -149,4 +229,5 @@ const Setting = () => {
     </div>
   );
 };
+
 export default Setting;

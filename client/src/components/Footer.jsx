@@ -5,6 +5,7 @@ import {
   FaYoutube,
   FaXTwitter,
 } from "react-icons/fa6";
+import { NavLink } from "react-router";
 
 export default function Footer() {
   return (
@@ -19,10 +20,10 @@ export default function Footer() {
             className="object-contain w-32 h-32 mx-auto md:mx-0"
           />
           <p className="mt-4 text-sm text-gray-300">
-            <strong>EliteQuranTutors.com</strong> offers personalized,
-            one-on-one online Quran classes with certified male and female
-            tutors. Learn Quran with Tajweed, Hifz, and Islamic studies — from
-            the comfort of your home.
+            <strong>Islamic Center</strong> offers personalized, one-on-one
+            online Quran classes with certified male and female tutors. Learn
+            Quran with Tajweed, Hifz, and Islamic studies — from the comfort of
+            your home.
           </p>
         </div>
 
@@ -31,44 +32,9 @@ export default function Footer() {
           <h2 className="mb-4 text-lg font-semibold">POPULAR COURSES</h2>
           <ul className="space-y-2 text-sm text-gray-300">
             <li>
-              <a
-                href="https://elitequrantutors.com/courses/noorani-qaidah-online/"
-                className="hover:underline"
-              >
+              <NavLink to={"/courses"} className="hover:underline">
                 Noorani Qaidah Course
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://elitequrantutors.com/courses/quran-reading-with-tajweed/"
-                className="hover:underline"
-              >
-                Quran Reading Course
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://elitequrantutors.com/courses/tafseer-ul-quran-course/"
-                className="hover:underline"
-              >
-                Tafseer ul Quran Course
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://elitequrantutors.com/courses/qruan-memorization-course/"
-                className="hover:underline"
-              >
-                Quran Memorization Course
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://elitequrantutors.com/courses/curriculum-subjects-tution/"
-                className="hover:underline"
-              >
-                Curriculum Subjects Tuition
-              </a>
+              </NavLink>
             </li>
           </ul>
         </div>
@@ -78,20 +44,19 @@ export default function Footer() {
           <h2 className="mb-4 text-lg font-semibold">NEED ANY HELP?</h2>
           <ul className="space-y-2 text-sm text-gray-300">
             <li>
-              <a
-                href="https://elitequrantutors.com/contact/#faq"
-                className="hover:underline"
-              >
-                FAQs
-              </a>
+              <NavLink to={"/about"} className="hover:underline">
+                About
+              </NavLink>
             </li>
             <li>
-              <a
-                href="https://elitequrantutors.com/contact/"
-                className="hover:underline"
-              >
+              <NavLink to={"/contact"} className="hover:underline">
                 Contact Us
-              </a>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to={"fee"} className="hover:underline">
+                Fee
+              </NavLink>
             </li>
           </ul>
         </div>
@@ -101,7 +66,7 @@ export default function Footer() {
           <h2 className="mb-4 text-lg font-semibold">FOLLOW US ON</h2>
           <div className="flex justify-center gap-4 text-xl">
             <a
-              href="https://www.facebook.com/elitequrantutors"
+              href="#"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Facebook"
@@ -109,7 +74,7 @@ export default function Footer() {
               <FaFacebook />
             </a>
             <a
-              href="https://x.com"
+              href="#"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Twitter"
@@ -117,7 +82,7 @@ export default function Footer() {
               <FaXTwitter />
             </a>
             <a
-              href="https://www.instagram.com/adeelonlinequranacademy/"
+              href="#"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram"
@@ -125,7 +90,7 @@ export default function Footer() {
               <FaInstagram />
             </a>
             <a
-              href="https://www.youtube.com/@elitequrantutors"
+              href="#"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="YouTube"
@@ -138,7 +103,7 @@ export default function Footer() {
 
       {/* Middle Footer */}
       <div className="py-4 text-sm text-center text-gray-400 bg-black">
-        © 2025 EliteQuranTutors.com – Designed by{" "}
+        © 2025 islamic center – Designed by{" "}
         <a
           href="https://www.facebook.com/m.tallha.ali"
           className="text-blue-400 hover:underline"

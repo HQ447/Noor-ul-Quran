@@ -1,93 +1,35 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { BookOpen, ArrowRight, Clock, Users, Star } from "lucide-react";
-
+import axios from "axios";
+import { NavLink, useNavigate } from "react-router-dom";
 const Courses = () => {
-  // Sample courses data
-  const courses = [
-    {
-      id: 1,
-      title: "Quran Recitation & Tajweed",
-      description:
-        "Learn the proper pronunciation and beautiful recitation of the Holy Quran with Tajweed rules. Master the art of Quranic recitation with expert guidance.",
-      image:
-        "https://images.unsplash.com/photo-1609599006353-e629aaabfeae?w=500&h=300&fit=crop",
-      duration: "12 weeks",
-      students: 1250,
-      rating: 4.9,
-      level: "Beginner to Advanced",
-    },
-    {
-      id: 2,
-      title: "Arabic Language Fundamentals",
-      description:
-        "Master the Arabic language from basics to advanced levels. Understand Quranic Arabic and communicate effectively in the language of the Quran.",
-      image:
-        "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=500&h=300&fit=crop",
-      duration: "16 weeks",
-      students: 980,
-      rating: 4.8,
-      level: "Beginner",
-    },
-    {
-      id: 3,
-      title: "Islamic History & Civilization",
-      description:
-        "Explore the rich history of Islam, from the time of Prophet Muhammad (PBUH) to the golden age of Islamic civilization and its contributions to humanity.",
-      image:
-        "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=500&h=300&fit=crop",
-      duration: "10 weeks",
-      students: 750,
-      rating: 4.7,
-      level: "Intermediate",
-    },
-    {
-      id: 4,
-      title: "Islamic Jurisprudence (Fiqh)",
-      description:
-        "Understand Islamic law and jurisprudence. Learn about worship, transactions, family law, and contemporary issues from authentic Islamic sources.",
-      image:
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&h=300&fit=crop",
-      duration: "14 weeks",
-      students: 650,
-      rating: 4.8,
-      level: "Intermediate",
-    },
-    {
-      id: 5,
-      title: "Hadith Studies",
-      description:
-        "Study the authentic sayings and traditions of Prophet Muhammad (PBUH). Learn hadith classification, authentication methods, and practical application.",
-      image:
-        "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=500&h=300&fit=crop",
-      duration: "12 weeks",
-      students: 540,
-      rating: 4.9,
-      level: "Advanced",
-    },
-    {
-      id: 6,
-      title: "Islamic Ethics & Spirituality",
-      description:
-        "Develop strong Islamic character and spirituality. Learn about Islamic morals, ethics, and the path to spiritual purification and closeness to Allah.",
-      image:
-        "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=500&h=300&fit=crop",
-      duration: "8 weeks",
-      students: 890,
-      rating: 4.6,
-      level: "All Levels",
-    },
-  ];
+  const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+  const BASE_URL = "http://localhost:8000";
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const res = await axios.get(`${BASE_URL}/admin/courses`);
+        setCourses(res.data); // Adjust depending on your API response shape
+      } catch (err) {
+        console.error("Failed to fetch courses", err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const handleLearnMore = (course) => {
-    // In a real app, this would navigate to course details page
-    alert(`Learn more about: ${course.title}`);
+    fetchCourses();
+  }, []);
+
+  const handleLearnMore = (id) => {
+    navigate(`/course-detail/${id}`);
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-50">
       {/* Hero Section */}
       <section className="relative py-16 overflow-hidden text-white bg-gradient-to-r from-green-600 to-emerald-600">
-        {/* Islamic Pattern Background */}
         <div className="absolute inset-0 opacity-10">
           <div
             className="w-full h-full"
@@ -96,7 +38,6 @@ const Courses = () => {
             }}
           />
         </div>
-
         <div className="relative max-w-6xl px-6 mx-auto text-center lg:px-12">
           <div className="mb-6">
             <div className="inline-flex items-center gap-2 px-4 py-2 mb-4 text-sm font-semibold text-black bg-white rounded-full bg-opacity-20">
@@ -131,71 +72,63 @@ const Courses = () => {
           </div>
 
           {/* Courses Grid */}
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {courses.map((course) => (
-              <div
-                key={course.id}
-                className="overflow-hidden transition-shadow bg-white border border-gray-100 shadow-lg rounded-xl hover:shadow-xl group"
-              >
-                {/* Course Image */}
-                <div className="relative h-48 overflow-hidden">
-                  <img
-                    src={course.image}
-                    alt={course.title}
-                    className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-
-                  {/* Level Badge */}
-                  <div className="absolute top-3 left-3">
-                    <span className="px-2 py-1 text-xs font-medium text-white bg-green-600 rounded-full">
-                      {course.level}
-                    </span>
-                  </div>
-
-                  {/* Rating Badge */}
-                  <div className="absolute flex items-center gap-1 px-2 py-1 rounded-full top-3 right-3 bg-white/90 backdrop-blur-sm">
-                    <Star className="w-3 h-3 text-yellow-500 fill-current" />
-                    <span className="text-xs font-medium text-gray-700">
-                      {course.rating}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Course Content */}
-                <div className="p-6">
-                  <h3 className="mb-2 text-lg font-bold text-gray-800 transition-colors group-hover:text-green-600">
-                    {course.title}
-                  </h3>
-
-                  <p className="mb-4 text-sm text-gray-600 line-clamp-3">
-                    {course.description}
-                  </p>
-
-                  {/* Course Stats */}
-                  <div className="flex items-center justify-between mb-4 text-xs text-gray-500">
-                    <div className="flex items-center gap-1">
-                      <Clock className="w-3 h-3" />
-                      <span>{course.duration}</span>
+          {loading ? (
+            <div className="text-center text-gray-500">Loading courses...</div>
+          ) : (
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {courses.map((course) => (
+                <div
+                  key={course._id}
+                  className="overflow-hidden transition-shadow bg-white border border-gray-100 shadow-lg rounded-xl hover:shadow-xl group"
+                >
+                  <div className="relative h-48 overflow-hidden">
+                    <img
+                      src={course.thumbnail}
+                      alt={course.title}
+                      className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                    <div className="absolute top-3 left-3">
+                      <span className="px-2 py-1 text-xs font-medium text-white bg-green-600 rounded-full">
+                        {course.level || "Intermediate"}
+                      </span>
                     </div>
-                    <div className="flex items-center gap-1">
-                      <Users className="w-3 h-3" />
-                      <span>{course.students.toLocaleString()}</span>
+                    <div className="absolute flex items-center gap-1 px-2 py-1 rounded-full top-3 right-3 bg-white/90 backdrop-blur-sm">
+                      <Star className="w-3 h-3 text-yellow-500 fill-current" />
+                      <span className="text-xs font-medium text-gray-700">
+                        5{course.rating}
+                      </span>
                     </div>
                   </div>
-
-                  {/* Learn More Button */}
-                  <button
-                    onClick={() => handleLearnMore(course)}
-                    className="flex items-center justify-center w-full gap-2 px-4 py-2 text-sm font-medium text-white transition-all duration-300 rounded-lg bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 group"
-                  >
-                    Learn More
-                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                  </button>
+                  <div className="p-6">
+                    <h3 className="mb-2 text-lg font-bold text-gray-800 transition-colors group-hover:text-green-600">
+                      {course.title}
+                    </h3>
+                    <p className="mb-4 text-sm text-gray-600 line-clamp-2">
+                      {course.description}
+                    </p>
+                    <div className="flex items-center justify-between mb-4 text-xs text-gray-500">
+                      <div className="flex items-center gap-1">
+                        <Clock className="w-3 h-3" />
+                        <span>{course.duration} months</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Users className="w-3 h-3" />
+                        <span>423{course.students?.toLocaleString()}</span>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => handleLearnMore(course._id)}
+                      className="flex items-center justify-center w-full gap-2 px-4 py-2 text-sm font-medium text-white transition-all duration-300 rounded-lg bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 group"
+                    >
+                      Learn More
+                      <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
@@ -210,12 +143,12 @@ const Courses = () => {
             understanding of Islam
           </p>
           <div className="flex flex-col justify-center gap-4 sm:flex-row">
-            <button className="px-6 py-3 font-semibold text-green-600 transition-colors bg-white rounded-lg shadow-lg hover:bg-gray-100">
+            <NavLink
+              to={"/register-student"}
+              className="px-6 py-3 font-semibold text-green-600 transition-colors bg-white rounded-lg shadow-lg hover:bg-gray-100"
+            >
               Start Free Trial
-            </button>
-            <button className="px-6 py-3 font-semibold text-white transition-colors border-2 rounded-lg bg-emerald-500 hover:bg-emerald-600 border-emerald-400">
-              View All Courses
-            </button>
+            </NavLink>
           </div>
         </div>
       </section>

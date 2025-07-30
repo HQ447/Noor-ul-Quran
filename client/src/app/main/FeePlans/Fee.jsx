@@ -9,10 +9,12 @@ import {
   Award,
   Zap,
 } from "lucide-react";
+import { NavLink, useNavigate } from "react-router";
 
 function Fee() {
   const [billingCycle, setBillingCycle] = useState("monthly");
   const [selectedPlan, setSelectedPlan] = useState("");
+  const navigate = useNavigate();
 
   const plans = [
     {
@@ -139,12 +141,7 @@ function Fee() {
 
   const handlePlanSelect = (planId) => {
     setSelectedPlan(planId);
-    // Here you would typically redirect to payment or signup
-    alert(
-      `You selected the ${
-        plans.find((p) => p.id === planId)?.name
-      }. Redirecting to registration...`
-    );
+    navigate("/register-student");
   };
 
   const getBillingLabel = () => {
@@ -433,12 +430,18 @@ function Fee() {
           </div>
 
           <div className="flex flex-col justify-center gap-4 sm:flex-row">
-            <button className="px-8 py-4 font-semibold text-green-600 transition-colors bg-white rounded-lg shadow-lg hover:bg-gray-100">
+            <NavLink
+              to={"/register-student"}
+              className="px-8 py-4 font-semibold text-green-600 transition-colors bg-white rounded-lg shadow-lg hover:bg-gray-100"
+            >
               Start Free Trial
-            </button>
-            <button className="px-8 py-4 font-semibold text-white transition-colors border-2 rounded-lg bg-emerald-500 hover:bg-emerald-600 border-emerald-400">
+            </NavLink>
+            <NavLink
+              to={"/contact"}
+              className="px-8 py-4 font-semibold text-white transition-colors border-2 rounded-lg bg-emerald-500 hover:bg-emerald-600 border-emerald-400"
+            >
               Contact Sales Team
-            </button>
+            </NavLink>
           </div>
         </div>
       </section>

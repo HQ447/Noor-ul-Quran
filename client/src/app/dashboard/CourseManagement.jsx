@@ -21,15 +21,19 @@ const IslamicPattern = () => (
 
 const CourseManagement = () => {
   const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [form, setForm] = useState({
     title: "",
     description: "",
+    level: "",
+    duration: "",
     thumbnail: null,
   });
 
   const fetchCourses = async () => {
     try {
+      setLoading(true);
       const res = await fetch(`${BASE_URL}/courses`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -39,8 +43,11 @@ const CourseManagement = () => {
       setCourses(data);
     } catch (err) {
       console.error("Failed to fetch courses", err);
+    } finally {
+      setLoading(false);
     }
   };
+
   const handleDeleteCourse = async (courseId) => {
     try {
       const res = await fetch(`${BASE_URL}/deleteCourse/${courseId}`, {
@@ -63,13 +70,22 @@ const CourseManagement = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!form.title || !form.thumbnail) return;
+    if (
+      !form.title ||
+      !form.thumbnail ||
+      !form.level.trim() ||
+      !form.duration.trim()
+    )
+      return;
 
     const formData = new FormData();
     formData.append("title", form.title);
     formData.append("description", form.description);
     formData.append("thumbnail", form.thumbnail);
+    formData.append("level", form.level);
+    formData.append("duration", form.duration);
 
+    console.log(formData);
     try {
       const res = await fetch(`${BASE_URL}/create-course`, {
         method: "POST",
@@ -82,7 +98,13 @@ const CourseManagement = () => {
       if (res.ok) {
         await fetchCourses();
         setShowModal(false);
-        setForm({ title: "", description: "", thumbnail: null });
+        setForm({
+          title: "",
+          description: "",
+          thumbnail: null,
+          level: "",
+          duration: "",
+        });
       } else {
         console.error("Failed to add course");
       }
@@ -97,6 +119,7 @@ const CourseManagement = () => {
 
   const token = localStorage.getItem("token");
   if (!token) return <NotFound />;
+
   return (
     <div className="relative min-h-screen p-6 bg-emerald-50">
       <IslamicPattern />
@@ -106,7 +129,9 @@ const CourseManagement = () => {
           <h2 className="text-xl font-bold md:text-2xl text-emerald-800">
             Course Management
           </h2>
-          <p className="text-sm text-emerald-600">Manage all Islamic courses</p>
+          <p className="text-sm text-emerald-600">
+            {loading ? "Loading courses..." : "Manage all Islamic courses"}
+          </p>
         </div>
         <button
           onClick={() => setShowModal(true)}
@@ -118,7 +143,22 @@ const CourseManagement = () => {
       </div>
 
       <div className="relative z-10">
-        {courses.length === 0 ? (
+        {loading ? (
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {[...Array(8)].map((_, i) => (
+              <div
+                key={i}
+                className="relative p-4 transition-shadow border shadow-lg bg-white/80 backdrop-blur-sm rounded-xl md:p-6 border-emerald-200/20"
+              >
+                <div className="mb-4 text-center">
+                  <div className="h-32 mx-auto mb-2 rounded bg-emerald-100 animate-pulse"></div>
+                  <div className="h-4 mb-2 rounded bg-emerald-100 animate-pulse"></div>
+                  <div className="h-3 rounded bg-emerald-100 animate-pulse"></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : courses.length === 0 ? (
           <div className="p-8 text-center bg-white shadow text-emerald-600 rounded-xl">
             No courses available.
           </div>
@@ -190,6 +230,34 @@ const CourseManagement = () => {
                     setForm({ ...form, description: e.target.value })
                   }
                   rows="3"
+                  className="w-full px-3 py-2 text-sm border rounded-lg border-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                />
+              </div>
+              <div>
+                <label className="block mb-1 text-sm font-medium text-emerald-700">
+                  Difficulty Level
+                </label>
+                <select
+                  value={form.level}
+                  onChange={(e) => setForm({ ...form, level: e.target.value })}
+                  required
+                  className="w-full px-3 py-2 text-sm border rounded-lg border-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                >
+                  <option value="Basic">Basic</option>
+                  <option value="Intermediate">Intermediate</option>
+                  <option value="Advance">Advance</option>
+                </select>
+              </div>
+              <div>
+                <label className="block mb-1 text-sm font-medium text-emerald-700">
+                  Course Duration (in months)
+                </label>
+                <input
+                  value={form.duration}
+                  onChange={(e) =>
+                    setForm({ ...form, duration: e.target.value })
+                  }
+                  required
                   className="w-full px-3 py-2 text-sm border rounded-lg border-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-500"
                 />
               </div>

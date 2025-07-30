@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Users,
   BookOpen,
@@ -34,53 +34,110 @@ const IslamicPattern = () => (
 );
 
 const Analytics = () => {
-  const analytics = {
-    totalStudents: 25,
-    pendingStudents: 8,
-    registeredStudents: 17,
-    totalCourses: 12,
-    totalAdmins: 3,
-  };
+  const [analytics, setAnalytics] = useState({
+    totalStudents: 0,
+    pendingStudents: 0,
+    registeredStudents: 0,
+    totalCourses: 0,
+    totalAdmins: 0,
+  });
+  const [students, setStudents] = useState([]);
+  const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const students = [
-    { id: 1, name: "Ahmed Hassan", status: "pending", joinDate: "2024-01-15" },
-    { id: 2, name: "Fatima Ali", status: "registered", joinDate: "2024-01-10" },
-    { id: 3, name: "Omar Khan", status: "pending", joinDate: "2024-01-20" },
-    {
-      id: 4,
-      name: "Aisha Rahman",
-      status: "registered",
-      joinDate: "2024-01-05",
-    },
-    { id: 5, name: "Ibrahim Malik", status: "pending", joinDate: "2024-01-18" },
-  ];
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = localStorage.getItem("token");
 
-  const courses = [
-    {
-      id: 1,
-      title: "Quran Recitation",
-      description: "Learn proper Tajweed and Quran recitation",
-      image: "🕌",
-    },
-    {
-      id: 2,
-      title: "Islamic History",
-      description: "Comprehensive Islamic history course",
-      image: "📚",
-    },
-    {
-      id: 3,
-      title: "Arabic Language",
-      description: "Classical Arabic language fundamentals",
-      image: "📖",
-    },
-    {
-      id: 4,
-      title: "Hadith Studies",
-      description: "Study of authentic Hadith collections",
-      image: "📜",
-    },
-  ];
+        if (!token) {
+          console.error("No token found in localStorage");
+          return;
+        }
+
+        const headers = {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        };
+
+        // Fetch all data concurrently
+        const [studentsResponse, coursesResponse, adminsResponse] =
+          await Promise.all([
+            fetch("http://localhost:8000/admin/students", { headers }),
+            fetch("http://localhost:8000/admin/courses", { headers }),
+            fetch("http://localhost:8000/admin/getAdmins", { headers }),
+          ]);
+
+        const studentsData = await studentsResponse.json();
+        const coursesData = await coursesResponse.json();
+        const adminsData = await adminsResponse.json();
+
+        console.log("Students API response:", studentsData);
+        console.log("Courses API response:", coursesData);
+        console.log("Admins API response:", adminsData);
+
+        // Process students data - handle different response structures
+        let allStudents = [];
+        if (Array.isArray(studentsData)) {
+          allStudents = studentsData;
+        } else if (studentsData.data && Array.isArray(studentsData.data)) {
+          allStudents = studentsData.data;
+        } else if (
+          studentsData.students &&
+          Array.isArray(studentsData.students)
+        ) {
+          allStudents = studentsData.students;
+        }
+
+        // Process courses data
+        let allCourses = [];
+        if (Array.isArray(coursesData)) {
+          allCourses = coursesData;
+        } else if (coursesData.data && Array.isArray(coursesData.data)) {
+          allCourses = coursesData.data;
+        } else if (coursesData.courses && Array.isArray(coursesData.courses)) {
+          allCourses = coursesData.courses;
+        }
+
+        // Process admins data
+        let allAdmins = [];
+        if (Array.isArray(adminsData)) {
+          allAdmins = adminsData;
+        } else if (adminsData.data && Array.isArray(adminsData.data)) {
+          allAdmins = adminsData.data;
+        } else if (adminsData.admins && Array.isArray(adminsData.admins)) {
+          allAdmins = adminsData.admins;
+        }
+
+        // Calculate student statistics
+        const pendingStudents = allStudents.filter(
+          (student) => student.status === "pending"
+        ).length;
+        const registeredStudents = allStudents.filter(
+          (student) => student.status === "registered"
+        ).length;
+
+        // Update analytics
+        setAnalytics({
+          totalStudents: allStudents.length,
+          pendingStudents: pendingStudents,
+          registeredStudents: registeredStudents,
+          totalCourses: allCourses.length,
+          totalAdmins: allAdmins.length,
+        });
+
+        // Set students and courses data
+        setStudents(allStudents);
+        setCourses(allCourses);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const StatCard = ({ title, value, icon: Icon, color }) => (
     <div
@@ -95,12 +152,35 @@ const Analytics = () => {
           </span>
         </div>
         <div className="mb-1 text-xl font-bold text-white md:text-2xl">
-          {value}
+          {loading ? "..." : value}
         </div>
         <div className="text-xs text-white/80">{title}</div>
       </div>
     </div>
   );
+
+  if (loading) {
+    return (
+      <div className="p-4 md:p-6">
+        <div className="mb-6">
+          <h2 className="mb-2 text-xl font-bold md:text-2xl text-emerald-800">
+            Analytics Dashboard
+          </h2>
+          <p className="text-sm text-emerald-600">
+            Loading your Islamic learning platform data...
+          </p>
+        </div>
+        <div className="grid grid-cols-2 gap-3 mb-6 md:grid-cols-3 lg:grid-cols-5 md:gap-4 md:mb-8">
+          {[...Array(5)].map((_, i) => (
+            <div
+              key={i}
+              className="h-24 bg-emerald-100 rounded-xl animate-pulse"
+            ></div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="p-4 md:p-6">
@@ -154,15 +234,20 @@ const Analytics = () => {
           <div className="space-y-3">
             {students.slice(0, 5).map((student) => (
               <div
-                key={student.id}
+                key={student.id || student._id}
                 className="flex items-center justify-between p-3 rounded-lg bg-emerald-50/50"
               >
                 <div>
                   <p className="text-sm font-medium text-emerald-800">
-                    {student.name}
+                    {student.name || student.username || "Unknown Student"}
                   </p>
                   <p className="text-xs text-emerald-600">
-                    Joined: {student.joinDate}
+                    Joined:{" "}
+                    {student.joinDate || student.createdAt
+                      ? new Date(
+                          student.joinDate || student.createdAt
+                        ).toLocaleDateString()
+                      : "N/A"}
                   </p>
                 </div>
                 <span
@@ -172,10 +257,15 @@ const Analytics = () => {
                       : "bg-amber-100 text-amber-700"
                   }`}
                 >
-                  {student.status}
+                  {student.status || "pending"}
                 </span>
               </div>
             ))}
+            {students.length === 0 && (
+              <p className="py-4 text-sm text-center text-emerald-600">
+                No students found
+              </p>
+            )}
           </div>
         </div>
 
@@ -186,20 +276,27 @@ const Analytics = () => {
           <div className="space-y-3">
             {courses.slice(0, 4).map((course) => (
               <div
-                key={course.id}
+                key={course.id || course._id}
                 className="flex items-center p-3 space-x-3 rounded-lg bg-emerald-50/50"
               >
-                <div className="text-xl md:text-2xl">{course.image}</div>
+                <div className="text-xl md:text-2xl">
+                  {course.image || course.emoji || "📚"}
+                </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium truncate text-emerald-800">
-                    {course.title}
+                    {course.title || course.name || "Untitled Course"}
                   </p>
                   <p className="text-xs truncate text-emerald-600">
-                    {course.description}
+                    {course.description || "No description available"}
                   </p>
                 </div>
               </div>
             ))}
+            {courses.length === 0 && (
+              <p className="py-4 text-sm text-center text-emerald-600">
+                No courses found
+              </p>
+            )}
           </div>
         </div>
       </div>

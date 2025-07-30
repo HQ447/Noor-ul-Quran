@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { type } from "os";
 
 const userSchema = new mongoose.Schema(
   {
@@ -7,6 +8,8 @@ const userSchema = new mongoose.Schema(
     whatsapp: { type: String },
     country: { type: String },
     course: { type: String },
+    bio: { type: String },
+    img: { type: String },
     joinDate: { type: Date },
     password: { type: String },
     role: { type: String, required: true },

@@ -7,6 +7,7 @@ import {
   Star,
   Quote,
 } from "lucide-react";
+import { NavLink } from "react-router";
 
 export default function Faqs() {
   const [openFAQ, setOpenFAQ] = useState(0);
@@ -139,12 +140,12 @@ export default function Faqs() {
             >
               Email Us
             </a>
-            <a
-              href="https://elitequrantutors.com/home/registration-for-free-trial-class/"
+            <NavLink
+              to={"/register-student"}
               className="px-6 py-3 font-semibold text-white transition-colors rounded-lg bg-emerald-500 hover:bg-emerald-600"
             >
               Book Free Trial
-            </a>
+            </NavLink>
           </div>
         </div>
       </div>

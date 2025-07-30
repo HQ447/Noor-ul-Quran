@@ -2,7 +2,7 @@ import Course from "../models/Course.js";
 
 export const addCourse = async (req, res) => {
   try {
-    const { title, description } = req.body;
+    const { title, description, duration, level } = req.body;
 
     if (!title || !req.file) {
       return res
@@ -15,6 +15,8 @@ export const addCourse = async (req, res) => {
     const newCourse = new Course({
       title,
       description,
+      level,
+      duration,
       thumbnail: thumbnailUrl,
     });
 
