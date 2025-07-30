@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Plus, X, Star } from "lucide-react";
 import { IoTrashBinSharp } from "react-icons/io5";
 import NotFound from "../main/Not Found/NotFound";
-const BASE_URL = "http://localhost:8000/admin";
+const BASE_URL = "http://localhost:8000";
 
 const IslamicPattern = () => (
   <div className="absolute inset-0 z-0 opacity-5">
@@ -34,7 +34,7 @@ const CourseManagement = () => {
   const fetchCourses = async () => {
     try {
       setLoading(true);
-      const res = await fetch(`${BASE_URL}/courses`, {
+      const res = await fetch(`${BASE_URL}/admin/courses`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -50,7 +50,7 @@ const CourseManagement = () => {
 
   const handleDeleteCourse = async (courseId) => {
     try {
-      const res = await fetch(`${BASE_URL}/deleteCourse/${courseId}`, {
+      const res = await fetch(`${BASE_URL}/admin/deleteCourse/${courseId}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -87,7 +87,7 @@ const CourseManagement = () => {
 
     console.log(formData);
     try {
-      const res = await fetch(`${BASE_URL}/create-course`, {
+      const res = await fetch(`${BASE_URL}/admin/create-course`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,

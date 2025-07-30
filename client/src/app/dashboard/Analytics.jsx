@@ -44,7 +44,7 @@ const Analytics = () => {
   const [students, setStudents] = useState([]);
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const BASE_URL = "http://localhost:8000";
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -63,9 +63,9 @@ const Analytics = () => {
         // Fetch all data concurrently
         const [studentsResponse, coursesResponse, adminsResponse] =
           await Promise.all([
-            fetch("http://localhost:8000/admin/students", { headers }),
-            fetch("http://localhost:8000/admin/courses", { headers }),
-            fetch("http://localhost:8000/admin/getAdmins", { headers }),
+            fetch(`${BASE_URL}/admin/students`, { headers }),
+            fetch(`${BASE_URL}/admin/courses`, { headers }),
+            fetch(`${BASE_URL}/admin/getAdmins`, { headers }),
           ]);
 
         const studentsData = await studentsResponse.json();

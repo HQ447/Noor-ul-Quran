@@ -11,9 +11,9 @@ const Books = () => {
     thumbnail: null,
     pdf: null,
   });
-
+const BASE_URL="http://localhost:8000"
   useEffect(() => {
-    fetch("http://localhost:8000/api/books", {
+    fetch(`${BASE_URL}/api/books`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },

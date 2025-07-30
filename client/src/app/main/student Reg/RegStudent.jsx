@@ -8,9 +8,9 @@ const RegStudent = () => {
     whatsapp: "",
     country: "",
     course: "",
-    startDate: "",
+    joinDate: "",
   });
-  const BASE_URL = `http://localhost:8000/auth`;
+  const BASE_URL = `http://localhost:8000`;
 
   const countries = [
     "Afghanistan",
@@ -70,13 +70,13 @@ const RegStudent = () => {
       !formData.whatsapp ||
       !formData.country ||
       !formData.course ||
-      !formData.startDate
+      !formData.joinDate
     ) {
       alert("Please fill in all required fields");
       return;
     }
     try {
-      const res = await fetch(`${BASE_URL}/register-student`, {
+      const res = await fetch(`${BASE_URL}/auth/register-student`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -270,9 +270,9 @@ const RegStudent = () => {
                 <Calendar className="absolute w-4 h-4 text-green-500 transform -translate-y-1/2 left-3 top-1/2" />
                 <input
                   type="date"
-                  name="startDate"
+                  name="joinDate"
                   required
-                  value={formData.startDate}
+                  value={formData.joinDate}
                   onChange={handleInputChange}
                   className="w-full pl-10 pr-4 py-2.5 text-sm border border-green-200 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-white/70"
                 />

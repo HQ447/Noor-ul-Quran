@@ -4,7 +4,7 @@ import sendEmail from "../utils/sendEmail.js";
 
 const registerStudent = async (req, res) => {
   try {
-    const { name, email, whatsapp, country, course, startDate } = req.body;
+    const { name, email, whatsapp, country, course, joinDate } = req.body;
 
     // Basic validation
     if (!name || !email || !course) {
@@ -23,7 +23,7 @@ const registerStudent = async (req, res) => {
       whatsapp,
       country,
       course,
-      startDate,
+      joinDate,
       role: "student",
     });
 

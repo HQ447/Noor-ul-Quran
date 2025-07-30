@@ -21,11 +21,11 @@ const IslamicPattern = () => (
 export const AdminsManagement = () => {
   const [admins, setAdmins] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const BASE_URL = "http://localhost:8000";
   useEffect(() => {
     const fetchAdmins = async () => {
       try {
-        const response = await fetch("http://localhost:8000/admin/getAdmins", {
+        const response = await fetch(`${BASE_URL}/admin/getAdmins`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
