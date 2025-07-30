@@ -1,13 +1,13 @@
 // server.js
 import express from "express";
 import dotenv from "dotenv";
-import authRouter from "./routes/auth/authRoutes.js";
-import connectDB from "./config/connectDB.js";
+import authRouter from "../routes/auth/authRoutes.js";
+import connectDB from "../config/connectDB.js";
 import path from "path";
 import { fileURLToPath } from "url";
 import cors from "cors";
-import router from "./routes/bookRoutes.js";
-import adminRouter from "./routes/adminRoutes.js";
+import router from "../routes/bookRoutes.js";
+import adminRouter from "../routes/adminRoutes.js";
 
 dotenv.config();
 
@@ -34,5 +34,5 @@ app.use("/api", router);
 app.get("/", (req, res) => res.send("Server is running 🚀"));
 
 // Start server
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// const PORT = process.env.PORT || 8080;
+// app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
