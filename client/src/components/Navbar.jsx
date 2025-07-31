@@ -59,10 +59,10 @@ function Navbar() {
               </div>
               <div className="flex flex-col">
                 <h1 className="text-xs font-bold text-gray-800 sm:text-base lg:text-xl">
-                  Islamic Center
+                  Noor ul Quran
                 </h1>
-                <p className="hidden text-xs text-gray-600 sm:block sm:text-sm">
-                  Learn Online Quran with us
+                <p className="hidden text-[10px] text-gray-600 sm:block sm:text-xs">
+                  Distance Learning Academy
                 </p>
               </div>
             </div>

@@ -5,6 +5,7 @@ export default function AdminLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setloading] = useState(false);
+  const [error, setError] = useState(""); // Added error state
   const navigate = useNavigate();
   // Mock navigation function for demo
 
@@ -12,6 +13,7 @@ export default function AdminLogin() {
 
   const handleSubmit = async (e) => {
     setloading(true);
+    setError(""); // Clear previous errors
     e.preventDefault();
 
     try {
@@ -29,10 +31,17 @@ export default function AdminLogin() {
         localStorage.setItem("token", data.token);
         localStorage.setItem("role", data.user.role);
         localStorage.setItem("name", data.user.name);
+      } else {
+        // Handle error response
+        setloading(false);
+        setError(
+          data.message || "Login failed. Please check your credentials."
+        );
       }
     } catch (error) {
       setloading(false);
       console.error("Login error:", error);
+      setError("Network error. Please check your connection and try again.");
     }
   };
 
@@ -93,6 +102,26 @@ export default function AdminLogin() {
           </div>
 
           <div className="p-8 space-y-6">
+            {/* Error Message Display */}
+            {error && (
+              <div className="p-4 border border-red-200 rounded-xl bg-red-50">
+                <div className="flex items-center">
+                  <svg
+                    className="w-5 h-5 mr-2 text-red-500"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  <p className="text-sm font-medium text-red-700">{error}</p>
+                </div>
+              </div>
+            )}
+
             <div className="space-y-4">
               <div>
                 <label
