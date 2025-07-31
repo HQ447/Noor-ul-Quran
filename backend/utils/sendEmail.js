@@ -14,7 +14,7 @@ const sendEmail = async (to, subject, htmlContent) => {
     });
 
     const mailOptions = {
-      from: `"Learn Quran" <${process.env.EMAIL_USER}>`,
+      from: `"Noor ul Quran" <${process.env.EMAIL_USER}>`,
       to,
       subject,
       html: htmlContent,

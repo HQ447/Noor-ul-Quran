@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Menu, X, User, LogOut } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { isTokenExpired } from "../../utils/authUtils";
+import logoImage from "../assets/logo.jpg";
 
 function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -35,7 +36,7 @@ function Navbar() {
         <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-12">
           <div className="flex items-center justify-between h-16 lg:h-20">
             {/* Mobile Menu Button */}
-            <div className="lg:hidden">
+            <div className="lg:hidden ">
               <button
                 onClick={toggleMobileMenu}
                 className="p-2 text-gray-600 rounded-md hover:text-green-800 hover:bg-gray-100 focus:outline-none"
@@ -43,25 +44,23 @@ function Navbar() {
                 {isMobileMenuOpen ? (
                   <X className="w-6 h-6" />
                 ) : (
-                  <Menu className="w-6 h-6" />
+                  <Menu className="w-4 h-4" />
                 )}
               </button>
             </div>
 
             {/* Logo */}
-            <div className="flex items-center gap-2 sm:gap-3">
-              <div className="flex items-center justify-center w-8 h-8 rounded-full shadow-lg sm:w-10 sm:h-10 lg:w-16 lg:h-16 bg-gradient-to-br from-green-500 to-emerald-600">
-                <div className="flex items-center justify-center w-5 h-5 bg-white rounded-full sm:w-6 sm:h-6 lg:w-10 lg:h-10">
-                  <span className="text-xs font-bold text-green-600 sm:text-base lg:text-xl">
-                    🕌
-                  </span>
-                </div>
-              </div>
+            <div className="flex justify-center items-center gap-2 sm:gap-3">
+              <img
+                src={logoImage}
+                alt=""
+                className="w-8 h-8 md:w-13 md:h-13 rounded-full"
+              />
               <div className="flex flex-col">
                 <h1 className="text-xs font-bold text-gray-800 sm:text-base lg:text-xl">
                   Noor ul Quran
                 </h1>
-                <p className="hidden text-[10px] text-gray-600 sm:block sm:text-xs">
+                <p className=" text-[6px] md:text-[10px] text-gray-600 sm:block sm:text-xs">
                   Distance Learning Academy
                 </p>
               </div>
@@ -94,7 +93,7 @@ function Navbar() {
                     className="flex items-center justify-center gap-2 px-3 py-1 bg-gray-100 rounded-full cursor-pointer sm:py-2"
                   >
                     <User className="hidden w-4 h-4 text-gray-600 sm:flex" />
-                    <span className="text-[10px] sm:text-sm font-medium text-gray-800">
+                    <span className="text-[10px] capitalize sm:text-sm font-medium text-gray-800">
                       {name?.split(" ")[0]}
                     </span>
                   </div>

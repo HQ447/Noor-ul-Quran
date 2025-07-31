@@ -59,7 +59,7 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
           <div className="flex items-center space-x-3">
             <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-br from-emerald-400 to-emerald-600"></div>
             <div className="hidden md:block lg:block">
-              <h1 className="text-lg font-bold text-white">Islamic Admin</h1>
+              <h1 className="text-lg font-bold text-white">Noor ul Quran</h1>
               <p className="text-xs text-emerald-200">Dashboard Panel</p>
             </div>
           </div>

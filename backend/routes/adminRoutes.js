@@ -14,6 +14,7 @@ import {
   getAdminProfile,
   updateAdminProfile,
 } from "../controllers/profileController.js";
+import deleteAdmin from "../controllers/deleteAdmin.js";
 
 const router = express.Router();
 
@@ -28,6 +29,7 @@ router.get("/courses", getCourses);
 router.get("/course/:id", findCourse);
 router.put("/updateStatus/:id", tokenVerifier, updateStatus);
 router.delete("/deleteStudent/:id", tokenVerifier, deleteStudent);
+router.delete("/deleteAdmin/:id", tokenVerifier, deleteAdmin);
 router.delete("/deleteCourse/:id", tokenVerifier, deleteCourse);
 router.get("/students", tokenVerifier, getAllStudents);
 router.get("/getAdminProfile", tokenVerifier, getAdminProfile);

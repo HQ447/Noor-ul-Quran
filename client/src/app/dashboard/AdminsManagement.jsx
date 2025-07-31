@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Star } from "lucide-react";
 import { NavLink } from "react-router";
 
+import { IoTrashBinSharp } from "react-icons/io5";
 // Islamic Pattern Component
 const IslamicPattern = () => (
   <div className="absolute inset-0 opacity-5">
@@ -22,24 +23,43 @@ export const AdminsManagement = () => {
   const [admins, setAdmins] = useState([]);
   const [loading, setLoading] = useState(true);
   const BASE_URL = "http://localhost:8000";
-  useEffect(() => {
-    const fetchAdmins = async () => {
-      try {
-        const response = await fetch(`${BASE_URL}/admin/getAdmins`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
-        const data = await response.json();
-        setAdmins(data.admins || []); // assuming your API returns { admins: [...] }
-      } catch (error) {
-        console.error("Failed to fetch admins:", error);
-        setAdmins([]);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchAdmins = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/admin/getAdmins`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      const data = await response.json();
+      setAdmins(data.admins || []); // assuming your API returns { admins: [...] }
+    } catch (error) {
+      console.error("Failed to fetch admins:", error);
+      setAdmins([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+  const handleDeleteAdmin = async (adminId) => {
+    try {
+      const res = await fetch(`${BASE_URL}/admin/deleteAdmin/${adminId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
 
+      if (res.ok) {
+        fetchAdmins();
+      } else {
+        console.error("Failed to delete admin");
+      }
+    } catch (error) {
+      console.error("Error deleting admin:", error);
+    }
+  };
+
+  useEffect(() => {
     fetchAdmins();
   }, []);
 
@@ -70,6 +90,9 @@ export const AdminsManagement = () => {
                 </th>
                 <th className="hidden px-3 py-3 text-xs font-medium tracking-wider text-left uppercase md:px-6 text-emerald-800 md:table-cell">
                   Join Date
+                </th>
+                <th className="hidden px-3 py-3 text-xs font-medium tracking-wider text-left uppercase md:px-6 text-emerald-800 md:table-cell">
+                  Actions
                 </th>
               </tr>
             </thead>
@@ -120,12 +143,18 @@ export const AdminsManagement = () => {
                       {admin.email}
                     </td>
                     <td className="px-3 py-4 md:px-6 whitespace-nowrap">
-                      <span className="inline-flex px-2 py-1 text-xs font-semibold text-purple-800 bg-purple-100 rounded-full">
+                      <span className="inline-flex capitalize px-2 py-1 text-xs font-semibold text-purple-800 bg-purple-100 rounded-full">
                         {admin.role}
                       </span>
                     </td>
                     <td className="hidden px-3 py-4 text-sm md:px-6 whitespace-nowrap text-emerald-600 md:table-cell">
                       {admin.createdAt?.substring(0, 10) || "N/A"}
+                    </td>
+                    <td className="hidden px-3 py-4 text-sm md:px-6 whitespace-nowrap text-emerald-600 md:table-cell">
+                      <IoTrashBinSharp
+                        className="text-2xl text-red-600 transition-all cursor-pointer hover:scale-95"
+                        onClick={() => handleDeleteAdmin(admin._id)}
+                      />
                     </td>
                   </tr>
                 ))

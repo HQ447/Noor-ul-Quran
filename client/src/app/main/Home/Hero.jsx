@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Gift, Star, Users, BookOpen, CheckCircle } from "lucide-react";
-
+import { NavLink } from "react-router-dom";
 export default function Hero() {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const slides = [
     {
-      src: "https://elitequrantutors.com/wp-content/uploads/2022/08/muslim-boy-reading.png",
+      src: "https://learnqurankids.com/wp-content/uploads/2023/01/Tajweed-Quran-with-tajweed-rules-for-beginners-Basic-to-Advanced-Tajweed-1.svg",
       alt: "Muslim boy reading",
     },
     {
@@ -192,11 +192,14 @@ export default function Hero() {
 
           {/* Enhanced CTA Button */}
           <div className="mt-6 lg:mt-8">
-            <button className="inline-flex items-center gap-2 px-6 py-3 text-xs font-semibold text-white transition-all duration-300 transform border rounded-full shadow-xl md:gap-3 md:px-8 md:py-4 md:text-sm lg:text-base bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 hover:shadow-2xl hover:-translate-y-1 border-emerald-400/20 group">
+            <NavLink
+              to={"/register-student"}
+              className="inline-flex items-center gap-2 px-6 py-3 text-xs font-semibold text-white transition-all duration-300 transform border rounded-full shadow-xl md:gap-3 md:px-8 md:py-4 md:text-sm lg:text-base bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 hover:shadow-2xl hover:-translate-y-1 border-emerald-400/20 group"
+            >
               <Gift className="w-4 h-4 md:w-5 md:h-5 text-emerald-200 group-hover:animate-bounce" />
               <span>Book Free Trial Class</span>
               <span className="text-xs text-emerald-200">إن شاء الله</span>
-            </button>
+            </NavLink>
 
             {/* Trust indicators */}
             <div className="flex items-center justify-center gap-4 mt-3 text-xs lg:justify-start text-emerald-300/80">

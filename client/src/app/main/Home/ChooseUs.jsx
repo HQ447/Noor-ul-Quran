@@ -43,7 +43,7 @@ function ChooseUs() {
     },
   ];
   return (
-    <section className="px-4 py-12 text-center bg-white">
+    <section className="px-4 md:px-12 py-12 text-center bg-white">
       <div className="mx-auto max-w-7xl">
         <h2 className="mb-2 text-2xl font-bold text-blue-700 lg:text-3xl">
           Why <span className="text-green-600">Choose Us!</span>
