@@ -26,7 +26,7 @@ const BASE_URL = "http://localhost:8000";
 
 // Islamic Pattern Component
 const IslamicPattern = () => (
-  <div className="absolute inset-0 opacity-5 pointer-events-none">
+  <div className="absolute inset-0 pointer-events-none opacity-5">
     <div className="grid h-full grid-cols-8 gap-4">
       {[...Array(64)].map((_, i) => (
         <div
@@ -154,7 +154,7 @@ const StudentManagement = () => {
               className={`px-3 py-1 text-sm rounded-lg transition-colors ${
                 statusFilter === "all"
                   ? "bg-emerald-600 text-white"
-                  : "bg-emerald-100 text-emerald-800 hover:bg-emerald-200"
+                  : "bg-emerald-50 text-emerald-800 hover:bg-emerald-200"
               }`}
             >
               All
@@ -164,7 +164,7 @@ const StudentManagement = () => {
               className={`px-3 py-1 text-sm rounded-lg transition-colors ${
                 statusFilter === "registered"
                   ? "bg-emerald-600 text-white"
-                  : "bg-emerald-100 text-emerald-800 hover:bg-emerald-200"
+                  : "bg-emerald-50 text-emerald-800 hover:bg-emerald-200"
               }`}
             >
               Registered
@@ -177,7 +177,7 @@ const StudentManagement = () => {
               className={`px-3 py-1 text-sm rounded-lg transition-colors ${
                 statusFilter === "pending"
                   ? "bg-emerald-600 text-white"
-                  : "bg-emerald-100 text-emerald-800 hover:bg-emerald-200"
+                  : "bg-emerald-50 text-emerald-800 hover:bg-emerald-200"
               }`}
             >
               Pending
@@ -195,7 +195,7 @@ const StudentManagement = () => {
           </div>
           <button
             onClick={handleViewToggle}
-            className="flex items-center px-3 py-2 text-sm text-emerald-800 transition-colors bg-emerald-100 rounded-lg hover:bg-emerald-200"
+            className="flex items-center px-3 py-2 text-sm transition-colors rounded-lg text-emerald-800 bg-emerald-100 hover:bg-emerald-200"
           >
             {viewMode === "table" ? (
               <>
@@ -243,14 +243,15 @@ const StudentManagement = () => {
                   >
                     <td className="px-3 py-4 md:px-6 whitespace-nowrap">
                       <div className="flex items-center">
-                        <div className="flex items-center justify-center flex-shrink-0 w-8 h-8 mr-3 text-xs font-semibold text-white rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600">
+                        <div className="flex items-center justify-center flex-shrink-0 w-8 h-8 mr-3 text-xs font-semibold text-white rounded-full bg-gradient-to-br from-indigo-400 to-indigo-600">
                           {student.name?.charAt(0)}
                         </div>
+
                         <div className="min-w-0">
                           <div className="text-sm font-medium truncate text-emerald-800">
                             {student.name}
                           </div>
-                          <div className="text-xs uppercase truncate text-emerald-600 sm:hidden">
+                          <div className="text-xs truncate text-emerald-600 sm:hidden">
                             {student.email}
                           </div>
                         </div>
@@ -303,7 +304,7 @@ const StudentManagement = () => {
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        <FaWhatsapp className="text-2xl font-bold hover:scale-95 transition-all cursor-pointer text-green-600" />
+                        <FaWhatsapp className="text-2xl font-bold text-green-600 transition-all cursor-pointer hover:scale-95" />
                       </a>
                     </td>
                   </tr>
@@ -319,11 +320,11 @@ const StudentManagement = () => {
               key={student._id || student.id}
               className="p-4 transition-shadow border shadow-md bg-white/80 backdrop-blur-sm rounded-xl border-emerald-200/20 hover:shadow-lg"
             >
-              <div className="flex flex-col justify-center items-center mb-3">
-                <div className="flex items-center justify-center flex-shrink-0 w-10 md:w-12 md:h-12 mb-2 h-10  text-sm font-semibold text-white rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600">
+              <div className="flex flex-col items-center justify-center mb-3">
+                <div className="flex items-center justify-center flex-shrink-0 w-10 h-10 mb-2 text-sm font-semibold text-white rounded-full md:w-12 md:h-12 bg-gradient-to-br from-indigo-400 to-indigo-600">
                   {student.name?.charAt(0)}
                 </div>
-                <div className="flex flex-col justify-center items-center">
+                <div className="flex flex-col items-center justify-center">
                   <div className="text-base font-medium text-emerald-800">
                     {student.name}
                   </div>
@@ -331,25 +332,52 @@ const StudentManagement = () => {
                     {student.email}
                   </div>
                 </div>
+                <div className="w-full mt-2 text-center">
+                  <span
+                    className={`px-3 py-1 text-xs font-medium ${
+                      student.status == "registered"
+                        ? "text-yellow-800 bg-yellow-300"
+                        : "text-yellow-800 bg-yellow-300"
+                    }   rounded-full`}
+                  >
+                    {student.status === "registered"
+                      ? "Registered ✔️"
+                      : "Pending ⏱"}
+                  </span>
+                </div>
               </div>
-              <div className="flex items-center justify-between mb-2">
-                <span
-                  className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                    student.status?.toLowerCase() === "registered"
-                      ? "bg-green-100 text-green-800"
-                      : "bg-amber-100 text-amber-800"
-                  }`}
-                >
-                  {student.status}
-                </span>
-                <div className="text-sm text-emerald-600">
-                  {student.joinDate
-                    ? new Date(student.joinDate).toLocaleString("en-GB", {
-                        day: "2-digit",
-                        month: "short",
-                        year: "numeric",
-                      })
-                    : "N/A"}
+
+              <div className="px-1 pb-3 space-y-3">
+                <div className="space-y-2 text-xs text-gray-600 md:text-sm">
+                  <p className="flex items-center gap-2">
+                    <span className="text-blue-500">🌎</span>
+                    <span>{student.country}</span>
+                  </p>
+                  <p className="flex items-center gap-2">
+                    <span className="text-blue-500">📚</span>
+                    <span>{student.course}</span>
+                  </p>
+                  <p className="flex items-center gap-2">
+                    <span className="text-blue-500">📞</span>
+                    <span>{student.whatsapp}</span>
+                  </p>
+                  <p className="flex items-center gap-2">
+                    <span className="text-blue-500">📅</span>
+                    <span>
+                      {student.joinDate
+                        ? new Date(student.joinDate).toLocaleString("en-GB", {
+                            day: "2-digit",
+                            month: "short",
+                            year: "numeric",
+                          })
+                        : "N/A"}
+                    </span>
+                  </p>
+
+                  <p className="flex items-center gap-2 ">
+                    <span className="text-blue-500">💲 </span>
+                    <span className="capitalize ">{student.feeStatus}</span>
+                  </p>
                 </div>
               </div>
               <div className="flex gap-2">
@@ -362,12 +390,12 @@ const StudentManagement = () => {
                     <span>Approve</span>
                   </button>
                 )}
-                <div className="flex justify-center gap-2 w-full">
+                <div className="flex justify-center w-full gap-2">
                   <a
                     href={`https://wa.me/${student.whatsapp}?text=Assalam O Alikum ! Welcome to Noor ul Quran , How can we Help you?`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center  gap-1 px-3 py-2 w-full text-xs font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 transition-colors duration-200 shadow-sm"
+                    className="flex items-center justify-center w-full gap-1 px-3 py-2 text-xs font-medium text-white transition-colors duration-200 bg-green-600 rounded-lg shadow-sm hover:bg-green-700"
                   >
                     <FaWhatsapp className="w-4 h-4" />
                     <span>Whatsapp</span>
@@ -376,7 +404,7 @@ const StudentManagement = () => {
                     onClick={() =>
                       handleDeleteStudent(student._id || student.id)
                     }
-                    className="flex items-center w-full justify-center  gap-1 px-3 py-2 text-xs font-medium text-white bg-red-600 rounded-lg hover:bg-red-700 transition-colors duration-200 shadow-sm"
+                    className="flex items-center justify-center w-full gap-1 px-3 py-2 text-xs font-medium text-white transition-colors duration-200 bg-red-600 rounded-lg shadow-sm hover:bg-red-700"
                   >
                     <IoTrashBinSharp className="w-4 h-4" />
                     <span>Delete</span>

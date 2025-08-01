@@ -237,21 +237,26 @@ const Analytics = () => {
                 key={student.id || student._id}
                 className="flex items-center justify-between p-3 rounded-lg bg-emerald-50/50"
               >
-                <div>
-                  <p className="text-sm font-medium text-emerald-800">
-                    {student.name || student.username || "Unknown Student"}
-                  </p>
-                  <p className="text-xs text-emerald-600">
-                    Joined:{" "}
-                    {student.joinDate || student.createdAt
-                      ? new Date(
-                          student.joinDate || student.createdAt
-                        ).toLocaleDateString()
-                      : "N/A"}
-                  </p>
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center justify-center w-6 h-6 overflow-hidden text-sm font-bold text-white rounded-full md:w-8 md:h-8 bg-gradient-to-br from-indigo-400 to-indigo-600">
+                    {student?.name?.charAt(0).toUpperCase() || "A"}
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-emerald-800">
+                      {student.name || student.username || "Unknown Student"}
+                    </p>
+                    <p className="text-xs text-emerald-600">
+                      Joined:{" "}
+                      {student.joinDate || student.createdAt
+                        ? new Date(
+                            student.joinDate || student.createdAt
+                          ).toLocaleDateString()
+                        : "N/A"}
+                    </p>
+                  </div>
                 </div>
                 <span
-                  className={`px-2 py-1 rounded-full text-xs font-medium ${
+                  className={`px-2 py-1 rounded-full text-xs font-medium capitalize ${
                     student.status === "registered"
                       ? "bg-green-100 text-green-700"
                       : "bg-amber-100 text-amber-700"
@@ -279,8 +284,8 @@ const Analytics = () => {
                 key={course.id || course._id}
                 className="flex items-center p-3 space-x-3 rounded-lg bg-emerald-50/50"
               >
-                <div className="text-xl md:text-2xl">
-                  {course.image || course.emoji || "📚"}
+                <div className="h-8 overflow-hidden rounded-md w-14">
+                  <img src={course.thumbnail} alt="" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium truncate text-emerald-800">

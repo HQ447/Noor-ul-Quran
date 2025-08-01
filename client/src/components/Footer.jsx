@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   FaFacebook,
   FaInstagram,
@@ -9,6 +9,24 @@ import { NavLink } from "react-router";
 import logo from "../assets/logo1.png";
 
 export default function Footer() {
+  const [courses, setCourses] = useState([]);
+  const BASE_URL = "http://localhost:8000";
+  const fetchCourses = async () => {
+    try {
+      const res = await fetch(`${BASE_URL}/admin/courses`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      const data = await res.json();
+      setCourses(data);
+    } catch (err) {
+      console.error("Failed to fetch courses", err);
+    }
+  };
+  useEffect(() => {
+    fetchCourses();
+  }, []);
   return (
     <footer className="text-white bg-black ">
       {/* Top Footer */}
@@ -32,11 +50,16 @@ export default function Footer() {
         <div>
           <h2 className="mb-4 text-lg font-semibold">POPULAR COURSES</h2>
           <ul className="space-y-2 text-sm text-gray-300">
-            <li>
-              <NavLink to={"/courses"} className="hover:underline">
-                Noorani Qaidah Course
-              </NavLink>
-            </li>
+            {courses.map((course) => (
+              <li key={course._id}>
+                <NavLink
+                  to={`/course-detail/${course._id}`}
+                  className="hover:underline"
+                >
+                  {course.title}
+                </NavLink>
+              </li>
+            ))}
           </ul>
         </div>
 

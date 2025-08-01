@@ -50,20 +50,20 @@ function Navbar() {
             </div>
 
             {/* Logo */}
-            <div className="flex justify-center items-center gap-2 sm:gap-3">
+            <div className="flex items-center justify-center gap-2 sm:gap-3">
               <img
                 src={logoImage}
                 alt=""
-                className="w-8 h-8 md:w-13 md:h-13 rounded-full"
+                className="w-8 h-8 rounded-full md:w-13 md:h-13"
               />
-              <div className="flex flex-col">
+              <NavLink to={"/"} className="flex flex-col">
                 <h1 className="text-xs font-bold text-gray-800 sm:text-base lg:text-xl">
                   Noor ul Quran
                 </h1>
                 <p className=" text-[6px] md:text-[10px] text-gray-600 sm:block sm:text-xs">
                   Distance Learning Academy
                 </p>
-              </div>
+              </NavLink>
             </div>
 
             {/* Desktop Nav Links */}
@@ -114,7 +114,7 @@ function Navbar() {
                   {/* Admin Login: Only on large screen */}
                   <NavLink
                     to="admin-Login"
-                    className="hidden px-3 py-2 text-sm font-medium text-white bg-blue-500 rounded-full lg:inline hover:bg-blue-600"
+                    className="hidden px-3 py-2 text-xs font-medium border border-green-500 rounded-sm green-500 lg:inline hover:bg-green-600 hover:text-white hover:shadow-lg"
                   >
                     Admin Login
                   </NavLink>
@@ -122,7 +122,7 @@ function Navbar() {
                   {/* Register Now: Always visible */}
                   <NavLink
                     to="register-student"
-                    className="px-2 py-1 text-[10px] font-medium text-white bg-green-500 rounded-full shadow-md sm:px-3 sm:py-2 sm:text-sm hover:bg-green-600 hover:shadow-lg"
+                    className="px-2 py-1 text-xs font-medium text-white bg-green-500 rounded-sm sm:px-3 sm:py-2 hover:bg-green-600 hover:shadow-lg"
                   >
                     Register Now
                   </NavLink>

@@ -121,7 +121,7 @@ const CourseManagement = () => {
   if (!token) return <NotFound />;
 
   return (
-    <div className="relative min-h-screen p-6 bg-emerald-50">
+    <div className="relative min-h-screen p-6 ">
       <IslamicPattern />
 
       <div className="relative z-10 flex items-center justify-between mb-6">

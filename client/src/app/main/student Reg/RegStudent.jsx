@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { User, Mail, Phone, Globe, BookOpen, Calendar } from "lucide-react";
 
 const RegStudent = () => {
+  const [courses, setCourses] = useState([]);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -11,6 +12,19 @@ const RegStudent = () => {
     joinDate: "",
   });
   const BASE_URL = `http://localhost:8000`;
+  const fetchCourses = async () => {
+    try {
+      const res = await fetch(`${BASE_URL}/admin/courses`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      const data = await res.json();
+      setCourses(data);
+    } catch (err) {
+      console.error("Failed to fetch courses", err);
+    }
+  };
 
   const countries = [
     "Afghanistan",
@@ -44,16 +58,16 @@ const RegStudent = () => {
     "Other",
   ];
 
-  const courses = [
-    "Quran Recitation (Tajweed)",
-    "Quran Memorization (Hifz)",
-    "Arabic Language",
-    "Islamic Studies",
-    "Hadith Studies",
-    "Fiqh (Islamic Jurisprudence)",
-    "Tafseer (Quran Interpretation)",
-    "Islamic History",
-  ];
+  // const courses = [
+  //   "Quran Recitation (Tajweed)",
+  //   "Quran Memorization (Hifz)",
+  //   "Arabic Language",
+  //   "Islamic Studies",
+  //   "Hadith Studies",
+  //   "Fiqh (Islamic Jurisprudence)",
+  //   "Tafseer (Quran Interpretation)",
+  //   "Islamic History",
+  // ];
 
   const handleInputChange = (e) => {
     setFormData({
@@ -92,6 +106,9 @@ const RegStudent = () => {
       console.log(error);
     }
   };
+  useEffect(() => {
+    fetchCourses();
+  }, []);
 
   return (
     <div className="flex items-center justify-center min-h-screen p-4 bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
@@ -238,8 +255,8 @@ const RegStudent = () => {
                 >
                   <option value="">Choose a course</option>
                   {courses.map((course, index) => (
-                    <option key={index} value={course}>
-                      {course}
+                    <option key={index} value={course.title}>
+                      {course.title}
                     </option>
                   ))}
                 </select>
