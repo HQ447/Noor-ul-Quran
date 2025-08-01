@@ -70,13 +70,13 @@ export default function Faqs() {
       <div className="max-w-4xl px-6 mx-auto lg:px-2">
         {/* Section Header */}
         <div className="mb-12 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 mb-4 text-sm font-semibold text-blue-800 bg-blue-100 rounded-full">
+          <div className="inline-flex items-center gap-2 px-4 py-2 mb-4 text-xs font-semibold text-blue-800 bg-blue-100 rounded-full">
             ❓ Common Questions
           </div>
-          <h2 className="mb-2 text-2xl font-bold text-blue-700 lg:text-3xl">
+          <h2 className="mb-2 text-xl font-bold text-blue-700 md:text-2xl lg:text-3xl">
             Frequently <span className="text-green-600">Asked Questions</span>
           </h2>
-          <div className="flex justify-center my-4">
+          <div className="flex justify-center my-3">
             <img
               src="https://elitequrantutors.com/wp-content/uploads/2023/02/Saperator-1-300x25.png"
               alt="Separator"
@@ -84,7 +84,7 @@ export default function Faqs() {
             />
           </div>
 
-          <p className="max-w-2xl mx-auto text-lg text-slate-600">
+          <p className="max-w-2xl mx-auto text-sm md:text-lg text-slate-600">
             Find answers to common questions about our Quran learning programs
             and teaching methodology
           </p>
@@ -117,7 +117,7 @@ export default function Faqs() {
                 <>
                   <div className="px-6 pb-5">
                     <div className="pt-2 border-t border-gray-100">
-                      <p className="leading-relaxed text-slate-600">
+                      <p className="leading-relaxed text-[11px] md:text-sm text-slate-600">
                         {faq.answer}
                       </p>
                     </div>
@@ -130,23 +130,25 @@ export default function Faqs() {
 
         {/* Call to Action */}
         <div className="p-8 mt-12 text-center text-white bg-gradient-to-r from-blue-600 to-emerald-600 rounded-2xl">
-          <h3 className="mb-4 text-2xl font-bold">Still have questions?</h3>
-          <p className="mb-6 text-blue-100">
+          <h3 className="mb-4 text-xl font-bold lg:text-2xl">
+            Still have questions?
+          </h3>
+          <p className="mb-6 text-[13px] md:text-lg text-blue-100">
             Our friendly support team is here to help you get started on your
             Quran learning journey
           </p>
-          <div className="flex flex-col justify-center gap-4 sm:flex-row">
+          <div className="flex flex-col justify-center gap-2 sm:flex-row">
             <a
               href="https://mail.google.com/mail/?view=cm&fs=1&to=hamadqur447@gmail.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-6 py-3 font-semibold text-blue-600 transition-colors bg-white rounded-lg hover:bg-gray-100"
+              className="px-6 py-2 text-xs font-semibold text-blue-600 transition-colors bg-white rounded-lg md:text-sm md:py-2 hover:bg-gray-100"
             >
               Email Us
             </a>
             <NavLink
               to={"/register-student"}
-              className="px-6 py-3 font-semibold text-white transition-colors rounded-lg bg-emerald-500 hover:bg-emerald-600"
+              className="px-6 py-2 text-xs font-semibold text-white transition-colors rounded-lg md:text-sm md:py-2 bg-emerald-500 hover:bg-emerald-600"
             >
               Book Free Trial
             </NavLink>

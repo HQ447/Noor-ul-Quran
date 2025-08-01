@@ -249,6 +249,12 @@ export default function AdminLogin() {
               >
                 Create Admin Account
               </NavLink>
+              <NavLink
+                to={"/"}
+                className="inline-flex items-center justify-center w-full px-6 py-3 font-semibold transition-all duration-300 bg-transparent cursor-pointer border-emerald-600 text-emerald-600 rounded-xl"
+              >
+                Back
+              </NavLink>
             </div>
           </div>
 

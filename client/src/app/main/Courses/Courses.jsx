@@ -29,7 +29,7 @@ const Courses = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-50">
       {/* Hero Section */}
-      <section className="relative py-16 overflow-hidden text-white bg-gradient-to-r from-green-600 to-emerald-600">
+      <section className="relative py-12 overflow-hidden text-white bg-gradient-to-r from-green-600 to-emerald-600">
         <div className="absolute inset-0 opacity-10">
           <div
             className="w-full h-full"
@@ -39,16 +39,16 @@ const Courses = () => {
           />
         </div>
         <div className="relative max-w-6xl px-6 mx-auto text-center lg:px-12">
-          <div className="mb-6">
-            <div className="inline-flex items-center gap-2 px-4 py-2 mb-4 text-sm font-semibold text-black bg-white rounded-full bg-opacity-20">
+          <div className="mb-4">
+            <div className="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-black bg-white rounded-full bg-opacity-20">
               📚 Islamic Courses
             </div>
           </div>
-          <h1 className="mb-6 text-3xl font-bold leading-tight md:text-4xl lg:text-5xl">
+          <h1 className="mb-4 text-2xl font-bold leading-tight md:text-3xl lg:text-4xl">
             Expand Your Knowledge Through
             <span className="block text-yellow-300">Expert-Led Courses</span>
           </h1>
-          <p className="max-w-3xl mx-auto text-lg leading-relaxed text-green-100 md:text-xl">
+          <p className="max-w-3xl mx-auto text-sm leading-relaxed text-green-100 md:text-xl">
             Deepen your understanding of Islam with comprehensive courses taught
             by qualified scholars
           </p>
@@ -56,16 +56,16 @@ const Courses = () => {
       </section>
 
       {/* Courses Section */}
-      <section className="py-12 bg-white">
+      <section className="py-8 bg-white ">
         <div className="max-w-6xl px-6 mx-auto lg:px-12">
           <div className="mb-8 text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 mb-4 text-sm font-semibold text-green-800 bg-green-100 rounded-full">
+            <div className="inline-flex items-center gap-2 px-4 py-2 mb-4 text-xs font-semibold text-green-800 bg-green-100 rounded-full">
               🎓 Available Courses
             </div>
-            <h2 className="mb-4 text-2xl font-bold text-gray-800 lg:text-3xl">
+            <h2 className="mb-4 text-xl font-bold text-gray-800 md:text-2xl lg:text-3xl">
               Choose Your Learning Path
             </h2>
-            <p className="max-w-2xl mx-auto text-gray-600">
+            <p className="max-w-2xl mx-auto text-xs text-gray-600 md:text-sm">
               Select from our comprehensive range of Islamic courses designed
               for all levels
             </p>
@@ -100,11 +100,11 @@ const Courses = () => {
                       </span>
                     </div>
                   </div>
-                  <div className="p-6">
+                  <div className="px-6 py-5">
                     <h3 className="mb-2 text-lg font-bold text-gray-800 transition-colors group-hover:text-green-600">
                       {course.title}
                     </h3>
-                    <p className="mb-4 text-sm text-gray-600 line-clamp-2">
+                    <p className="mb-4 text-sm text-justify text-gray-600 line-clamp-2">
                       {course.description}
                     </p>
                     <div className="flex items-center justify-between mb-4 text-xs text-gray-500">
@@ -135,10 +135,10 @@ const Courses = () => {
       {/* CTA Section */}
       <section className="py-12 text-white bg-gradient-to-r from-green-600 to-emerald-600">
         <div className="max-w-4xl px-6 mx-auto text-center lg:px-12">
-          <h2 className="mb-4 text-2xl font-bold lg:text-3xl">
+          <h2 className="mb-4 text-xl font-bold md:text-2xl lg:text-3xl">
             Ready to Begin Your Learning Journey?
           </h2>
-          <p className="max-w-2xl mx-auto mb-6 text-lg text-green-100">
+          <p className="max-w-2xl mx-auto mb-6 text-sm text-green-100 md:text-lg">
             Join thousands of students worldwide in deepening their
             understanding of Islam
           </p>

@@ -38,7 +38,7 @@ export default function Footer() {
             alt="EliteQuranTutors.com"
             className="object-contain w-32 h-32 mx-auto bg-transparent md:mx-0"
           />
-          <p className="mt-4 text-sm text-gray-300">
+          <p className="mt-4 text-sm text-justify text-gray-300">
             <strong>Noor ul Quran</strong> offers personalized, one-on-one
             online Quran classes with certified male and female tutors. Learn
             Quran with Tajweed, Hifz, and Islamic studies — from the comfort of
@@ -48,7 +48,9 @@ export default function Footer() {
 
         {/* Popular Courses */}
         <div>
-          <h2 className="mb-4 text-lg font-semibold">POPULAR COURSES</h2>
+          <h2 className="mb-4 text-sm font-semibold md:text-lg">
+            POPULAR COURSES
+          </h2>
           <ul className="space-y-2 text-sm text-gray-300">
             {courses.map((course) => (
               <li key={course._id}>
@@ -65,7 +67,9 @@ export default function Footer() {
 
         {/* Help Section */}
         <div>
-          <h2 className="mb-4 text-lg font-semibold">NEED ANY HELP?</h2>
+          <h2 className="mb-4 text-sm font-semibold md:text-lg">
+            NEED ANY HELP?
+          </h2>
           <ul className="space-y-2 text-sm text-gray-300">
             <li>
               <NavLink to={"/about"} className="hover:underline">
@@ -87,7 +91,9 @@ export default function Footer() {
 
         {/* Social Links */}
         <div className="text-center">
-          <h2 className="mb-4 text-lg font-semibold">FOLLOW US ON</h2>
+          <h2 className="mb-4 text-sm font-semibold md:text-lg">
+            FOLLOW US ON
+          </h2>
           <div className="flex justify-center gap-4 text-xl">
             <a
               href="#"

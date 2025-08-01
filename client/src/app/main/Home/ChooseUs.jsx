@@ -43,12 +43,12 @@ function ChooseUs() {
     },
   ];
   return (
-    <section className="px-4 md:px-12 py-12 text-center bg-white">
+    <section className="px-4 py-12 text-center bg-white md:px-12">
       <div className="mx-auto max-w-7xl">
-        <h2 className="mb-2 text-2xl font-bold text-blue-700 lg:text-3xl">
+        <h2 className="mb-2 text-xl font-bold text-blue-700 md:text-2xl lg:text-3xl">
           Why <span className="text-green-600">Choose Us!</span>
         </h2>
-        <div className="flex justify-center my-4">
+        <div className="flex justify-center my-2">
           <img
             src="https://elitequrantutors.com/wp-content/uploads/2023/02/Saperator-1-300x25.png"
             alt="Separator"
@@ -65,13 +65,13 @@ function ChooseUs() {
               <img
                 src={item.image}
                 alt={item.title}
-                className="mx-auto w-15 h-15"
+                className="w-12 h-12 mx-auto md:w-15 md:h-15s"
               />
               <div>
                 <h5 className="mt-4 font-semibold sm:text-sm lg:text-lg">
                   {item.title}
                 </h5>
-                <p className="text-gray-600 sm:text-[10px] lg:text-sm">
+                <p className="text-xs text-gray-600 lg:text-sm">
                   {item.description}
                 </p>
               </div>
