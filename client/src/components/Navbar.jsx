@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Menu, X, User, LogOut } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { isTokenExpired } from "../../utils/authUtils";
-import logoImage from "../assets/logo.jpg";
+import logoImage from "../assets/logo1.png";
 
 function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);

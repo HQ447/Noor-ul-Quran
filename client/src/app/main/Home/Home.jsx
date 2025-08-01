@@ -10,7 +10,7 @@ function Home() {
   const message = "Assalam O Alikum! I’m interested in your services.";
   const encodedMessage = encodeURIComponent(message);
   return (
-    <div className="relative">
+    <div className="">
       <a
         href={`https://wa.me/${phoneNumber}?text=${encodedMessage}`}
         target="_blank"
@@ -19,7 +19,7 @@ function Home() {
         <img
           src={whatsapp}
           alt=""
-          className=" cursor-pointer hover:scale-95 transition-all hover:rotate-180 w-10 h-10 right-6 bottom-3 md:w-15 md:h-15 rounded-full fixed md:right-10 md:bottom-7 z-50"
+          className="fixed z-50 w-10 h-10 transition-all rounded-full cursor-pointer hover:scale-95 hover:rotate-180 right-6 bottom-3 md:w-15 md:h-15 md:right-10 md:bottom-7"
         />
       </a>
       <Hero />

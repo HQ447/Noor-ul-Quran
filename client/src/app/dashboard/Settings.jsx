@@ -22,7 +22,9 @@ const Setting = () => {
   const [admin, setAdmin] = useState({
     name: "",
     email: "",
-    bio: "",
+    designation: "",
+    qualification: "",
+    experience: "",
     img: "",
   });
   const [imageFile, setImageFile] = useState(null);
@@ -63,7 +65,9 @@ const Setting = () => {
       const formData = new FormData();
       formData.append("name", admin.name);
       formData.append("email", admin.email);
-      formData.append("bio", admin.bio);
+      formData.append("designation", admin.designation);
+      formData.append("qualification", admin.qualification);
+      formData.append("experience", admin.experience);
       if (imageFile) formData.append("img", imageFile);
 
       await axios.put(`${BASE_URL}/admin/updateProfile`, formData, {
@@ -151,14 +155,37 @@ const Setting = () => {
 
             <div>
               <label className="block mb-2 text-sm font-medium text-emerald-700">
-                Bio
+                Designation
               </label>
-              <textarea
-                name="bio"
-                rows="3"
-                value={admin.bio}
+              <input
+                name="designation"
+                value={admin.designation}
                 onChange={handleChange}
-                placeholder="Tell us about yourself..."
+                placeholder="Your Designation"
+                className="w-full px-3 py-2 text-sm border rounded-lg border-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              />
+            </div>
+            <div>
+              <label className="block mb-2 text-sm font-medium text-emerald-700">
+                Qualification
+              </label>
+              <input
+                name="qualification"
+                value={admin.qualification}
+                onChange={handleChange}
+                placeholder="Enter your Qualification "
+                className="w-full px-3 py-2 text-sm border rounded-lg border-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              />
+            </div>
+            <div>
+              <label className="block mb-2 text-sm font-medium text-emerald-700">
+                Experience (in Years)
+              </label>
+              <input
+                name="experience"
+                value={admin.experience}
+                onChange={handleChange}
+                placeholder="How many year of Experience you have"
                 className="w-full px-3 py-2 text-sm border rounded-lg border-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-500"
               />
             </div>

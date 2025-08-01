@@ -6,6 +6,7 @@ import {
   FaXTwitter,
 } from "react-icons/fa6";
 import { NavLink } from "react-router";
+import logo from "../assets/logo1.png";
 
 export default function Footer() {
   return (
@@ -15,12 +16,12 @@ export default function Footer() {
         {/* Logo + Description */}
         <div className="text-center md:text-left">
           <img
-            src="https://elitequrantutors.com/wp-content/uploads/2025/07/01-01-2-1-300x300.webp"
+            src={logo}
             alt="EliteQuranTutors.com"
-            className="object-contain w-32 h-32 mx-auto md:mx-0"
+            className="object-contain w-32 h-32 mx-auto bg-transparent md:mx-0"
           />
           <p className="mt-4 text-sm text-gray-300">
-            <strong>Islamic Center</strong> offers personalized, one-on-one
+            <strong>Noor ul Quran</strong> offers personalized, one-on-one
             online Quran classes with certified male and female tutors. Learn
             Quran with Tajweed, Hifz, and Islamic studies — from the comfort of
             your home.
@@ -102,15 +103,14 @@ export default function Footer() {
       </div>
 
       {/* Middle Footer */}
-      <div className="py-4 text-sm text-center text-gray-400 bg-black">
-        © 2025 islamic center – Designed by{" "}
+      <div className="py-4 text-xs text-center text-gray-400 bg-black ">
+        © 2025 Noor ul Quran . All right reserved. Designed by{" "}
         <a
-          href="https://www.facebook.com/m.tallha.ali"
-          className="text-blue-400 hover:underline"
+          href="https://hamad-1.vercel.app/"
+          target="_blank"
+          className="font-bold text-green-500"
         >
-          <a href="https://hamad-1.vercel.app/" target="_blank">
-            Hammad Ahmad
-          </a>
+          Hammad Ahmad
         </a>
       </div>
     </footer>

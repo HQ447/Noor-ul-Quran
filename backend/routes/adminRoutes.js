@@ -18,7 +18,7 @@ import deleteAdmin from "../controllers/deleteAdmin.js";
 
 const router = express.Router();
 
-router.get("/getAdmins", tokenVerifier, getAdmins);
+router.get("/getAdmins", getAdmins);
 router.post(
   "/create-course",
   tokenVerifier,

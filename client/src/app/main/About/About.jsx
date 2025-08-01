@@ -1,7 +1,10 @@
 import React from "react";
 import { BookOpen, Users, Award, Heart, Globe, Star } from "lucide-react";
+import { useEffect, useState } from "react";
 
 function About() {
+  const [teamData, setTeamData] = useState([]);
+  const BASE_URL = "http://localhost:8000";
   const stats = [
     { number: "10,000+", label: "Students Worldwide", icon: Users },
     { number: "500+", label: "Certified Teachers", icon: Award },
@@ -9,56 +12,26 @@ function About() {
     { number: "99%", label: "Success Rate", icon: Star },
   ];
 
-  const values = [
-    {
-      icon: BookOpen,
-      title: "Authentic Islamic Education",
-      description:
-        "We provide authentic Quranic education based on traditional Islamic scholarship and modern teaching methodologies.",
-    },
-    {
-      icon: Heart,
-      title: "Compassionate Teaching",
-      description:
-        "Our teachers approach each student with patience, understanding, and genuine care for their spiritual journey.",
-    },
-    {
-      icon: Users,
-      title: "Global Community",
-      description:
-        "Join a worldwide community of learners united in their pursuit of Islamic knowledge and spiritual growth.",
-    },
-    {
-      icon: Award,
-      title: "Excellence in Learning",
-      description:
-        "We maintain the highest standards of Islamic education with certified teachers and proven methodologies.",
-    },
-  ];
-
-  const team = [
-    {
-      name: "Sheikh Muhammad Al-Rashid",
-      role: "Head of Islamic Studies",
-      qualification: "PhD in Islamic Studies, Al-Azhar University",
-      experience: "15+ years",
-      image: "👨‍🏫",
-    },
-    {
-      name: "Ustadha Fatima Al-Zahra",
-      role: "Director of Quran Studies",
-      qualification: "Ijazah in Quran Recitation & Tajweed",
-      experience: "12+ years",
-      image: "👩‍🏫",
-    },
-    {
-      name: "Sheikh Omar Abdullah",
-      role: "Arabic Language Director",
-      qualification: "Masters in Arabic Literature",
-      experience: "10+ years",
-      image: "👨‍💼",
-    },
-  ];
+  useEffect(() => {
+    fetch(`${BASE_URL}/admin/getAdmins`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("API Response:", data);
+        // If your API returns { admins: [...] }
+        if (Array.isArray(data)) {
+          setTeamData(data);
+        } else if (Array.isArray(data.admins)) {
+          setTeamData(data.admins);
+        } else {
+          console.warn("Unexpected API shape");
+          setTeamData([]);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching team data:", error);
+        setTeamData([]);
+      });
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-50">
@@ -158,50 +131,6 @@ function About() {
         </div>
       </section>
 
-      {/* Values Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-6xl px-6 mx-auto lg:px-12">
-          <div className="mb-12 text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 mb-4 text-sm font-semibold text-green-800 bg-green-100 rounded-full">
-              ⭐ Our Values
-            </div>
-            <h2 className="mb-4 text-3xl font-bold text-gray-800 lg:text-4xl">
-              What Guides Our Work
-            </h2>
-            <p className="max-w-2xl mx-auto text-lg text-gray-600">
-              Our core values shape everything we do, from curriculum design to
-              student interaction
-            </p>
-          </div>
-
-          <div className="grid gap-8 md:grid-cols-2">
-            {values.map((value, index) => {
-              const IconComponent = value.icon;
-              return (
-                <div
-                  key={index}
-                  className="p-8 transition-shadow bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl hover:shadow-lg"
-                >
-                  <div className="flex items-start gap-4">
-                    <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 rounded-lg bg-gradient-to-br from-green-500 to-emerald-600">
-                      <IconComponent className="w-6 h-6 text-white" />
-                    </div>
-                    <div>
-                      <h3 className="mb-3 text-xl font-bold text-gray-800">
-                        {value.title}
-                      </h3>
-                      <p className="leading-relaxed text-gray-600">
-                        {value.description}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
       {/* Team Section */}
       <section className="py-16 bg-gradient-to-br from-green-50 to-emerald-50">
         <div className="max-w-6xl px-6 mx-auto lg:px-12">
@@ -218,25 +147,43 @@ function About() {
           </div>
 
           <div className="grid gap-8 md:grid-cols-3">
-            {team.map((member, index) => (
+            {teamData.map((member, index) => (
               <div
                 key={index}
                 className="overflow-hidden transition-shadow bg-white shadow-lg rounded-xl hover:shadow-xl"
               >
                 <div className="p-8 text-center">
-                  <div className="mb-4 text-6xl">{member.image}</div>
+                  <div className="flex justify-center mb-4 text-6xl">
+                    {member.img ? (
+                      <img
+                        src={member.img}
+                        alt={member.name}
+                        className="object-cover w-12 h-12 mx-auto rounded-full md:w-18 md:h-18"
+                      />
+                    ) : (
+                      <div className="flex items-center justify-center w-12 h-12 overflow-hidden text-xl font-bold text-white rounded-full md:w-18 md:h-18 bg-gradient-to-br from-emerald-400 to-emerald-600 md:text-2xl">
+                        {member?.name?.charAt(0).toUpperCase() || "A"}
+                      </div>
+                    )}
+                  </div>
                   <h3 className="mb-2 text-xl font-bold text-gray-800">
                     {member.name}
                   </h3>
-                  <p className="mb-3 font-semibold text-green-600">
-                    {member.role}
-                  </p>
+                  <div className="mb-3 ">
+                    {member.designation ? (
+                      <p className="font-semibold text-green-600">
+                        {member.designation}
+                      </p>
+                    ) : (
+                      <p className="font-semibold text-green-600">Teacher</p>
+                    )}
+                  </div>
                   <p className="mb-2 text-sm text-gray-600">
-                    {member.qualification}
+                    {member.qualification || "Expert in Quran Education"}
                   </p>
-                  <div className="inline-flex items-center gap-1 px-3 py-1 text-sm font-medium text-green-800 bg-green-100 rounded-full">
+                  <div className="inline-flex items-center gap-1 px-3 py-1 mt-2 text-sm font-medium text-green-800 bg-green-100 rounded-full">
                     <Award className="w-4 h-4" />
-                    {member.experience}
+                    {member.experience || 3} Years
                   </div>
                 </div>
               </div>

@@ -7,7 +7,7 @@ import {
   Star,
   Quote,
 } from "lucide-react";
-import { NavLink } from "react-router";
+import { NavLink } from "react-router-dom";
 
 export default function Faqs() {
   const [openFAQ, setOpenFAQ] = useState(0);
@@ -113,15 +113,17 @@ export default function Faqs() {
                 </div>
               </button>
 
-              {openFAQ === index && (
-                <div className="px-6 pb-5">
-                  <div className="pt-2 border-t border-gray-100">
-                    <p className="leading-relaxed text-slate-600">
-                      {faq.answer}
-                    </p>
+              {openFAQ === index ? (
+                <>
+                  <div className="px-6 pb-5">
+                    <div className="pt-2 border-t border-gray-100">
+                      <p className="leading-relaxed text-slate-600">
+                        {faq.answer}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              )}
+                </>
+              ) : null}
             </div>
           ))}
         </div>
@@ -135,7 +137,9 @@ export default function Faqs() {
           </p>
           <div className="flex flex-col justify-center gap-4 sm:flex-row">
             <a
-              href="mailto:info@elitequrantutors.com"
+              href="https://mail.google.com/mail/?view=cm&fs=1&to=hamadqur447@gmail.com"
+              target="_blank"
+              rel="noopener noreferrer"
               className="px-6 py-3 font-semibold text-blue-600 transition-colors bg-white rounded-lg hover:bg-gray-100"
             >
               Email Us
