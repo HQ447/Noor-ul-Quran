@@ -30,15 +30,16 @@ const Setting = () => {
   const [imageFile, setImageFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const BASE_URL = "http://localhost:8000";
+  const token = localStorage.getItem("token");
   // Fetch current admin info on mount
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const token = localStorage.getItem("token");
         const { data } = await axios.get(`${BASE_URL}/admin/getAdminProfile`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setAdmin(data);
+        console.log(data);
         setPreview(data.img);
       } catch (err) {
         console.error("Failed to fetch profile:", err);
@@ -60,6 +61,8 @@ const Setting = () => {
   };
 
   const handleUpdate = async () => {
+    console.log(token);
+    if (!admin.name && !admin.email) return alert("Fill all fields");
     try {
       const token = localStorage.getItem("token");
       const formData = new FormData();
@@ -122,6 +125,7 @@ const Setting = () => {
                     accept="image/*"
                     onChange={handleFileChange}
                     className="hidden"
+                    required
                   />
                 </label>
               </div>

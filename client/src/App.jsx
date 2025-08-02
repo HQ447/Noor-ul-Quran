@@ -23,6 +23,8 @@ import AdminsManagement from "./app/dashboard/AdminsManagement";
 import Settings from "./app/dashboard/Settings";
 import BooksManagement from "./app/dashboard/Books";
 import NotFound from "./app/main/Not Found/NotFound";
+import AllStudents from "./app/dashboard/AllStudents";
+import TeacherDetails from "./app/dashboard/TeacherDetails";
 
 function App() {
   return (
@@ -52,6 +54,8 @@ function App() {
           <Route path="course-management" element={<CourseManagement />} />
           <Route path="admin-management" element={<AdminsManagement />} />
           <Route path="books" element={<BooksManagement />} />
+          <Route path="all-students" element={<AllStudents />} />
+          <Route path="teacher-detail/:id" element={<TeacherDetails />} />
           <Route path="settings" element={<Settings />} />
         </Route>
       </Routes>

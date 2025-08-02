@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Check,
   Star,
@@ -9,13 +9,17 @@ import {
   Award,
   Zap,
 } from "lucide-react";
-import { NavLink, useNavigate } from "react-router";
+import { NavLink, useLocation, useNavigate } from "react-router";
 
 function Fee() {
   const [billingCycle, setBillingCycle] = useState("monthly");
   const [selectedPlan, setSelectedPlan] = useState("");
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [pathname]);
   const plans = [
     {
       id: "weekly",
@@ -38,7 +42,6 @@ function Fee() {
         "Basic Course Materials",
         "Email Support",
         "Progress Tracking",
-        "Certificate upon completion",
       ],
       badge: "Great Start",
       icon: Clock,
@@ -65,9 +68,6 @@ function Fee() {
         "Complete Course Materials",
         "Priority Email & Chat Support",
         "Advanced Progress Analytics",
-        "Monthly Assessment Reports",
-        "Access to Resource Library",
-        "Islamic Calendar & Reminders",
       ],
       badge: "Most Popular",
       icon: Star,
@@ -94,13 +94,6 @@ function Fee() {
         "Premium Course Materials",
         "24/7 Priority Support",
         "Comprehensive Analytics",
-        "Monthly & Quarterly Reports",
-        "Full Resource Library Access",
-        "Islamic Calendar & Reminders",
-        "Free Course Switching",
-        "Bonus: Tajweed Masterclass",
-        "Bonus: Islamic History Course",
-        "Family Plan Discount",
       ],
       badge: "Best Value",
       icon: Award,
@@ -166,7 +159,7 @@ function Fee() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-50">
       {/* Hero Section */}
-      <section className="relative py-20 overflow-hidden text-white bg-gradient-to-r from-green-600 to-emerald-600">
+      <section className="relative py-12 overflow-hidden text-white bg-gradient-to-r from-green-600 to-emerald-600">
         <div className="absolute inset-0 opacity-10">
           <div
             className="w-full h-full"
@@ -177,16 +170,16 @@ function Fee() {
         </div>
 
         <div className="relative max-w-6xl px-6 mx-auto text-center lg:px-12">
-          <div className="mb-6">
-            <div className="inline-flex items-center gap-2 px-4 py-2 mb-4 text-sm font-semibold text-black bg-white rounded-full bg-opacity-20">
+          <div className="mb-2">
+            <div className="inline-flex items-center gap-2 px-4 py-2 mb-4 text-xs font-semibold text-black bg-white rounded-full bg-opacity-20">
               💰 Pricing Plans
             </div>
           </div>
-          <h1 className="mb-6 text-4xl font-bold leading-tight md:text-5xl lg:text-6xl">
+          <h1 className="mb-5 text-2xl font-bold leading-tight md:text-3xl lg:text-4xl">
             Choose Your
             <span className="block text-yellow-300">Learning Journey</span>
           </h1>
-          <p className="max-w-3xl mx-auto mb-8 text-xl leading-relaxed text-green-100 md:text-2xl">
+          <p className="max-w-3xl mx-auto mb-5 text-sm leading-relaxed text-green-100 md:text-lg">
             Flexible pricing plans designed to make quality Islamic education
             accessible to everyone
           </p>
@@ -200,15 +193,10 @@ function Fee() {
                 className={`px-6 py-2 rounded-full text-sm font-semibold transition-all ${
                   billingCycle === cycle
                     ? "bg-white text-green-600 shadow-lg"
-                    : "text-white hover:bg-white hover:bg-opacity-10"
+                    : "text-green-600 hover:bg-white hover:bg-opacity-10"
                 }`}
               >
                 {cycle.charAt(0).toUpperCase() + cycle.slice(1)}
-                {cycle === "yearly" && (
-                  <span className="px-2 py-1 ml-2 text-xs text-yellow-900 bg-yellow-400 rounded-full">
-                    Save 30%
-                  </span>
-                )}
               </button>
             ))}
           </div>
@@ -235,30 +223,32 @@ function Fee() {
                   {/* Popular Badge */}
                   {plan.popular && (
                     <div className="absolute transform -translate-x-1/2 -top-4 left-1/2">
-                      <div className="px-6 py-2 text-sm font-bold text-white rounded-full shadow-lg bg-gradient-to-r from-green-500 to-emerald-600">
+                      <div className="px-2 py-2 text-xs font-bold text-white rounded-full shadow-lg bg-gradient-to-r from-green-500 to-emerald-600">
                         ⭐ {plan.badge}
                       </div>
                     </div>
                   )}
 
-                  <div className="p-8">
+                  <div className="p-5 md:p-8">
                     {/* Plan Header */}
                     <div className="mb-8 text-center">
                       <div
-                        className={`inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br ${plan.color} rounded-full mb-4`}
+                        className={`inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br ${plan.color} rounded-full mb-4`}
                       >
-                        <IconComponent className="w-8 h-8 text-white" />
+                        <IconComponent className="w-6 h-6 text-white" />
                       </div>
-                      <h3 className="mb-2 text-2xl font-bold text-gray-800">
+                      <h3 className="mb-2 text-xl font-bold text-gray-800 md:text-2xl">
                         {plan.name}
                       </h3>
-                      <p className="text-gray-600">{plan.description}</p>
+                      <p className="text-xs text-gray-600">
+                        {plan.description}
+                      </p>
                     </div>
 
                     {/* Pricing */}
                     <div className="mb-8 text-center">
                       <div className="flex items-center justify-center gap-2 mb-2">
-                        <span className="text-3xl font-bold text-gray-800 lg:text-4xl">
+                        <span className="text-2xl font-bold text-gray-800 md:text-3xl lg:text-4xl">
                           ${plan.price[billingCycle]}
                         </span>
                         <div className="text-left">
@@ -270,7 +260,7 @@ function Fee() {
                           </div>
                         </div>
                       </div>
-                      <div className="inline-flex items-center gap-1 px-3 py-1 text-sm font-semibold text-red-800 bg-red-100 rounded-full">
+                      <div className="inline-flex items-center gap-1 px-3 py-1 text-xs font-semibold text-red-800 bg-red-100 rounded-full">
                         <Gift className="w-4 h-4" />
                         {discount}% OFF
                       </div>
@@ -286,7 +276,9 @@ function Fee() {
                           <div className="flex-shrink-0 w-5 h-5 bg-green-100 rounded-full flex items-center justify-center mt-0.5">
                             <Check className="w-3 h-3 text-green-600" />
                           </div>
-                          <span className="text-gray-700">{feature}</span>
+                          <span className="text-sm text-gray-700 ">
+                            {feature}
+                          </span>
                         </div>
                       ))}
                     </div>
@@ -294,7 +286,7 @@ function Fee() {
                     {/* CTA Button */}
                     <button
                       onClick={() => handlePlanSelect(plan.id)}
-                      className={`w-full py-4 rounded-lg font-semibold transition-all ${
+                      className={`w-full py-1 md:py-2 text-sm rounded-lg font-semibold transition-all ${
                         plan.popular
                           ? "bg-gradient-to-r from-green-600 to-emerald-600 text-white hover:from-green-700 hover:to-emerald-700 shadow-lg hover:shadow-xl"
                           : "bg-gray-100 text-gray-800 hover:bg-gray-200 border-2 border-gray-200 hover:border-green-300"
@@ -314,13 +306,13 @@ function Fee() {
       <section className="py-16 bg-gradient-to-br from-green-50 to-emerald-50">
         <div className="max-w-6xl px-6 mx-auto lg:px-12">
           <div className="mb-12 text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 mb-4 text-sm font-semibold text-green-800 bg-green-100 rounded-full">
+            <div className="inline-flex items-center gap-2 px-4 py-2 mb-4 text-xs font-semibold text-green-800 bg-green-100 rounded-full">
               ➕ Additional Services
             </div>
-            <h2 className="mb-4 text-3xl font-bold text-gray-800 lg:text-4xl">
+            <h2 className="mb-4 text-2xl font-bold text-gray-800 md:text-3xl lg:text-4xl">
               Enhance Your Learning Experience
             </h2>
-            <p className="max-w-2xl mx-auto text-lg text-gray-600">
+            <p className="max-w-2xl mx-auto text-sm text-gray-600 lg:text-lg">
               Complement your main subscription with specialized services and
               workshops
             </p>
@@ -364,10 +356,10 @@ function Fee() {
       <section className="py-16 bg-white">
         <div className="max-w-6xl px-6 mx-auto lg:px-12">
           <div className="mb-12 text-center">
-            <h2 className="mb-4 text-3xl font-bold text-gray-800 lg:text-4xl">
+            <h2 className="mb-4 text-2xl font-bold text-gray-800 md:text-3xl lg:text-4xl">
               Why Choose Our Plans?
             </h2>
-            <p className="text-lg text-gray-600">
+            <p className="text-sm text-gray-600">
               All plans include our core commitment to quality Islamic education
             </p>
           </div>
@@ -377,10 +369,10 @@ function Fee() {
               <div className="inline-flex items-center justify-center w-16 h-16 mb-6 bg-green-100 rounded-full">
                 <Award className="w-8 h-8 text-green-600" />
               </div>
-              <h3 className="mb-4 text-xl font-bold text-gray-800">
+              <h3 className="mb-4 text-lg font-bold text-gray-800">
                 Certified Teachers
               </h3>
-              <p className="text-gray-600">
+              <p className="text-sm text-gray-600">
                 Learn from qualified Islamic scholars with Ijazah and years of
                 teaching experience.
               </p>
@@ -389,10 +381,10 @@ function Fee() {
               <div className="inline-flex items-center justify-center w-16 h-16 mb-6 bg-green-100 rounded-full">
                 <Users className="w-8 h-8 text-green-600" />
               </div>
-              <h3 className="mb-4 text-xl font-bold text-gray-800">
+              <h3 className="mb-4 text-lg font-bold text-gray-800">
                 Personalized Learning
               </h3>
-              <p className="text-gray-600">
+              <p className="text-sm text-gray-600">
                 One-on-one classes tailored to your learning pace, goals, and
                 schedule.
               </p>
@@ -401,10 +393,10 @@ function Fee() {
               <div className="inline-flex items-center justify-center w-16 h-16 mb-6 bg-green-100 rounded-full">
                 <BookOpen className="w-8 h-8 text-green-600" />
               </div>
-              <h3 className="mb-4 text-xl font-bold text-gray-800">
+              <h3 className="mb-4 text-lg font-bold text-gray-800">
                 Comprehensive Curriculum
               </h3>
-              <p className="text-gray-600">
+              <p className="text-sm text-gray-600">
                 From basic Quran reading to advanced Tajweed and Islamic studies
                 programs.
               </p>
@@ -420,10 +412,10 @@ function Fee() {
             <div className="inline-flex items-center justify-center w-20 h-20 mb-6 bg-white rounded-full bg-opacity-20">
               <Gift className="w-10 h-10 text-white" />
             </div>
-            <h2 className="mb-4 text-3xl font-bold lg:text-4xl">
+            <h2 className="mb-4 text-2xl font-bold md:text-3xl lg:text-4xl">
               30-Day Money Back Guarantee
             </h2>
-            <p className="max-w-2xl mx-auto mb-8 text-xl text-green-100">
+            <p className="max-w-2xl mx-auto mb-8 text-sm text-green-100">
               We're confident you'll love our teaching approach. If you're not
               completely satisfied within 30 days, we'll provide a full refund.
             </p>
@@ -432,13 +424,13 @@ function Fee() {
           <div className="flex flex-col justify-center gap-4 sm:flex-row">
             <NavLink
               to={"/register-student"}
-              className="px-8 py-4 font-semibold text-green-600 transition-colors bg-white rounded-lg shadow-lg hover:bg-gray-100"
+              className="px-8 py-2 font-semibold text-green-600 transition-colors bg-white rounded-lg shadow-lg md:py-3 hover:bg-gray-100"
             >
               Start Free Trial
             </NavLink>
             <NavLink
               to={"/contact"}
-              className="px-8 py-4 font-semibold text-white transition-colors border-2 rounded-lg bg-emerald-500 hover:bg-emerald-600 border-emerald-400"
+              className="px-8 py-2 font-semibold text-white transition-colors border-2 rounded-lg md:py-4 bg-emerald-500 hover:bg-emerald-600 border-emerald-400"
             >
               Contact Sales Team
             </NavLink>

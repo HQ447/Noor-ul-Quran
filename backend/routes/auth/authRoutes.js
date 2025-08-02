@@ -1,19 +1,19 @@
 import express from "express";
 import { authValidator } from "../../middlewares/authValidator.js";
 import { registerController } from "../../controllers/registerController.js";
-import { tokenVerifier } from "../../middlewares/tokenVerifier.js";
+// import { tokenVerifier } from "../../middlewares/tokenVerifier.js";
 import { loginController } from "../../controllers/loginController.js";
 import { forgotPassword } from "../../controllers/ForgotPassword.js";
 import { resetPasswordController } from "../../controllers/resetPasswordController.js";
 import { verifyOtpController } from "../../controllers/verifyOtpController.js";
 import registerStudent from "../../controllers/studentRegistration.js";
-import { addCourse } from "../../controllers/addCourse.js";
-import upload from "../../middlewares/upload.js";
-import updateStatus from "../../controllers/updateStatus.js";
-import deleteCourse from "../../controllers/deleteCourse.js";
-import deleteStudent from "../../controllers/deleteStudent.js";
-import getAllStudents from "../../controllers/getStudents.js";
-import getCourses from "../../controllers/getCourses.js";
+// import { addCourse } from "../../controllers/addCourse.js";
+// import upload from "../../middlewares/upload.js";
+// import updateStatus from "../../controllers/updateStatus.js";
+// import deleteCourse from "../../controllers/deleteCourse.js";
+// import deleteStudent from "../../controllers/deleteStudent.js";
+// import getAllStudents from "../../controllers/getStudents.js";
+// import getCourses from "../../controllers/getCourses.js";
 
 const authRouter = express.Router();
 

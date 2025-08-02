@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { BookOpen, ArrowRight, Clock, Users, Star } from "lucide-react";
 import axios from "axios";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 const Courses = () => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const BASE_URL = "http://localhost:8000";
+
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [pathname]);
+
   useEffect(() => {
     const fetchCourses = async () => {
       try {

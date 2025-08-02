@@ -4,7 +4,8 @@ import sendEmail from "../utils/sendEmail.js";
 
 const registerStudent = async (req, res) => {
   try {
-    const { name, email, whatsapp, country, course, joinDate } = req.body;
+    const { name, email, whatsapp, country, course, joinDate, teacherId } =
+      req.body;
 
     // Basic validation
     if (!name || !email || !course) {
@@ -17,10 +18,18 @@ const registerStudent = async (req, res) => {
       return res.status(409).json({ message: "Email already registered." });
     }
 
+    const findTeacher = await User.findById(teacherId);
+
+    if (!findTeacher) return res.json("Teacher Not found");
+
+    const teacherName = findTeacher.name;
+
     const newStudent = new User({
       name,
       email,
       whatsapp,
+      teacherId,
+      teacherName,
       country,
       course,
       joinDate,
@@ -41,7 +50,7 @@ const registerStudent = async (req, res) => {
     <div style="padding: 30px;">
       <h2 style="color: #333;">Hi ${name},</h2>
       <p style="font-size: 16px; color: #555;">
-        Your registration application has been submitted successfully.
+        Your registration application has been submitted to ${teacherId.name}.
       </p>
       <p style="font-size: 16px; color: #555;">
         We will inform you once it is approved by an instructor. Thank you for joining Noor ul Quran.

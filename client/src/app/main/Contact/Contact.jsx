@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Mail,
   Phone,
@@ -9,6 +9,7 @@ import {
   Globe,
   Users,
 } from "lucide-react";
+import { useLocation } from "react-router-dom";
 
 function Contact() {
   const [formData, setFormData] = useState({
@@ -99,11 +100,15 @@ function Contact() {
         "Absolutely. Our technical support team is available to help you with any platform-related issues or questions.",
     },
   ];
+  const { pathname } = useLocation();
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [pathname]);
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-50">
       {/* Hero Section */}
-      <section className="relative py-20 overflow-hidden text-white bg-gradient-to-r from-green-600 to-emerald-600">
+      <section className="relative py-12 overflow-hidden text-white bg-gradient-to-r from-green-600 to-emerald-600">
         <div className="absolute inset-0 opacity-10">
           <div
             className="w-full h-full"
@@ -114,16 +119,16 @@ function Contact() {
         </div>
 
         <div className="relative max-w-6xl px-6 mx-auto text-center lg:px-12">
-          <div className="mb-6">
-            <div className="inline-flex items-center gap-2 px-4 py-2 mb-4 text-sm font-semibold text-black bg-white rounded-full bg-opacity-20">
+          <div className="mb-4">
+            <div className="inline-flex items-center gap-2 px-4 py-2 mb-4 text-xs font-semibold text-black bg-white rounded-full bg-opacity-20">
               📞 Contact Us
             </div>
           </div>
-          <h1 className="mb-6 text-4xl font-bold leading-tight md:text-5xl lg:text-6xl">
+          <h1 className="mb-4 text-2xl font-bold leading-tight md:text-3xl lg:text-4xl">
             Get in Touch
             <span className="block text-yellow-300">We're Here to Help</span>
           </h1>
-          <p className="max-w-3xl mx-auto text-xl leading-relaxed text-green-100 md:text-2xl">
+          <p className="max-w-3xl mx-auto text-sm leading-relaxed text-green-100 md:text-lg">
             Have questions about our courses or need guidance on your Islamic
             learning journey? We'd love to hear from you.
           </p>
@@ -166,10 +171,10 @@ function Contact() {
             {/* Contact Form */}
             <div className="p-8 bg-white shadow-xl rounded-2xl">
               <div className="mb-8">
-                <h2 className="mb-4 text-3xl font-bold text-gray-800">
+                <h2 className="mb-4 text-xl font-bold text-gray-800 md:text-2xl">
                   Send us a Message
                 </h2>
-                <p className="text-gray-600">
+                <p className="text-sm text-gray-600">
                   Fill out the form below and we'll get back to you as soon as
                   possible.
                 </p>
@@ -187,7 +192,7 @@ function Contact() {
                       value={formData.name}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-3 transition-colors border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                      className="w-full px-4 py-2 transition-colors border border-gray-300 rounded-lg placeholder:text-sm md:py-3 focus:ring-2 focus:ring-green-500 focus:border-transparent"
                       placeholder="Your full name"
                     />
                   </div>
@@ -201,7 +206,7 @@ function Contact() {
                       value={formData.email}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-3 transition-colors border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                      className="w-full px-4 py-2 transition-colors border border-gray-300 rounded-lg placeholder:text-sm md:py-3 focus:ring-2 focus:ring-green-500 focus:border-transparent"
                       placeholder="your.email@example.com"
                     />
                   </div>
@@ -217,7 +222,7 @@ function Contact() {
                       name="phone"
                       value={formData.phone}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 transition-colors border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                      className="w-full px-4 py-2 transition-colors border border-gray-300 rounded-lg placeholder:text-sm md:py-3 focus:ring-2 focus:ring-green-500 focus:border-transparent"
                       placeholder="+1 (555) 123-4567"
                     />
                   </div>
@@ -229,7 +234,7 @@ function Contact() {
                       name="inquiryType"
                       value={formData.inquiryType}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 transition-colors border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                      className="w-full px-4 py-2 text-sm transition-colors border border-gray-300 rounded-lg placeholder:text-sm md:py-3 focus:ring-2 focus:ring-green-500 focus:border-transparent"
                     >
                       <option value="general">General Inquiry</option>
                       <option value="courses">Course Information</option>
@@ -250,7 +255,7 @@ function Contact() {
                     value={formData.subject}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 transition-colors border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full px-4 py-2 transition-colors border border-gray-300 rounded-lg placeholder:text-sm md:py-3 focus:ring-2 focus:ring-green-500 focus:border-transparent"
                     placeholder="Brief subject of your message"
                   />
                 </div>
@@ -265,7 +270,7 @@ function Contact() {
                     onChange={handleInputChange}
                     required
                     rows="6"
-                    className="w-full px-4 py-3 transition-colors border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full px-4 py-2 transition-colors border border-gray-300 rounded-lg resize-none placeholder:text-sm md:py-3 focus:ring-2 focus:ring-green-500 focus:border-transparent"
                     placeholder="Please provide details about your inquiry..."
                   ></textarea>
                 </div>
@@ -273,7 +278,7 @@ function Contact() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="flex items-center justify-center w-full gap-2 px-6 py-4 font-semibold text-white transition-colors rounded-lg bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex items-center justify-center w-full gap-2 px-6 py-2 font-semibold text-white transition-colors rounded-lg lg:py-4 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isSubmitting ? (
                     <>
@@ -297,11 +302,13 @@ function Contact() {
                 <div className="relative flex items-center justify-center h-64 bg-gradient-to-br from-green-100 to-emerald-100">
                   <div className="text-center">
                     <MapPin className="w-12 h-12 mx-auto mb-4 text-green-600" />
-                    <h3 className="mb-2 text-xl font-bold text-gray-800">
+                    <h3 className="mb-2 text-lg font-bold text-gray-800 lg:text-xl">
                       Visit Our Campus
                     </h3>
-                    <p className="text-gray-600">123 Islamic Center Street</p>
-                    <p className="text-gray-600">City, State 12345</p>
+                    <p className="text-sm text-gray-600">
+                      123 Islamic Center Street
+                    </p>
+                    <p className="text-sm text-gray-600">City, State 12345</p>
                   </div>
                   {/* Decorative Elements */}
                   <div className="absolute w-8 h-8 bg-green-200 rounded-full top-4 right-4 opacity-60"></div>
@@ -310,7 +317,7 @@ function Contact() {
                 <div className="p-6">
                   <div className="flex items-center gap-4 text-sm text-gray-600">
                     <div className="flex items-center gap-2">
-                      <Clock className="w-4 h-4 text-green-600" />
+                      <Clock className="w-4 h-4 text-xs text-green-600" />
                       <span>Mon-Fri: 8AM-10PM</span>
                     </div>
                     <div className="flex items-center gap-2">
@@ -344,11 +351,11 @@ function Contact() {
 
               {/* Support Hours */}
               <div className="p-6 text-white bg-gradient-to-r from-green-600 to-emerald-600 rounded-2xl">
-                <h3 className="flex items-center gap-2 mb-4 text-xl font-bold">
+                <h3 className="flex items-center gap-2 mb-4 text-lg font-bold">
                   <Users className="w-6 h-6" />
                   24/7 Support Available
                 </h3>
-                <p className="mb-4 text-green-100">
+                <p className="mb-4 text-sm text-green-100">
                   Our dedicated support team is here to help you succeed in your
                   Islamic learning journey.
                 </p>

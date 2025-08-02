@@ -40,7 +40,7 @@ const IslamicPattern = () => (
   </div>
 );
 
-const StudentManagement = () => {
+const AllStudents = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [students, setStudents] = useState([]);
   const [viewMode, setViewMode] = useState("grid"); // table or grid
@@ -48,7 +48,7 @@ const StudentManagement = () => {
 
   const fetchStudents = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/admin/students`, {
+      const response = await fetch(`${BASE_URL}/super/getAllStudents`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -141,10 +141,10 @@ const StudentManagement = () => {
       <div className="flex flex-col mb-6 space-y-4 md:flex-row md:justify-between md:items-center md:space-y-0">
         <div>
           <h2 className="mb-2 text-xl font-bold md:text-2xl text-emerald-800">
-            Student Management
+            All Students
           </h2>
           <p className="text-sm text-emerald-600">
-            Manage Your students registrations and approvals
+            Manage all students registrations and approvals
           </p>
         </div>
         <div className="flex flex-col space-y-4 md:flex-row md:items-center md:space-y-0 md:space-x-4">
@@ -423,4 +423,4 @@ const StudentManagement = () => {
   );
 };
 
-export default StudentManagement;
+export default AllStudents;

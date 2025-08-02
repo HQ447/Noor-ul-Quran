@@ -10,16 +10,20 @@ export const registerController = async (req, res) => {
     if (existingAdmin)
       return res.status(400).json({ message: "Email already in use" });
 
-    if (secret !== process.env.ADMIN_SECRET) {
+    let role;
+    if (secret === process.env.ADMIN_SECRET) {
+      role = "admin";
+    } else if (secret === process.env.SUPER_ADMIN_SECRET) {
+      role = "superadmin";
+    } else {
       return res.status(403).json({ message: "Invalid Admin Secret" });
     }
-
     const hashedPassword = await bcrypt.hash(password, 10);
     const newAdmin = new User({
       name,
       email,
       password: hashedPassword,
-      role: "admin",
+      role,
     });
     await newAdmin.save();
 

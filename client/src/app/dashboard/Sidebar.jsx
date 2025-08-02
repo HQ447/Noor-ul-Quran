@@ -32,6 +32,8 @@ const IslamicPattern = () => (
 const Sidebar = ({ activeTab, setActiveTab }) => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+  const role = localStorage.getItem("role");
+
   const toggleSidebar = () => setIsOpen(!isOpen);
   function handleLogout() {
     localStorage.clear();
@@ -63,38 +65,114 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
               <p className="text-xs text-emerald-200">Dashboard Panel</p>
             </div>
           </div>
+          <p className="text-xs text-white">{role}</p>
         </div>
 
         <nav className="px-2 mt-4">
-          {[
-            { id: "", label: "Analytics", icon: BarChart3 },
-            { id: "student-management", label: "Students", icon: Users },
-            { id: "course-management", label: "Courses", icon: BookOpen },
-            { id: "books", label: "Library Management", icon: BookOpen },
-            { id: "admin-management", label: "Admins", icon: UserCheck },
-            { id: "settings", label: "Settings", icon: Settings },
-          ].map(({ id, label, icon: Icon }) => (
+          {/* Common Tabs */}
+          <NavLink
+            to=""
+            className={`w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm transition-all duration-200 mb-1 ${
+              activeTab === ""
+                ? "bg-emerald-700 text-white shadow-lg"
+                : "text-emerald-200 hover:bg-emerald-700/50 hover:text-white"
+            }`}
+            onClick={() => setIsOpen(false)}
+          >
+            <BarChart3 className="w-4 h-4" />
+            <span>Analytics</span>
+          </NavLink>
+
+          <NavLink
+            to="student-management"
+            className={`w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm transition-all duration-200 mb-1 ${
+              activeTab === "student-management"
+                ? "bg-emerald-700 text-white shadow-lg"
+                : "text-emerald-200 hover:bg-emerald-700/50 hover:text-white"
+            }`}
+            onClick={() => setIsOpen(false)}
+          >
+            <Users className="w-4 h-4" />
+            <span>Your Students</span>
+          </NavLink>
+
+          {/* Show All Students only to superadmin */}
+          {role === "superadmin" && (
             <NavLink
-              to={id}
-              key={id}
+              to="all-students"
               className={`w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm transition-all duration-200 mb-1 ${
-                activeTab === id
+                activeTab === "all-students"
                   ? "bg-emerald-700 text-white shadow-lg"
                   : "text-emerald-200 hover:bg-emerald-700/50 hover:text-white"
               }`}
-              onClick={() => setIsOpen(false)} // close on selection in mobile
+              onClick={() => setIsOpen(false)}
             >
-              <Icon className="w-4 h-4" />
-              <span>{label}</span>
+              <Users className="w-4 h-4" />
+              <span>All Students</span>
             </NavLink>
-          ))}
+          )}
+
+          <NavLink
+            to="course-management"
+            className={`w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm transition-all duration-200 mb-1 ${
+              activeTab === "course-management"
+                ? "bg-emerald-700 text-white shadow-lg"
+                : "text-emerald-200 hover:bg-emerald-700/50 hover:text-white"
+            }`}
+            onClick={() => setIsOpen(false)}
+          >
+            <BookOpen className="w-4 h-4" />
+            <span>Courses</span>
+          </NavLink>
+
+          <NavLink
+            to="books"
+            className={`w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm transition-all duration-200 mb-1 ${
+              activeTab === "books"
+                ? "bg-emerald-700 text-white shadow-lg"
+                : "text-emerald-200 hover:bg-emerald-700/50 hover:text-white"
+            }`}
+            onClick={() => setIsOpen(false)}
+          >
+            <BookOpen className="w-4 h-4" />
+            <span>Library Management</span>
+          </NavLink>
+
+          {/* Admins tab visible only to superadmin */}
+          {role === "superadmin" && (
+            <NavLink
+              to="admin-management"
+              className={`w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm transition-all duration-200 mb-1 ${
+                activeTab === "admin-management"
+                  ? "bg-emerald-700 text-white shadow-lg"
+                  : "text-emerald-200 hover:bg-emerald-700/50 hover:text-white"
+              }`}
+              onClick={() => setIsOpen(false)}
+            >
+              <UserCheck className="w-4 h-4" />
+              <span>Admins</span>
+            </NavLink>
+          )}
+
+          <NavLink
+            to="settings"
+            className={`w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm transition-all duration-200 mb-1 ${
+              activeTab === "settings"
+                ? "bg-emerald-700 text-white shadow-lg"
+                : "text-emerald-200 hover:bg-emerald-700/50 hover:text-white"
+            }`}
+            onClick={() => setIsOpen(false)}
+          >
+            <Settings className="w-4 h-4" />
+            <span>Settings</span>
+          </NavLink>
         </nav>
 
         <div className="absolute bottom-4 left-4 right-4 md:block lg:block">
           <div className="p-3 text-center rounded-lg bg-emerald-700/50">
             <Moon className="w-6 h-6 mx-auto mb-2 text-emerald-200" />
             <p className="text-xs text-emerald-200">اللَّهُمَّ بَارِكْ لَنَا</p>
-            <p className="text-xs text-emerald-300">May Allah bless us</p>
+            <p className="mt-1 text-xs text-emerald-300">May Allah bless us</p>
             <button
               onClick={handleLogout}
               className="px-6 py-1 mt-2 mr-1 text-xs rounded-md bg-amber-50"

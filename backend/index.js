@@ -8,6 +8,7 @@ import { fileURLToPath } from "url";
 import cors from "cors";
 import router from "./routes/bookRoutes.js";
 import adminRouter from "./routes/adminRoutes.js";
+import superAdminRouter from "./routes/superAdminRoutes.js";
 
 dotenv.config();
 
@@ -28,6 +29,7 @@ app.use(express.json());
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/auth", authRouter);
 app.use("/admin", adminRouter);
+app.use("/super", superAdminRouter);
 app.use("/api", router);
 
 // Test route

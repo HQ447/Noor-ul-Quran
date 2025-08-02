@@ -86,14 +86,15 @@ function Navbar() {
 
             {/* Right Side Buttons */}
             <div className="flex items-center gap-2 lg:gap-3">
-              {role === "admin" ? (
+              {role === "admin" || role === "superadmin" ? (
                 <>
                   <div
                     onClick={() => navigate("/admin-dashboard")}
                     className="flex items-center justify-center gap-2 px-3 py-1 bg-gray-100 rounded-full cursor-pointer sm:py-2"
                   >
                     <User className="hidden w-4 h-4 text-gray-600 sm:flex" />
-                    <span className="text-[10px] capitalize sm:text-sm font-medium text-gray-800">
+                    {role == "superadmin" && "🟢"}
+                    <span className="text-[10px] capitalize sm:text-sm font-medium text-gray-800 ">
                       {name?.split(" ")[0]}
                     </span>
                   </div>

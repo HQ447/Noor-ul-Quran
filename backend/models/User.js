@@ -5,6 +5,7 @@ const userSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
     email: { type: String, unique: true, required: true },
+    role: { type: String, required: true },
     whatsapp: { type: String },
     country: { type: String },
     course: { type: String },
@@ -12,9 +13,14 @@ const userSchema = new mongoose.Schema(
     qualification: { type: String },
     experience: { type: String },
     img: { type: String },
+    teacherId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+    teacherName: { type: String },
+    //superAdmin: { type: Boolean, default: false },
     joinDate: { type: Date },
     password: { type: String },
-    role: { type: String, required: true },
     status: {
       type: String,
       enum: ["pending", "registered", "rejected"],

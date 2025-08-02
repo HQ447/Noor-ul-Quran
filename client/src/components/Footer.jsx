@@ -30,7 +30,7 @@ export default function Footer() {
   return (
     <footer className="text-white bg-black ">
       {/* Top Footer */}
-      <div className="grid grid-cols-1 gap-8 px-4 py-12 md:px-12 md:grid-cols-2 lg:grid-cols-4 max-w-7xl">
+      <div className="grid grid-cols-1 gap-8 px-6 py-12 md:px-12 md:grid-cols-2 lg:grid-cols-4 max-w-7xl">
         {/* Logo + Description */}
         <div className="text-center md:text-left">
           <img
@@ -41,7 +41,7 @@ export default function Footer() {
           <p className="mt-4 text-sm text-justify text-gray-300">
             <strong>Noor ul Quran</strong> offers personalized, one-on-one
             online Quran classes with certified male and female tutors. Learn
-            Quran with Tajweed, Hifz, and Islamic studies — from the comfort of
+            Quran with Tajweed, Hifz, and Islamic studies from the comfort of
             your home.
           </p>
         </div>
@@ -132,8 +132,8 @@ export default function Footer() {
       </div>
 
       {/* Middle Footer */}
-      <div className="py-4 text-xs text-center text-gray-400 bg-black ">
-        © 2025 Noor ul Quran . All right reserved. Designed by{" "}
+      <div className="px-3 py-4 text-xs text-center text-gray-400 bg-black ">
+        © 2025 Noor ul Quran . All rights reserved. Designed by{" "}
         <a
           href="https://hamad-1.vercel.app/"
           target="_blank"

@@ -1,27 +1,52 @@
 import React, { useEffect, useState } from "react";
-import { Star, Grid, Table } from "lucide-react";
+import { Star, Grid, Table, Sparkles, Users, Award } from "lucide-react";
 import { IoTrashBinSharp } from "react-icons/io5";
+import { NavLink, useNavigate } from "react-router-dom";
 
-// Islamic Pattern Component
+// Enhanced Islamic Pattern Component with animated elements
 const IslamicPattern = () => (
-  <div className="absolute inset-0 pointer-events-none opacity-5">
-    <div className="grid h-full grid-cols-8 gap-4">
-      {[...Array(64)].map((_, i) => (
+  <div className="absolute inset-0 pointer-events-none opacity-10">
+    <div className="grid h-full grid-cols-12 gap-3">
+      {[...Array(96)].map((_, i) => (
         <div
           key={i}
-          className="flex items-center justify-center text-emerald-600"
+          className="flex items-center justify-center text-green-400 animate-pulse"
+          style={{ animationDelay: `${i * 0.1}s` }}
         >
-          <Star className="w-4 h-4" />
+          <Star className="w-3 h-3" />
         </div>
       ))}
     </div>
+    {/* Floating geometric shapes */}
+    <div className="absolute w-20 h-20 border rounded-full top-10 left-10 border-green-300/20 animate-spin-slow"></div>
+    <div className="absolute w-16 h-16 rotate-45 border top-32 right-16 border-green-400/20 animate-pulse"></div>
+    <div className="absolute w-12 h-12 border rounded-full bottom-20 left-20 border-green-300/20 animate-bounce-slow"></div>
+  </div>
+);
+
+// Floating particles background
+const FloatingParticles = () => (
+  <div className="absolute inset-0 overflow-hidden pointer-events-none">
+    {[...Array(20)].map((_, i) => (
+      <div
+        key={i}
+        className="absolute w-2 h-2 rounded-full bg-green-200/30 animate-float"
+        style={{
+          left: `${Math.random() * 100}%`,
+          top: `${Math.random() * 100}%`,
+          animationDuration: `${3 + Math.random() * 4}s`,
+          animationDelay: `${Math.random() * 2}s`,
+        }}
+      />
+    ))}
   </div>
 );
 
 export const AdminsManagement = () => {
   const [admins, setAdmins] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [viewMode, setViewMode] = useState("grid"); // <-- NEW
+  const [viewMode, setViewMode] = useState("grid");
+  const navigate = useNavigate();
   const BASE_URL = "http://localhost:8000";
 
   const fetchAdmins = async () => {
@@ -66,185 +91,214 @@ export const AdminsManagement = () => {
   }, []);
 
   return (
-    <div className="relative p-4 md:p-6">
+    <div className="relative min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
       <IslamicPattern />
-      <div className="flex flex-col justify-between gap-4 mb-6 md:flex-row md:items-center">
-        <div>
-          <h2 className="mb-2 text-xl font-bold md:text-2xl text-emerald-800">
-            Admin Management
-          </h2>
-          <p className="text-sm text-emerald-600">
-            Manage platform administrators
-          </p>
-        </div>
-        <button
-          onClick={() => setViewMode(viewMode === "table" ? "grid" : "table")}
-          className="flex items-center px-3 py-2 text-sm transition-colors rounded-lg text-emerald-800 bg-emerald-100 hover:bg-emerald-200"
-        >
-          {viewMode === "table" ? (
-            <>
-              <Grid className="w-4 h-4 mr-2" />
-              Grid View
-            </>
-          ) : (
-            <>
-              <Table className="w-4 h-4 mr-2" />
-              Table View
-            </>
-          )}
-        </button>
-      </div>
+      <FloatingParticles />
 
-      {viewMode === "table" ? (
-        <div className="overflow-hidden border shadow-lg bg-white/80 backdrop-blur-sm rounded-xl border-emerald-200/20">
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-full">
-              <thead className="bg-emerald-100/50">
-                <tr>
-                  <th className="px-3 py-3 text-xs font-medium tracking-wider text-left uppercase md:px-6 text-emerald-800">
-                    Admin
-                  </th>
-                  <th className="hidden px-3 py-3 text-xs font-medium tracking-wider text-left uppercase md:px-6 text-emerald-800 sm:table-cell">
-                    Email
-                  </th>
-                  <th className="px-3 py-3 text-xs font-medium tracking-wider text-left uppercase md:px-6 text-emerald-800">
-                    Role
-                  </th>
-                  <th className="hidden px-3 py-3 text-xs font-medium tracking-wider text-left uppercase md:px-6 text-emerald-800 md:table-cell">
-                    Join Date
-                  </th>
-                  <th className="hidden px-3 py-3 text-xs font-medium tracking-wider text-left uppercase md:px-6 text-emerald-800 md:table-cell">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-emerald-100">
-                {loading ? (
+      {/* Header with enhanced styling */}
+      <div className="relative p-6 md:p-8">
+        <div className="flex flex-col justify-between gap-6 mb-8 md:flex-row md:items-center">
+          <div className="relative">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="p-3 shadow-lg bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl">
+                <Users className="w-8 h-8 text-white" />
+              </div>
+              <div>
+                <h2 className="text-2xl font-bold text-transparent md:text-3xl bg-gradient-to-r from-green-700 to-emerald-800 bg-clip-text">
+                  Admins & Teachers Management
+                </h2>
+                <div className="flex items-center gap-2 mt-1">
+                  <Sparkles className="w-4 h-4 text-green-500" />
+                  <p className="text-sm font-medium text-green-600">
+                    Manage platform administrators & instructors
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="w-24 h-1 rounded-full bg-gradient-to-r from-green-500 to-emerald-600"></div>
+          </div>
+
+          <button
+            onClick={() => setViewMode(viewMode === "table" ? "grid" : "table")}
+            className="flex items-center px-6 py-3 text-sm font-medium text-white transition-all duration-300 transform shadow-lg group rounded-xl bg-gradient-to-r from-green-600 to-emerald-700 hover:from-green-700 hover:to-emerald-800 hover:shadow-xl hover:-translate-y-1"
+          >
+            {viewMode === "table" ? (
+              <>
+                <Grid className="w-5 h-5 mr-2 transition-transform group-hover:rotate-12" />
+                Grid View
+              </>
+            ) : (
+              <>
+                <Table className="w-5 h-5 mr-2 transition-transform group-hover:rotate-12" />
+                Table View
+              </>
+            )}
+          </button>
+        </div>
+
+        {viewMode === "table" ? (
+          <div className="relative overflow-hidden border-2 shadow-2xl bg-white/90 backdrop-blur-lg rounded-2xl border-green-200/40">
+            <div className="absolute inset-0 bg-gradient-to-r from-green-50/50 to-emerald-50/50"></div>
+            <div className="relative overflow-x-auto">
+              <table className="w-full min-w-full">
+                <thead className="bg-gradient-to-r from-green-100 to-emerald-100">
                   <tr>
-                    <td
-                      colSpan={5}
-                      className="px-6 py-4 text-center text-emerald-600"
-                    >
-                      Loading admins...
-                    </td>
+                    <th className="px-6 py-4 text-xs font-bold tracking-wider text-left text-green-800 uppercase">
+                      Administrator
+                    </th>
+                    <th className="hidden px-6 py-4 text-xs font-bold tracking-wider text-left text-green-800 uppercase sm:table-cell">
+                      Email Address
+                    </th>
+                    <th className="px-6 py-4 text-xs font-bold tracking-wider text-left text-green-800 uppercase">
+                      Role
+                    </th>
+                    <th className="hidden px-6 py-4 text-xs font-bold tracking-wider text-left text-green-800 uppercase md:table-cell">
+                      Join Date
+                    </th>
+                    <th className="hidden px-6 py-4 text-xs font-bold tracking-wider text-left text-green-800 uppercase md:table-cell">
+                      Actions
+                    </th>
                   </tr>
-                ) : admins.length === 0 ? (
-                  <tr>
-                    <td
-                      colSpan={5}
-                      className="px-6 py-4 text-center text-red-600"
-                    >
-                      No admins found.
-                    </td>
-                  </tr>
-                ) : (
-                  admins.map((admin) => (
-                    <tr
-                      key={admin._id}
-                      className="transition-colors hover:bg-emerald-50/30"
-                    >
-                      <td className="px-3 py-4 md:px-6 whitespace-nowrap">
-                        <div className="flex items-center">
-                          {admin.img ? (
-                            <img
-                              src={admin.img}
-                              alt={admin.name}
-                              className="object-cover w-8 h-8 mr-2 rounded-full md:w-8 md:8"
-                            />
-                          ) : (
-                            <div className="flex items-center justify-center w-8 h-8 mr-2 overflow-hidden text-xs font-bold text-white rounded-full md:w-8 md:h-8 bg-gradient-to-br from-emerald-400 to-emerald-600 md:text-sm">
-                              {admin?.name?.charAt(0).toUpperCase() || "A"}
-                            </div>
-                          )}
-                          <div className="min-w-0">
-                            <div className="text-sm font-medium truncate text-emerald-800">
-                              {admin.name}
-                            </div>
-                            <div className="text-xs truncate text-emerald-600 sm:hidden">
-                              {admin.email}
-                            </div>
-                          </div>
+                </thead>
+                <tbody className="divide-y divide-green-100/60">
+                  {loading ? (
+                    <tr>
+                      <td colSpan={5} className="px-6 py-8 text-center">
+                        <div className="flex items-center justify-center">
+                          <div className="w-8 h-8 border-4 border-green-200 rounded-full border-t-green-600 animate-spin"></div>
+                          <span className="ml-3 font-medium text-green-600">
+                            Loading administrators...
+                          </span>
                         </div>
                       </td>
-                      <td className="hidden px-3 py-4 text-sm md:px-6 whitespace-nowrap text-emerald-600 sm:table-cell">
-                        {admin.email}
-                      </td>
-                      <td className="px-3 py-4 md:px-6 whitespace-nowrap">
-                        <span className="inline-flex px-2 py-1 text-xs font-semibold text-purple-800 capitalize bg-purple-100 rounded-full">
-                          {admin.role}
-                        </span>
-                      </td>
-                      <td className="hidden px-3 py-4 text-sm md:px-6 whitespace-nowrap text-emerald-600 md:table-cell">
-                        {admin.createdAt?.substring(0, 10) || "N/A"}
-                      </td>
-                      <td className="hidden px-3 py-4 text-sm md:px-6 whitespace-nowrap text-emerald-600 md:table-cell">
-                        <IoTrashBinSharp
-                          className="text-2xl text-red-600 transition-all cursor-pointer hover:scale-95"
-                          onClick={() => handleDeleteAdmin(admin._id)}
-                        />
+                    </tr>
+                  ) : admins.length === 0 ? (
+                    <tr>
+                      <td
+                        colSpan={5}
+                        className="px-6 py-8 font-medium text-center text-green-600"
+                      >
+                        No administrators found.
                       </td>
                     </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {admins.map((admin) => (
-            <div
-              key={admin._id}
-              className="relative p-4 transition-shadow border shadow-md bg-white/80 backdrop-blur-sm rounded-xl border-emerald-200/20 hover:shadow-lg"
-            >
-              <div className="absolute px-2 py-1 my-2 text-xs font-bold text-yellow-900 capitalize bg-yellow-400 rounded-full top-2 left-3">
-                🔰 {admin.role}
-              </div>
-              <div className="flex flex-col mb-3">
-                <div className="flex justify-center mb-1 text-6xl">
-                  {admin.img ? (
-                    <img
-                      src={admin.img}
-                      alt={admin.name}
-                      className="object-cover mx-auto rounded-full w-14 h-14 md:w-18 md:h-18"
-                    />
                   ) : (
-                    <div className="flex items-center justify-center overflow-hidden text-xl font-bold text-white rounded-full w-14 h-14 md:w-18 md:h-18 bg-gradient-to-br from-emerald-400 to-emerald-600 md:text-2xl">
-                      {admin?.name?.charAt(0).toUpperCase() || "A"}
-                    </div>
+                    admins.map((admin) => (
+                      <tr
+                        key={admin._id}
+                        className="transition-all duration-200 hover:bg-green-50/60 hover:shadow-md"
+                      >
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="flex items-center">
+                            {admin.img ? (
+                              <img
+                                src={admin.img}
+                                alt={admin.name}
+                                className="object-cover w-12 h-12 mr-4 border-2 border-green-200 rounded-full shadow-md"
+                              />
+                            ) : (
+                              <div className="flex items-center justify-center w-12 h-12 mr-4 text-lg font-bold text-white rounded-full shadow-md bg-gradient-to-br from-green-500 to-emerald-600">
+                                {admin?.name?.charAt(0).toUpperCase() || "A"}
+                              </div>
+                            )}
+                            <div className="min-w-0">
+                              <div className="text-sm font-semibold text-green-800">
+                                {admin.name}
+                              </div>
+                              <div className="text-xs text-green-600 sm:hidden">
+                                {admin.email}
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="hidden px-6 py-4 text-sm text-green-600 sm:table-cell whitespace-nowrap">
+                          {admin.email}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <span className="inline-flex px-3 py-1 text-xs font-semibold text-purple-800 capitalize bg-purple-100 rounded-full">
+                            {admin.role}
+                          </span>
+                        </td>
+                        <td className="hidden px-6 py-4 text-sm text-green-600 md:table-cell whitespace-nowrap">
+                          {admin.createdAt?.substring(0, 10) || "N/A"}
+                        </td>
+                        <td className="hidden px-6 py-4 text-sm text-green-600 md:table-cell whitespace-nowrap">
+                          <IoTrashBinSharp
+                            className="text-2xl text-red-500 transition-all cursor-pointer hover:text-red-600 hover:scale-110"
+                            onClick={() => handleDeleteAdmin(admin._id)}
+                          />
+                        </td>
+                      </tr>
+                    ))
                   )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {admins.map((admin) => (
+              <div
+                key={admin._id}
+                className="relative p-6 transition-all duration-300 border-2 shadow-lg group bg-white/90 backdrop-blur-lg rounded-2xl border-green-200/40 hover:shadow-2xl hover:-translate-y-2 hover:border-green-300/60"
+              >
+                {/* Card background gradient */}
+                <div className="absolute inset-0 bg-gradient-to-br from-green-50/50 to-emerald-50/50 rounded-2xl"></div>
+
+                {/* Role badge */}
+                <div className="absolute px-3 py-1 text-xs font-bold text-white capitalize rounded-full shadow-md top-4 right-4 bg-gradient-to-r from-yellow-500 to-orange-500">
+                  🔰 {admin.role === "admin" ? "Teacher" : "Super Admin"}
                 </div>
-                <div className="flex flex-col items-center justify-center">
-                  <div className="text-base font-medium text-emerald-800">
-                    {admin.name}
+
+                <div className="relative flex flex-col items-center mb-6">
+                  <div className="mb-4">
+                    {admin.img ? (
+                      <img
+                        src={admin.img}
+                        alt={admin.name}
+                        className="object-cover w-20 h-20 transition-shadow border-4 border-green-200 rounded-full shadow-lg group-hover:shadow-xl"
+                      />
+                    ) : (
+                      <div className="flex items-center justify-center w-20 h-20 text-2xl font-bold text-white transition-shadow rounded-full shadow-lg bg-gradient-to-br from-green-500 to-emerald-600 group-hover:shadow-xl">
+                        {admin?.name?.charAt(0).toUpperCase() || "A"}
+                      </div>
+                    )}
                   </div>
-                  <div className="text-xs md:text-sm text-emerald-600">
-                    {admin.email}
-                  </div>
-                  <div className="px-2 py-1 my-2 text-xs text-white bg-indigo-400 rounded-sm">
-                    🎖️ {admin.designation || "Teacher"}
+
+                  <div className="text-center">
+                    <h3 className="mb-1 text-lg font-bold text-green-800">
+                      {admin.name}
+                    </h3>
+                    <p className="mb-3 text-sm text-green-600">{admin.email}</p>
+                    <div className="inline-flex items-center px-3 py-1 text-xs font-semibold text-white rounded-full shadow-md bg-gradient-to-r from-indigo-500 to-purple-600">
+                      <Award className="w-3 h-3 mr-1" />
+                      {admin.designation || "Teacher"}
+                    </div>
                   </div>
                 </div>
 
-                <div className="px-1 pb-3 space-y-3">
-                  <div className="space-y-2 text-xs text-gray-600 md:text-sm">
-                    <p className="flex items-center gap-2">
-                      <span className="text-blue-500">🎓</span>
-                      <span>
+                <div className="relative mb-6 space-y-3">
+                  <div className="space-y-3 text-sm text-gray-700">
+                    <div className="flex items-center gap-3 p-2 rounded-lg bg-green-50/60">
+                      <span className="text-lg">🎓</span>
+                      <span className="font-medium">
                         {admin.qualification || "Expert in Quranic Education"}
                       </span>
-                    </p>
-                    <p className="flex items-center gap-2">
-                      <span className="text-blue-500">💼</span>
-                      <span>{admin.experience || "2"} years</span>
-                    </p>
-                    <p className="flex items-center gap-2">
-                      <span className="text-blue-500">📞</span>
-                      <span>{admin.whatsapp || "99999999999"}</span>
-                    </p>
-                    <p className="flex items-center gap-2">
-                      <span className="text-blue-500">📅</span>
-                      <span>
+                    </div>
+                    <div className="flex items-center gap-3 p-2 rounded-lg bg-green-50/60">
+                      <span className="text-lg">💼</span>
+                      <span className="font-medium">
+                        {admin.experience || "2"} years experience
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-3 p-2 rounded-lg bg-green-50/60">
+                      <span className="text-lg">📞</span>
+                      <span className="font-medium">
+                        {admin.whatsapp || "99999999999"}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-3 p-2 rounded-lg bg-green-50/60">
+                      <span className="text-lg">📅</span>
+                      <span className="font-medium">
                         {admin.createdAt
                           ? new Date(admin.createdAt).toLocaleString("en-GB", {
                               day: "2-digit",
@@ -253,23 +307,70 @@ export const AdminsManagement = () => {
                             })
                           : "N/A"}
                       </span>
-                    </p>
+                    </div>
                   </div>
                 </div>
+
+                <div className="relative flex gap-3">
+                  <button
+                    onClick={() => handleDeleteAdmin(admin._id)}
+                    className="flex items-center justify-center flex-1 gap-2 px-4 py-3 text-sm font-semibold text-white transition-all duration-200 transform shadow-md bg-gradient-to-r from-red-500 to-red-600 rounded-xl hover:from-red-600 hover:to-red-700 hover:shadow-lg hover:-translate-y-1"
+                  >
+                    <IoTrashBinSharp className="w-4 h-4" />
+                    Delete
+                  </button>
+                  <button
+                    onClick={() =>
+                      navigate(`/admin-dashboard/teacher-detail/${admin._id}`)
+                    }
+                    className="flex items-center justify-center flex-1 gap-2 px-4 py-3 text-sm font-semibold text-white transition-all duration-200 transform shadow-md bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl hover:from-green-600 hover:to-emerald-700 hover:shadow-lg hover:-translate-y-1"
+                  >
+                    View Details
+                  </button>
+                </div>
               </div>
-              <div className="flex justify-center">
-                <button
-                  onClick={() => handleDeleteAdmin(admin._id)}
-                  className="flex items-center justify-center gap-1 px-3 py-2 text-xs font-medium text-white transition-colors duration-200 bg-red-600 rounded-lg shadow-sm hover:bg-red-700"
-                >
-                  <IoTrashBinSharp className="w-4 h-4" />
-                  Delete
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
+            ))}
+          </div>
+        )}
+      </div>
+
+      <style jsx>{`
+        @keyframes spin-slow {
+          from {
+            transform: rotate(0deg);
+          }
+          to {
+            transform: rotate(360deg);
+          }
+        }
+        @keyframes bounce-slow {
+          0%,
+          100% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(-10px);
+          }
+        }
+        @keyframes float {
+          0%,
+          100% {
+            transform: translateY(0px) rotate(0deg);
+          }
+          50% {
+            transform: translateY(-20px) rotate(180deg);
+          }
+        }
+        .animate-spin-slow {
+          animation: spin-slow 20s linear infinite;
+        }
+        .animate-bounce-slow {
+          animation: bounce-slow 3s ease-in-out infinite;
+        }
+        .animate-float {
+          animation: float 6s ease-in-out infinite;
+        }
+      `}</style>
     </div>
   );
 };

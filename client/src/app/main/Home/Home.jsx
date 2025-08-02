@@ -1,14 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Hero from "./Hero";
 import ChooseUs from "./ChooseUs";
 import Testimonial from "./Testimonial";
 import Faqs from "./Faqs";
 import whatsapp from "../../../assets/w2.png";
+import { useLocation } from "react-router";
 
 function Home() {
   const phoneNumber = "923411918094";
   const message = "Assalam O Alikum! I’m interested in your services.";
   const encodedMessage = encodeURIComponent(message);
+
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [pathname]);
   return (
     <div className="">
       <a

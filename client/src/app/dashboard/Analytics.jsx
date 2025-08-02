@@ -49,6 +49,7 @@ const Analytics = () => {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem("token");
+        const role = localStorage.getItem("role"); // assuming role is stored
 
         if (!token) {
           console.error("No token found in localStorage");
@@ -60,10 +61,15 @@ const Analytics = () => {
           "Content-Type": "application/json",
         };
 
-        // Fetch all data concurrently
+        const studentsEndpoint =
+          role === "superadmin"
+            ? `${BASE_URL}/super/getAllStudents`
+            : `${BASE_URL}/admin/students`;
+
+        // Fetch all data concurrently with role-based endpoint
         const [studentsResponse, coursesResponse, adminsResponse] =
           await Promise.all([
-            fetch(`${BASE_URL}/admin/students`, { headers }),
+            fetch(studentsEndpoint, { headers }),
             fetch(`${BASE_URL}/admin/courses`, { headers }),
             fetch(`${BASE_URL}/admin/getAdmins`, { headers }),
           ]);
@@ -76,7 +82,6 @@ const Analytics = () => {
         console.log("Courses API response:", coursesData);
         console.log("Admins API response:", adminsData);
 
-        // Process students data - handle different response structures
         let allStudents = [];
         if (Array.isArray(studentsData)) {
           allStudents = studentsData;
@@ -89,7 +94,6 @@ const Analytics = () => {
           allStudents = studentsData.students;
         }
 
-        // Process courses data
         let allCourses = [];
         if (Array.isArray(coursesData)) {
           allCourses = coursesData;
@@ -99,7 +103,6 @@ const Analytics = () => {
           allCourses = coursesData.courses;
         }
 
-        // Process admins data
         let allAdmins = [];
         if (Array.isArray(adminsData)) {
           allAdmins = adminsData;
@@ -109,7 +112,6 @@ const Analytics = () => {
           allAdmins = adminsData.admins;
         }
 
-        // Calculate student statistics
         const pendingStudents = allStudents.filter(
           (student) => student.status === "pending"
         ).length;
@@ -117,16 +119,14 @@ const Analytics = () => {
           (student) => student.status === "registered"
         ).length;
 
-        // Update analytics
         setAnalytics({
           totalStudents: allStudents.length,
-          pendingStudents: pendingStudents,
-          registeredStudents: registeredStudents,
+          pendingStudents,
+          registeredStudents,
           totalCourses: allCourses.length,
           totalAdmins: allAdmins.length,
         });
 
-        // Set students and courses data
         setStudents(allStudents);
         setCourses(allCourses);
       } catch (error) {

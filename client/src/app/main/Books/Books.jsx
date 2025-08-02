@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { Book, Download, Eye } from "lucide-react";
 import quran from "../../../assets/pdf/quran.pdf";
 import qaida from "../../../assets/pdf/qaida.pdf";
@@ -33,23 +34,43 @@ const IslamicLibrary = () => {
       description: "Authentic collection of Prophetic traditions",
     },
   ];
+  const { pathname } = useLocation();
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [pathname]);
   return (
     <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50">
       {/* Header */}
-      <div className="text-white shadow-xl bg-gradient-to-r from-emerald-600 via-green-600 to-teal-600">
-        <div className="container px-4 py-6 mx-auto">
-          <div className="text-center">
-            <div className="flex items-center justify-center mb-3">
-              <Book className="w-10 h-10 mr-3" />
-              <h1 className="text-3xl font-bold">Islamic Library</h1>
-            </div>
-            <p className="text-lg opacity-90">
-              Access Sacred Islamic Literature
-            </p>
-          </div>
+      <section className="relative py-12 overflow-hidden text-white bg-gradient-to-r from-green-600 to-emerald-600">
+        {/* Islamic Pattern Background */}
+        <div className="absolute inset-0 opacity-10">
+          <div
+            className="w-full h-full"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.2'%3E%3Cpath d='M30 0l15 15-15 15-15-15zM0 30l15 15-15 15-15-15zM30 30l15 15-15 15-15-15zM60 30l15 15-15 15-15-15z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+            }}
+          />
         </div>
-      </div>
+
+        <div className="relative max-w-6xl px-6 mx-auto text-center lg:px-12">
+          <div className="mb-2">
+            <div className="inline-flex items-center gap-2 px-4 py-2 mb-4 text-xs font-semibold text-black bg-white rounded-full bg-opacity-20">
+              📚 Downloads
+            </div>
+          </div>
+          <h1 className="mb-2 text-2xl font-bold leading-tight md:text-3xl lg:text-4xl">
+            Nourish Your Soul with
+            <span className="block text-yellow-300">
+              Authentic Islamic Texts
+            </span>
+          </h1>
+          <p className="max-w-3xl mx-auto text-sm leading-relaxed text-green-100 md:text-lg ">
+            Explore our collection of sacred Islamic books available for free
+            download.
+          </p>
+        </div>
+      </section>
 
       <div className="container px-4 py-8 mx-auto">
         {/* Books Grid */}
@@ -124,19 +145,6 @@ const IslamicLibrary = () => {
           ))}
         </div>
       </div>
-
-      {/* Footer */}
-      <footer className="py-6 mt-12 text-white bg-gradient-to-r from-emerald-800 via-green-800 to-teal-800">
-        <div className="container px-4 mx-auto text-center">
-          <div className="flex items-center justify-center mb-3">
-            <Book className="w-6 h-6 mr-2" />
-            <span className="text-xl font-bold">Islamic Library</span>
-          </div>
-          <p className="text-sm text-emerald-100">
-            Empowering Islamic education through accessible digital resources
-          </p>
-        </div>
-      </footer>
     </div>
   );
 };

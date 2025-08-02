@@ -5,7 +5,6 @@ import getCourses from "../controllers/getCourses.js";
 import updateStatus from "../controllers/updateStatus.js";
 import deleteStudent from "../controllers/deleteStudent.js";
 import deleteCourse from "../controllers/deleteCourse.js";
-import getAllStudents from "../controllers/getStudents.js";
 import upload from "../middlewares/upload.js";
 import { tokenVerifier } from "../middlewares/tokenVerifier.js";
 import findCourse from "../controllers/findCourse.js";
@@ -15,6 +14,7 @@ import {
   updateAdminProfile,
 } from "../controllers/profileController.js";
 import deleteAdmin from "../controllers/deleteAdmin.js";
+import getMyStudents from "../controllers/getMyStudents.js";
 
 const router = express.Router();
 
@@ -31,7 +31,7 @@ router.put("/updateStatus/:id", tokenVerifier, updateStatus);
 router.delete("/deleteStudent/:id", tokenVerifier, deleteStudent);
 router.delete("/deleteAdmin/:id", tokenVerifier, deleteAdmin);
 router.delete("/deleteCourse/:id", tokenVerifier, deleteCourse);
-router.get("/students", tokenVerifier, getAllStudents);
+router.get("/students", tokenVerifier, getMyStudents);
 router.get("/getAdminProfile", tokenVerifier, getAdminProfile);
 router.put(
   "/updateProfile",
@@ -39,4 +39,5 @@ router.put(
   uploadCloud.single("img"),
   updateAdminProfile
 );
+
 export default router;

@@ -5,7 +5,7 @@ import User from "../models/User.js";
 export const getAdminProfile = async (req, res) => {
   try {
     const admin = await User.findById(req.user.id).select("-password");
-    if (!admin || admin.role !== "admin") {
+    if (!admin || (admin.role !== "admin" && admin.role !== "superadmin")) {
       return res.status(404).json({ message: "Admin not found" });
     }
     res.status(200).json(admin);

@@ -3,15 +3,19 @@ import { User, Mail, Phone, Globe, BookOpen, Calendar } from "lucide-react";
 
 const RegStudent = () => {
   const [courses, setCourses] = useState([]);
+  const [teachers, setTeachers] = useState([]);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     whatsapp: "",
     country: "",
     course: "",
+    teacherId: "",
     joinDate: "",
   });
+
   const BASE_URL = `http://localhost:8000`;
+
   const fetchCourses = async () => {
     try {
       const res = await fetch(`${BASE_URL}/admin/courses`, {
@@ -23,6 +27,19 @@ const RegStudent = () => {
       setCourses(data);
     } catch (err) {
       console.error("Failed to fetch courses", err);
+    }
+  };
+  const fetchTeachers = async () => {
+    try {
+      const res = await fetch(`${BASE_URL}/super/getAllTeachers`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      const data = await res.json();
+      setTeachers(data.teachers);
+    } catch (err) {
+      console.error("Failed to fetch teachers", err);
     }
   };
 
@@ -84,6 +101,7 @@ const RegStudent = () => {
       !formData.whatsapp ||
       !formData.country ||
       !formData.course ||
+      !formData.teacherId ||
       !formData.joinDate
     ) {
       alert("Please fill in all required fields");
@@ -108,6 +126,7 @@ const RegStudent = () => {
   };
   useEffect(() => {
     fetchCourses();
+    fetchTeachers();
   }, []);
 
   return (
@@ -257,6 +276,45 @@ const RegStudent = () => {
                   {courses.map((course, index) => (
                     <option key={index} value={course.title}>
                       {course.title}
+                    </option>
+                  ))}
+                </select>
+                <div className="absolute transform -translate-y-1/2 pointer-events-none right-3 top-1/2">
+                  <svg
+                    className="w-4 h-4 text-green-500"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            {/* Select Teacher  */}
+            <div className="relative">
+              <label className="block mb-1 text-sm font-medium text-green-700">
+                Select Teacher *
+              </label>
+              <div className="relative">
+                <BookOpen className="absolute w-4 h-4 text-green-500 transform -translate-y-1/2 left-3 top-1/2" />
+                <select
+                  name="teacherId"
+                  required
+                  value={formData.teacherId}
+                  onChange={handleInputChange}
+                  className="w-full pl-10 pr-4 py-2.5 text-sm border border-green-200 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-white/70 appearance-none cursor-pointer"
+                >
+                  <option value="">Choose Your Fav Teacher</option>
+                  {teachers.map((teacher, index) => (
+                    <option key={index} value={teacher._id}>
+                      {teacher.name}
                     </option>
                   ))}
                 </select>
