@@ -8,6 +8,9 @@ function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const role = localStorage.getItem("role");
   const name = localStorage.getItem("name");
+  const userImg = localStorage.getItem("userImg");
+  const user = localStorage.getItem("user");
+
   const navigate = useNavigate();
 
   function handleLogout() {
@@ -90,13 +93,13 @@ function Navbar() {
                 <>
                   <div
                     onClick={() => navigate("/admin-dashboard")}
-                    className="flex items-center justify-center gap-2 px-3 py-1 bg-gray-100 rounded-full cursor-pointer sm:py-2"
+                    className="flex items-center justify-center gap-2 px-2 py-1 bg-gray-100 rounded-full cursor-pointer "
                   >
-                    <User className="hidden w-4 h-4 text-gray-600 sm:flex" />
-                    {role == "superadmin" && "🟢"}
-                    <span className="text-[10px] capitalize sm:text-sm font-medium text-gray-800 ">
-                      {name?.split(" ")[0]}
-                    </span>
+                    <div className="relative flex items-center gap-1">
+                      <span className="text-[10px] capitalize sm:text-xs font-medium text-gray-800 ">
+                        {name?.split(" ")[0]}
+                      </span>
+                    </div>
                   </div>
                   <button
                     onClick={handleLogout}

@@ -9,6 +9,8 @@ import {
   Menu,
   X,
 } from "lucide-react";
+import { RiBookShelfLine } from "react-icons/ri";
+
 import { NavLink, useNavigate } from "react-router";
 import { useState } from "react";
 
@@ -111,6 +113,21 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
               <span>All Students</span>
             </NavLink>
           )}
+          {/* Admins tab visible only to superadmin */}
+          {role === "superadmin" && (
+            <NavLink
+              to="admin-management"
+              className={`w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm transition-all duration-200 mb-1 ${
+                activeTab === "admin-management"
+                  ? "bg-emerald-700 text-white shadow-lg"
+                  : "text-emerald-200 hover:bg-emerald-700/50 hover:text-white"
+              }`}
+              onClick={() => setIsOpen(false)}
+            >
+              <UserCheck className="w-4 h-4" />
+              <span>Admins/Teachers</span>
+            </NavLink>
+          )}
 
           <NavLink
             to="course-management"
@@ -134,25 +151,9 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
             }`}
             onClick={() => setIsOpen(false)}
           >
-            <BookOpen className="w-4 h-4" />
-            <span>Library Management</span>
+            <RiBookShelfLine className="w-4 h-4" />
+            <span>Library</span>
           </NavLink>
-
-          {/* Admins tab visible only to superadmin */}
-          {role === "superadmin" && (
-            <NavLink
-              to="admin-management"
-              className={`w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm transition-all duration-200 mb-1 ${
-                activeTab === "admin-management"
-                  ? "bg-emerald-700 text-white shadow-lg"
-                  : "text-emerald-200 hover:bg-emerald-700/50 hover:text-white"
-              }`}
-              onClick={() => setIsOpen(false)}
-            >
-              <UserCheck className="w-4 h-4" />
-              <span>Admins</span>
-            </NavLink>
-          )}
 
           <NavLink
             to="settings"

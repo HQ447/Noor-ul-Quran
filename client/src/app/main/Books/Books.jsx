@@ -1,39 +1,51 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Book, Download, Eye } from "lucide-react";
-import quran from "../../../assets/pdf/quran.pdf";
-import qaida from "../../../assets/pdf/qaida.pdf";
-import book from "../../../assets/pdf/book.pdf";
+// import quran from "../../../assets/pdf/quran.pdf";
+// import qaida from "../../../assets/pdf/qaida.pdf";
+// import book from "../../../assets/pdf/book.pdf";
 const IslamicLibrary = () => {
   // Sample books data with PDF links
-  const books = [
-    {
-      id: 1,
-      title: "The Holy Quran",
-      author: "Arabic 15 Lines Quran",
-      coverImg:
-        "https://i.pinimg.com/474x/67/cd/ff/67cdff79947266fb9393815eaa02bb23.jpg",
-      pdfUrl: quran,
-      description: "Holy Quran with Arabic text and English translation",
-    },
-    {
-      id: 2,
-      title: "Noorani Qaida",
-      author: "Noorani Qaida Urdu",
-      coverImg:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdBHaNFAULretljI3ok8v5yd42TJgaSRukB78U2T849y_Ax6msibsYNz4uu7yCRysHrxs&usqp=CAU",
-      pdfUrl: qaida,
-      description: "Classical commentary on the Holy Quran",
-    },
-    {
-      id: 3,
-      title: "Lughat ul Muslim",
-      author: "Sheikh Mosa Al-Iraqi",
-      coverImg: "https://online.pubhtml5.com/qtvu/hbsg/files/page/1.jpg",
-      pdfUrl: book,
-      description: "Authentic collection of Prophetic traditions",
-    },
-  ];
+  const [books, setBooks] = useState([]);
+  const BASE_URL = "http://localhost:8000";
+
+  useEffect(() => {
+    fetch(`${BASE_URL}/api/books`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => setBooks(data.books || []));
+  }, []);
+  // const books = [
+  //   {
+  //     id: 1,
+  //     title: "The Holy Quran",
+  //     author: "Arabic 15 Lines Quran",
+  //     coverImg:
+  //       "https://i.pinimg.com/474x/67/cd/ff/67cdff79947266fb9393815eaa02bb23.jpg",
+  //     pdfUrl: quran,
+  //     description: "Holy Quran with Arabic text and English translation",
+  //   },
+  //   {
+  //     id: 2,
+  //     title: "Noorani Qaida",
+  //     author: "Noorani Qaida Urdu",
+  //     coverImg:
+  //       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdBHaNFAULretljI3ok8v5yd42TJgaSRukB78U2T849y_Ax6msibsYNz4uu7yCRysHrxs&usqp=CAU",
+  //     pdfUrl: qaida,
+  //     description: "Classical commentary on the Holy Quran",
+  //   },
+  //   {
+  //     id: 3,
+  //     title: "Lughat ul Muslim",
+  //     author: "Sheikh Mosa Al-Iraqi",
+  //     coverImg: "https://online.pubhtml5.com/qtvu/hbsg/files/page/1.jpg",
+  //     pdfUrl: book,
+  //     description: "Authentic collection of Prophetic traditions",
+  //   },
+  // ];
   const { pathname } = useLocation();
 
   useEffect(() => {
@@ -83,16 +95,17 @@ const IslamicLibrary = () => {
               {/* Book Cover */}
               <div className="relative h-48 overflow-hidden bg-gray-200">
                 <img
-                  src={book.coverImg}
+                  src={book.thumbnail}
                   alt={book.title}
                   className="object-cover w-full h-full"
                 />
                 <div className="absolute inset-0 bg-black/10"></div>
-
+                <div>{book.title}</div>
+                <div>{book.author}</div>
                 {/* Overlay Actions */}
                 <div className="absolute inset-0 flex items-center justify-center gap-3 transition-opacity duration-300 opacity-0 bg-black/60 group-hover:opacity-100">
                   <a
-                    href={book.pdfUrl}
+                    href={book.pdf}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-2 text-white transition-all rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30"
@@ -101,7 +114,8 @@ const IslamicLibrary = () => {
                     <Eye className="w-5 h-5" />
                   </a>
                   <a
-                    href={book.pdfUrl}
+                    href={book.pdf}
+                    target="_blank"
                     download
                     className="p-2 text-white transition-all rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30"
                     title="Download PDF"
@@ -123,7 +137,7 @@ const IslamicLibrary = () => {
                 {/* Action Buttons */}
                 <div className="flex gap-2">
                   <a
-                    href={book.pdfUrl}
+                    href={book.pdf}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center justify-center flex-1 gap-1 px-3 py-2 text-sm font-medium text-white transition-all duration-300 rounded-md bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700"
@@ -132,7 +146,8 @@ const IslamicLibrary = () => {
                     View
                   </a>
                   <a
-                    href={book.pdfUrl}
+                    href={book.pdf}
+                    target="_blank"
                     download
                     className="flex items-center justify-center flex-1 gap-1 px-3 py-2 text-sm font-medium text-white transition-all duration-300 rounded-md bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-700 hover:to-emerald-700"
                   >

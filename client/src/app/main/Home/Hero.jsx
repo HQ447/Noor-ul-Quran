@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Gift, Star, Users, BookOpen, CheckCircle } from "lucide-react";
-import { NavLink } from "react-router-dom";
+
 export default function Hero() {
   const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -30,139 +30,121 @@ export default function Hero() {
 
   return (
     <section className="relative min-h-screen overflow-hidden">
-      {/* Enhanced Islamic Background with Multiple Layers */}
+      {/* Professional Islamic Background */}
       <div className="absolute inset-0">
-        {/* Base gradient - Rich Islamic colors */}
-        <div className="absolute inset-0 bg-gradient-to-br from-emerald-950 via-green-900 to-teal-900"></div>
+        {/* Clean gradient base with better contrast */}
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-emerald-950 to-teal-950"></div>
 
-        {/* Animated geometric pattern overlay */}
-        <div className="absolute inset-0 opacity-10">
+        {/* Subtle geometric pattern overlay */}
+        <div className="absolute inset-0 opacity-5">
           <div
-            className="w-full h-full animate-pulse"
+            className="w-full h-full"
             style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.8'%3E%3Cpath d='M40 40l20-20v40zm0 0l-20-20v40zm0 0l20 20h-40zm0 0l-20 20h40zm0-20a20 20 0 100 40 20 20 0 000-40z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-              backgroundSize: "80px 80px",
+              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3Cpath d='M30 0v60M0 30h60' stroke='%23ffffff' stroke-width='0.5' stroke-opacity='0.3'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+              backgroundSize: "60px 60px",
             }}
           />
         </div>
 
-        {/* Radial gradient for depth */}
-        <div className="absolute inset-0 bg-gradient-radial from-transparent via-green-950/40 to-emerald-950/80"></div>
+        {/* Radial overlay for depth without overwhelming */}
+        <div className="absolute inset-0 bg-gradient-radial from-transparent via-slate-900/30 to-slate-900/60"></div>
 
-        {/* Enhanced floating Islamic elements */}
-        <div className="absolute w-20 h-20 border rounded-full md:w-24 md:h-24 top-16 left-4 md:top-20 md:left-10 border-emerald-300/20 animate-pulse"></div>
+        {/* Minimalist floating elements */}
         <div
-          className="absolute w-12 h-12 rotate-45 md:w-16 md:h-16 top-32 right-8 md:top-40 md:right-20 bg-teal-400/10 animate-bounce"
+          className="absolute w-16 h-16 border rounded-full top-20 left-10 border-emerald-400/20 animate-pulse"
           style={{ animationDuration: "4s" }}
         ></div>
-        <div className="absolute w-16 h-16 transform border md:w-20 md:h-20 bottom-24 left-8 md:bottom-32 md:left-16 border-green-300/20 rotate-12">
-          <div className="w-full h-full transform rotate-45 border border-green-300/20"></div>
-        </div>
         <div
-          className="absolute w-10 h-10 transform rounded-lg md:w-14 md:h-14 top-1/3 right-1/4 bg-emerald-400/5 rotate-12 animate-pulse"
-          style={{ animationDelay: "2s" }}
+          className="absolute w-12 h-12 border rounded-full top-40 right-20 border-teal-400/15 animate-pulse"
+          style={{ animationDuration: "3s", animationDelay: "1s" }}
+        ></div>
+        <div
+          className="absolute w-8 h-8 border rounded-full bottom-32 left-16 border-emerald-300/10 animate-pulse"
+          style={{ animationDuration: "5s", animationDelay: "2s" }}
         ></div>
 
-        {/* Additional decorative elements */}
-        <div className="absolute w-6 h-6 border rounded-full md:w-8 md:h-8 top-20 right-6 md:top-24 md:right-12 border-green-300/30"></div>
-        <div
-          className="absolute w-4 h-4 rounded-full md:w-6 md:h-6 bottom-20 right-16 md:bottom-24 md:right-32 bg-teal-300/20 animate-pulse"
-          style={{ animationDelay: "1s" }}
-        ></div>
-
-        {/* Star elements */}
+        {/* Professional accent elements */}
         <div className="absolute top-1/4 left-1/3">
-          <Star className="w-3 h-3 md:w-4 md:h-4 text-emerald-300/30 animate-pulse" />
+          <Star
+            className="w-4 h-4 text-emerald-400/30 animate-pulse"
+            style={{ animationDuration: "3s" }}
+          />
         </div>
-        <div
-          className="absolute bottom-1/3 right-1/3"
-          style={{ animationDelay: "1.5s" }}
-        >
-          <Star className="w-2 h-2 md:w-3 md:h-3 text-teal-300/40 animate-pulse" />
-        </div>
-      </div>
-
-      {/* Enhanced Arabic calligraphy overlay */}
-      <div className="absolute text-center transform -translate-x-1/2 top-4 left-1/2 z-5 md:top-8">
-        <div className="mb-1 text-lg font-bold md:mb-2 md:text-2xl lg:text-3xl text-emerald-200/40">
-          بسم الله الرحمن الرحيم
-        </div>
-        <div className="text-xs md:text-sm text-green-300/60">
-          In the name of Allah, the Most Gracious, the Most Merciful
+        <div className="absolute bottom-1/3 right-1/3">
+          <Star
+            className="w-3 h-3 text-teal-400/25 animate-pulse"
+            style={{ animationDuration: "4s", animationDelay: "1.5s" }}
+          />
         </div>
       </div>
 
-      {/* Enhanced bottom separator */}
+      {/* Clean Arabic calligraphy header */}
+      <div className="absolute z-10 text-center transform -translate-x-1/2 top-8 left-1/2">
+        <div className="px-6 py-3 border rounded-lg bg-white/10 backdrop-blur-md border-white/20">
+          <div className="mb-1 text-2xl font-bold lg:text-3xl text-emerald-100">
+            بسم الله الرحمن الرحيم
+          </div>
+          <div className="text-sm text-emerald-200/80">
+            In the name of Allah, the Most Gracious, the Most Merciful
+          </div>
+        </div>
+      </div>
+
+      {/* Professional bottom wave */}
       <div className="absolute bottom-0 z-10 w-full">
         <svg
           viewBox="0 0 1000 100"
           preserveAspectRatio="none"
-          className="w-full h-12 md:h-16 lg:h-20"
+          className="w-full h-16 lg:h-20"
         >
           <defs>
-            <pattern
-              id="islamicPattern"
-              x="0"
-              y="0"
-              width="20"
-              height="20"
-              patternUnits="userSpaceOnUse"
-            >
-              <rect width="20" height="20" fill="#065f46" opacity="0.1" />
-              <circle cx="10" cy="10" r="2" fill="#059669" opacity="0.3" />
-            </pattern>
             <linearGradient id="waveGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#ffffff" stopOpacity="0.8" />
-              <stop offset="50%" stopColor="#ffffff" stopOpacity="0.9" />
-              <stop offset="100%" stopColor="#ffffff" stopOpacity="0.8" />
+              <stop offset="0%" stopColor="#ffffff" stopOpacity="0.95" />
+              <stop offset="50%" stopColor="#ffffff" stopOpacity="1" />
+              <stop offset="100%" stopColor="#ffffff" stopOpacity="0.95" />
             </linearGradient>
           </defs>
           <path
-            d="M1000,0l-500,98l-500,-98l0,100l1000,0l0,-100Z"
+            d="M0,60 C250,20 750,20 1000,60 L1000,100 L0,100 Z"
             fill="url(#waveGradient)"
-          />
-          <path
-            d="M1000,20l-500,78l-500,-78l0,80l1000,0l0,-80Z"
-            className="fill-white"
-            fill="url(#islamicPattern)"
           />
         </svg>
       </div>
 
-      <div className="relative z-20 flex flex-col items-center gap-6 px-4 py-12 mx-auto max-w-7xl sm:px-6 lg:px-12 lg:flex-row lg:gap-12 lg:py-20 xl:py-28">
-        {/* Enhanced Text Content */}
+      <div className="relative z-20 flex flex-col items-center gap-12 px-4 py-20 mx-auto max-w-7xl sm:px-6 lg:px-12 lg:flex-row lg:gap-16 lg:py-28 xl:py-32">
+        {/* Enhanced Text Content with better readability */}
         <div className="flex-1 text-center lg:text-left">
-          {/* Islamic greeting with enhanced styling */}
-          <div className="mb-4 lg:mb-6">
-            <div className="inline-block p-2 rounded-lg bg-gradient-to-r from-emerald-500/10 to-teal-500/10 backdrop-blur-sm">
-              <p className="text-xs font-medium tracking-wide md:text-sm text-emerald-200">
+          {/* Professional Islamic greeting */}
+          <div className="mb-6 lg:mb-8">
+            <div className="inline-block p-4 border rounded-xl bg-white/10 backdrop-blur-lg border-white/20">
+              <p className="text-sm font-medium tracking-wide text-emerald-100 md:text-base">
                 السلام عليكم ورحمة الله وبركاته
               </p>
-              <p className="mt-1 text-xs text-green-300/80">
+              <p className="mt-1 text-sm text-emerald-200/90">
                 Peace and blessings of Allah be upon you
               </p>
             </div>
           </div>
 
-          {/* Enhanced main heading */}
-          <h1 className="text-2xl font-bold leading-tight text-white md:text-3xl lg:text-4xl xl:text-5xl drop-shadow-lg">
-            <span className="block mb-2">Learn Online from</span>
-            <mark className="inline-block px-2 py-1 text-sm text-green-900 rounded-lg shadow-lg md:px-3 md:py-2 md:text-base lg:text-lg xl:text-xl bg-gradient-to-r from-emerald-400 to-teal-400">
+          {/* Clear, professional main heading */}
+          <h1 className="text-3xl font-bold leading-tight text-white md:text-4xl lg:text-5xl xl:text-6xl">
+            <span className="block mb-3">Learn Online from</span>
+            <span className="inline-block px-4 py-2 shadow-xl text-slate-900 rounded-xl bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-500">
               Expert Quran Teachers
-            </mark>
+            </span>
           </h1>
 
-          {/* Enhanced description */}
-          <p className="max-w-lg mx-auto mt-4 text-sm leading-relaxed md:text-base lg:text-lg text-emerald-100 lg:mx-0 lg:max-w-xl">
+          {/* Clear description with better contrast */}
+          <p className="max-w-2xl mx-auto mt-6 text-lg leading-relaxed text-emerald-50 lg:mx-0 lg:text-xl">
             Join us today as we are offering{" "}
-            <mark className="px-1 py-0.5 font-semibold text-green-900 rounded-md shadow-sm md:px-2 md:py-1 bg-gradient-to-r from-teal-400 to-emerald-400">
+            <span className="px-3 py-1 font-semibold rounded-lg text-slate-900 bg-gradient-to-r from-teal-400 to-emerald-400">
               free trial classes
-            </mark>{" "}
+            </span>{" "}
             to all our new students.
           </p>
 
-          {/* Features list */}
-          <div className="grid grid-cols-1 gap-2 mt-4 md:grid-cols-2 lg:gap-3">
+          {/* Professional features grid */}
+          <div className="grid grid-cols-2 gap-4 mt-8 lg:gap-6">
             {[
               { icon: Users, text: "Certified Teachers" },
               { icon: BookOpen, text: "Interactive Learning" },
@@ -171,60 +153,59 @@ export default function Hero() {
             ].map((feature, index) => (
               <div
                 key={index}
-                className="flex items-center gap-2 text-emerald-200"
+                className="flex items-center gap-3 p-3 border rounded-lg bg-white/10 backdrop-blur-sm border-white/20"
               >
-                <feature.icon className="w-3 h-3 md:w-4 md:h-4 text-emerald-400" />
-                <span className="text-xs md:text-sm">{feature.text}</span>
+                <feature.icon className="w-5 h-5 text-emerald-400" />
+                <span className="text-sm font-medium text-emerald-100 md:text-base">
+                  {feature.text}
+                </span>
               </div>
             ))}
           </div>
 
-          {/* Enhanced Islamic quote */}
-          <div className="p-3 mt-4 border-l-4 rounded-r-lg md:p-4 border-emerald-300 bg-green-900/30 backdrop-blur-sm">
-            <p className="text-xs italic md:text-sm text-emerald-200">
+          {/* Professional Islamic quote */}
+          <div className="p-6 mt-8 border-l-4 rounded-r-xl border-emerald-400 bg-white/10 backdrop-blur-lg">
+            <p className="text-base italic text-emerald-100 md:text-lg">
               "خَيْرُكُمْ مَن تَعَلَّمَ القُرْآنَ وَعَلَّمَهُ"
             </p>
-            <p className="mt-1 text-xs text-green-300/80">
+            <p className="mt-2 text-sm text-emerald-200/90">
               "The best of you are those who learn the Quran and teach it" -
               Prophet Muhammad (ﷺ)
             </p>
           </div>
 
-          {/* Enhanced CTA Button */}
-          <div className="mt-6 lg:mt-8">
-            <NavLink
-              to={"/register-student"}
-              className="inline-flex items-center gap-2 px-6 py-3 text-xs font-semibold text-white transition-all duration-300 transform border rounded-full shadow-xl md:gap-3 md:px-8 md:py-4 md:text-sm lg:text-base bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 hover:shadow-2xl hover:-translate-y-1 border-emerald-400/20 group"
-            >
-              <Gift className="w-4 h-4 md:w-5 md:h-5 text-emerald-200 group-hover:animate-bounce" />
+          {/* Professional CTA Button */}
+          <div className="mt-10 lg:mt-12">
+            <button className="inline-flex items-center gap-3 px-8 py-4 text-base font-semibold text-white transition-all duration-300 transform rounded-full shadow-2xl md:px-10 md:py-5 md:text-lg bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 hover:shadow-3xl hover:-translate-y-1 group">
+              <Gift className="w-5 h-5 text-emerald-200 group-hover:animate-bounce" />
               <span>Book Free Trial Class</span>
-              <span className="text-xs text-emerald-200">إن شاء الله</span>
-            </NavLink>
+              <span className="text-sm text-emerald-200">إن شاء الله</span>
+            </button>
 
             {/* Trust indicators */}
-            <div className="flex items-center justify-center gap-4 mt-3 text-xs lg:justify-start text-emerald-300/80">
-              <span className="flex items-center gap-1">
-                <CheckCircle className="w-3 h-3" />
+            <div className="flex items-center justify-center gap-6 mt-4 text-sm lg:justify-start text-emerald-200/90">
+              <span className="flex items-center gap-2">
+                <CheckCircle className="w-4 h-4" />
                 No Credit Card Required
               </span>
-              <span className="flex items-center gap-1">
-                <Users className="w-3 h-3" />
+              <span className="flex items-center gap-2">
+                <Users className="w-4 h-4" />
                 500+ Happy Students
               </span>
             </div>
           </div>
         </div>
 
-        {/* Enhanced Image Slider */}
-        <div className="flex-1 w-full max-w-sm mx-auto lg:mx-0 lg:max-w-md xl:max-w-lg">
+        {/* Professional Image Slider */}
+        <div className="flex-1 w-full max-w-lg mx-auto lg:mx-0">
           <div className="relative">
-            {/* Enhanced Islamic decorative frame */}
-            <div className="absolute border -inset-3 md:-inset-4 bg-gradient-to-r from-emerald-600/20 to-teal-600/20 rounded-2xl backdrop-blur-sm border-emerald-400/30"></div>
-            <div className="absolute -inset-1 md:-inset-2 bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-xl"></div>
+            {/* Clean, professional frame */}
+            <div className="absolute -inset-4 bg-gradient-to-r from-emerald-600/20 to-teal-600/20 rounded-2xl backdrop-blur-sm"></div>
+            <div className="absolute -inset-2 bg-white/10 rounded-xl backdrop-blur-sm"></div>
 
-            <div className="relative overflow-hidden border shadow-2xl rounded-xl border-emerald-300/30 bg-white/95">
+            <div className="relative overflow-hidden border shadow-2xl rounded-2xl border-white/30 bg-white/95 backdrop-blur-sm">
               <div
-                className="flex transition-transform duration-500 ease-out"
+                className="flex transition-transform duration-700 ease-out"
                 style={{ transform: `translateX(-${currentSlide * 100}%)` }}
               >
                 {slides.map((slide, index) => (
@@ -233,32 +214,32 @@ export default function Hero() {
                       src={slide.src}
                       alt={slide.alt}
                       className="object-contain w-full h-auto"
-                      style={{ minHeight: "200px", maxHeight: "300px" }}
+                      style={{ minHeight: "300px", maxHeight: "400px" }}
                     />
                   </div>
                 ))}
               </div>
 
-              {/* Enhanced slide indicators */}
-              <div className="absolute flex gap-2 transform -translate-x-1/2 bottom-4 left-1/2">
+              {/* Professional slide indicators */}
+              <div className="absolute flex gap-3 transform -translate-x-1/2 bottom-6 left-1/2">
                 {slides.map((_, index) => (
                   <button
                     key={index}
                     onClick={() => setCurrentSlide(index)}
                     className={`transition-all duration-300 ${
                       currentSlide === index
-                        ? "w-6 h-2 md:w-8 md:h-3 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full shadow-lg"
-                        : "w-2 h-2 md:w-3 md:h-3 bg-emerald-200/60 rounded-full hover:bg-emerald-300/80 backdrop-blur-sm"
+                        ? "w-8 h-3 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full shadow-lg"
+                        : "w-3 h-3 bg-gray-400/60 rounded-full hover:bg-gray-300 backdrop-blur-sm"
                     }`}
                     aria-label={`Go to slide ${index + 1}`}
                   />
                 ))}
               </div>
 
-              {/* Progress bar */}
-              <div className="absolute top-0 left-0 w-full h-1 bg-emerald-200/20">
+              {/* Clean progress bar */}
+              <div className="absolute top-0 left-0 w-full h-1 bg-gray-200/30">
                 <div
-                  className="h-full transition-all duration-500 bg-gradient-to-r from-emerald-500 to-teal-500"
+                  className="h-full transition-all duration-700 bg-gradient-to-r from-emerald-500 to-teal-500"
                   style={{
                     width: `${((currentSlide + 1) / slides.length) * 100}%`,
                   }}
@@ -266,31 +247,25 @@ export default function Hero() {
               </div>
             </div>
 
-            {/* Enhanced corner decorations */}
-            <div className="absolute w-4 h-4 rotate-45 border-2 md:w-6 md:h-6 -top-2 -right-2 border-emerald-400/40 animate-pulse"></div>
-            <div
-              className="absolute w-3 h-3 rounded-full md:w-4 md:h-4 -bottom-2 -left-2 bg-teal-400/30 animate-pulse"
-              style={{ animationDelay: "1s" }}
-            ></div>
-
-            {/* Additional glow effect */}
-            <div className="absolute inset-0 pointer-events-none rounded-xl bg-gradient-to-t from-emerald-500/5 to-transparent"></div>
+            {/* Subtle corner accents */}
+            <div className="absolute w-6 h-6 rotate-45 border-2 -top-3 -right-3 border-emerald-400/40"></div>
+            <div className="absolute w-4 h-4 rounded-full -bottom-2 -left-2 bg-teal-400/40"></div>
           </div>
 
-          {/* Student testimonial preview */}
-          <div className="p-3 mt-4 text-center rounded-lg bg-white/5 backdrop-blur-sm">
-            <div className="flex justify-center mb-1">
+          {/* Professional testimonial */}
+          <div className="p-4 mt-6 text-center border rounded-xl bg-white/10 backdrop-blur-lg border-white/20">
+            <div className="flex justify-center mb-2">
               {[...Array(5)].map((_, i) => (
                 <Star
                   key={i}
-                  className="w-3 h-3 text-yellow-400 fill-current"
+                  className="w-4 h-4 text-yellow-400 fill-current"
                 />
               ))}
             </div>
-            <p className="text-xs text-emerald-200">
+            <p className="text-sm font-medium text-emerald-100">
               "Excellent teachers and flexible timing!"
             </p>
-            <p className="text-xs text-emerald-300/60">- Sarah M.</p>
+            <p className="text-sm text-emerald-200/80">- Sarah M.</p>
           </div>
         </div>
       </div>

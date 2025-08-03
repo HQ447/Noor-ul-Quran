@@ -5,7 +5,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 
 // Enhanced Islamic Pattern Component with animated elements
 const IslamicPattern = () => (
-  <div className="absolute inset-0 pointer-events-none opacity-10">
+  <div className="absolute inset-0 pointer-events-none opacity-5">
     <div className="grid h-full grid-cols-12 gap-3">
       {[...Array(96)].map((_, i) => (
         <div
@@ -96,20 +96,17 @@ export const AdminsManagement = () => {
       <FloatingParticles />
 
       {/* Header with enhanced styling */}
-      <div className="relative p-6 md:p-8">
+      <div className="relative z-10 p-6 md:p-8">
         <div className="flex flex-col justify-between gap-6 mb-8 md:flex-row md:items-center">
           <div className="relative">
             <div className="flex items-center gap-3 mb-3">
-              <div className="p-3 shadow-lg bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl">
-                <Users className="w-8 h-8 text-white" />
-              </div>
               <div>
-                <h2 className="text-2xl font-bold text-transparent md:text-3xl bg-gradient-to-r from-green-700 to-emerald-800 bg-clip-text">
+                <h2 className="text-xl font-bold text-transparent md:text-2xl bg-gradient-to-r from-green-700 to-emerald-800 bg-clip-text">
                   Admins & Teachers Management
                 </h2>
                 <div className="flex items-center gap-2 mt-1">
                   <Sparkles className="w-4 h-4 text-green-500" />
-                  <p className="text-sm font-medium text-green-600">
+                  <p className="text-xs font-medium text-green-600 md:text-sm">
                     Manage platform administrators & instructors
                   </p>
                 </div>
@@ -120,7 +117,7 @@ export const AdminsManagement = () => {
 
           <button
             onClick={() => setViewMode(viewMode === "table" ? "grid" : "table")}
-            className="flex items-center px-6 py-3 text-sm font-medium text-white transition-all duration-300 transform shadow-lg group rounded-xl bg-gradient-to-r from-green-600 to-emerald-700 hover:from-green-700 hover:to-emerald-800 hover:shadow-xl hover:-translate-y-1"
+            className="flex items-center px-3 py-2 text-xs font-medium text-white transition-all duration-300 transform shadow-lg md:px-6 md:py-3 group rounded-xl bg-gradient-to-r from-green-600 to-emerald-700 hover:from-green-700 hover:to-emerald-800 hover:shadow-xl hover:-translate-y-1"
           >
             {viewMode === "table" ? (
               <>
@@ -137,7 +134,7 @@ export const AdminsManagement = () => {
         </div>
 
         {viewMode === "table" ? (
-          <div className="relative overflow-hidden border-2 shadow-2xl bg-white/90 backdrop-blur-lg rounded-2xl border-green-200/40">
+          <div className="relative z-10 overflow-hidden border-2 shadow-2xl bg-white/90 backdrop-blur-lg rounded-2xl border-green-200/40">
             <div className="absolute inset-0 bg-gradient-to-r from-green-50/50 to-emerald-50/50"></div>
             <div className="relative overflow-x-auto">
               <table className="w-full min-w-full">
@@ -235,98 +232,152 @@ export const AdminsManagement = () => {
             </div>
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="relative z-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {admins.map((admin) => (
               <div
                 key={admin._id}
-                className="relative p-6 transition-all duration-300 border-2 shadow-lg group bg-white/90 backdrop-blur-lg rounded-2xl border-green-200/40 hover:shadow-2xl hover:-translate-y-2 hover:border-green-300/60"
+                className="relative p-6 transition-all duration-300 border shadow-xl bg-white/95 backdrop-blur-sm rounded-2xl border-emerald-200/50 hover:shadow-2xl hover:-translate-y-1 hover:border-emerald-300/70 group"
               >
-                {/* Card background gradient */}
-                <div className="absolute inset-0 bg-gradient-to-br from-green-50/50 to-emerald-50/50 rounded-2xl"></div>
+                {/* Decorative Islamic Pattern Overlay - Fixed z-index */}
+                <div className="absolute top-0 right-0 w-20 h-20 transition-opacity duration-300 pointer-events-none opacity-5 group-hover:opacity-10">
+                  <svg
+                    viewBox="0 0 100 100"
+                    className="w-full h-full text-emerald-600"
+                  >
+                    <circle cx="50" cy="20" r="8" fill="currentColor" />
+                    <circle cx="50" cy="50" r="12" fill="currentColor" />
+                    <circle cx="50" cy="80" r="8" fill="currentColor" />
+                    <circle cx="20" cy="35" r="6" fill="currentColor" />
+                    <circle cx="80" cy="35" r="6" fill="currentColor" />
+                    <circle cx="20" cy="65" r="6" fill="currentColor" />
+                    <circle cx="80" cy="65" r="6" fill="currentColor" />
+                  </svg>
+                </div>
 
                 {/* Role badge */}
-                <div className="absolute px-3 py-1 text-xs font-bold text-white capitalize rounded-full shadow-md top-4 right-4 bg-gradient-to-r from-yellow-500 to-orange-500">
+                <div className="absolute z-20 px-3 py-1 text-xs font-bold text-white capitalize rounded-full shadow-md top-4 right-4 bg-gradient-to-r from-yellow-500 to-orange-500">
                   🔰 {admin.role === "admin" ? "Teacher" : "Super Admin"}
                 </div>
 
-                <div className="relative flex flex-col items-center mb-6">
-                  <div className="mb-4">
-                    {admin.img ? (
-                      <img
-                        src={admin.img}
-                        alt={admin.name}
-                        className="object-cover w-20 h-20 transition-shadow border-4 border-green-200 rounded-full shadow-lg group-hover:shadow-xl"
-                      />
-                    ) : (
-                      <div className="flex items-center justify-center w-20 h-20 text-2xl font-bold text-white transition-shadow rounded-full shadow-lg bg-gradient-to-br from-green-500 to-emerald-600 group-hover:shadow-xl">
-                        {admin?.name?.charAt(0).toUpperCase() || "A"}
+                {/* Main content with proper z-index */}
+                <div className="relative z-10">
+                  <div className="flex flex-col items-center mb-6">
+                    <div className="mb-4">
+                      {admin.img ? (
+                        <img
+                          src={admin.img}
+                          alt={admin.name}
+                          className="object-cover w-16 h-16 transition-shadow border-4 border-green-200 rounded-full shadow-lg md:w-20 md:h-20 group-hover:shadow-xl"
+                        />
+                      ) : (
+                        <div className="flex items-center justify-center w-16 h-16 text-2xl font-bold text-white transition-shadow rounded-full shadow-lg md:w-20 md:h-20 bg-gradient-to-br from-green-500 to-emerald-600 group-hover:shadow-xl">
+                          {admin?.name?.charAt(0).toUpperCase() || "A"}
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="text-center">
+                      <h3 className="mb-1 text-lg font-bold text-green-800">
+                        {admin.name}
+                      </h3>
+                      <p className="mb-3 text-sm text-green-600">
+                        {admin.email}
+                      </p>
+                      <div className="inline-flex items-center px-3 py-1 text-xs font-semibold text-white rounded-full shadow-md bg-gradient-to-r from-indigo-500 to-purple-600">
+                        <Award className="w-3 h-3 mr-1" />
+                        {admin.designation || "Teacher"}
                       </div>
-                    )}
-                  </div>
-
-                  <div className="text-center">
-                    <h3 className="mb-1 text-lg font-bold text-green-800">
-                      {admin.name}
-                    </h3>
-                    <p className="mb-3 text-sm text-green-600">{admin.email}</p>
-                    <div className="inline-flex items-center px-3 py-1 text-xs font-semibold text-white rounded-full shadow-md bg-gradient-to-r from-indigo-500 to-purple-600">
-                      <Award className="w-3 h-3 mr-1" />
-                      {admin.designation || "Teacher"}
                     </div>
                   </div>
-                </div>
 
-                <div className="relative mb-6 space-y-3">
-                  <div className="space-y-3 text-sm text-gray-700">
-                    <div className="flex items-center gap-3 p-2 rounded-lg bg-green-50/60">
-                      <span className="text-lg">🎓</span>
-                      <span className="font-medium">
-                        {admin.qualification || "Expert in Quranic Education"}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-3 p-2 rounded-lg bg-green-50/60">
-                      <span className="text-lg">💼</span>
-                      <span className="font-medium">
-                        {admin.experience || "2"} years experience
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-3 p-2 rounded-lg bg-green-50/60">
-                      <span className="text-lg">📞</span>
-                      <span className="font-medium">
-                        {admin.whatsapp || "99999999999"}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-3 p-2 rounded-lg bg-green-50/60">
-                      <span className="text-lg">📅</span>
-                      <span className="font-medium">
-                        {admin.createdAt
-                          ? new Date(admin.createdAt).toLocaleString("en-GB", {
-                              day: "2-digit",
-                              month: "short",
-                              year: "numeric",
-                            })
-                          : "N/A"}
-                      </span>
+                  {/* Information Section with better visibility */}
+                  <div className="mb-5 space-y-3">
+                    <div className="p-4 border rounded-xl bg-gradient-to-r from-emerald-50/80 to-teal-50/80 border-emerald-200/60">
+                      <div className="grid grid-cols-1 gap-3 text-xs md:text-sm">
+                        <div className="flex items-center justify-between">
+                          <span className="flex items-center gap-1.5 text-emerald-700 font-semibold">
+                            <span className="text-emerald-600">🌎</span>
+                            Country
+                          </span>
+                          <span className="font-semibold text-right text-emerald-900">
+                            {admin.country || "N/A"}
+                          </span>
+                        </div>
+
+                        <div className="flex items-center justify-between">
+                          <span className="flex items-center gap-1.5 text-emerald-700 font-semibold">
+                            <span className="text-emerald-600">🎓</span>
+                            Qualification
+                          </span>
+                          <span
+                            className="font-semibold text-right text-emerald-900 line-clamp-1"
+                            title={admin.qualification}
+                          >
+                            {admin.qualification || "N/A"}
+                          </span>
+                        </div>
+
+                        <div className="flex items-center justify-between">
+                          <span className="flex items-center gap-1.5 text-emerald-700 font-semibold">
+                            <span className="text-emerald-600">👨‍🏫</span>
+                            Experience
+                          </span>
+                          <span className="font-semibold text-right text-emerald-900">
+                            {admin.experience || "N/A"}
+                          </span>
+                        </div>
+
+                        <div className="flex items-center justify-between">
+                          <span className="flex items-center gap-1.5 text-emerald-700 font-semibold">
+                            <span className="text-emerald-600">📞</span>
+                            Contact
+                          </span>
+                          <span className="font-semibold text-right text-emerald-900">
+                            {admin.whatsapp || "87278328"}
+                          </span>
+                        </div>
+
+                        <div className="flex items-center justify-between">
+                          <span className="flex items-center gap-1.5 text-emerald-700 font-semibold">
+                            <span className="text-emerald-600">📅</span>
+                            Joined
+                          </span>
+                          <span className="font-semibold text-right text-emerald-900">
+                            {admin.createdAt
+                              ? new Date(admin.createdAt).toLocaleString(
+                                  "en-GB",
+                                  {
+                                    day: "2-digit",
+                                    month: "short",
+                                    year: "numeric",
+                                  }
+                                )
+                              : "N/A"}
+                          </span>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div className="relative flex gap-3">
-                  <button
-                    onClick={() => handleDeleteAdmin(admin._id)}
-                    className="flex items-center justify-center flex-1 gap-2 px-4 py-3 text-sm font-semibold text-white transition-all duration-200 transform shadow-md bg-gradient-to-r from-red-500 to-red-600 rounded-xl hover:from-red-600 hover:to-red-700 hover:shadow-lg hover:-translate-y-1"
-                  >
-                    <IoTrashBinSharp className="w-4 h-4" />
-                    Delete
-                  </button>
-                  <button
-                    onClick={() =>
-                      navigate(`/admin-dashboard/teacher-detail/${admin._id}`)
-                    }
-                    className="flex items-center justify-center flex-1 gap-2 px-4 py-3 text-sm font-semibold text-white transition-all duration-200 transform shadow-md bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl hover:from-green-600 hover:to-emerald-700 hover:shadow-lg hover:-translate-y-1"
-                  >
-                    View Details
-                  </button>
+                  {/* Action Buttons with proper z-index and contrast */}
+                  <div className="relative z-20 grid grid-cols-2 gap-3">
+                    <button
+                      onClick={() => handleDeleteAdmin(admin._id)}
+                      className="flex items-center justify-center gap-1.5 px-4 py-3 text-xs font-bold text-white transition-all duration-200 bg-gradient-to-r from-red-500 to-red-600 rounded-xl shadow-lg hover:from-red-600 hover:to-red-700 hover:shadow-xl transform hover:scale-105 active:scale-95 cursor-pointer"
+                    >
+                      <IoTrashBinSharp className="w-4 h-4" />
+                      <span>Delete</span>
+                    </button>
+
+                    <button
+                      onClick={() =>
+                        navigate(`/admin-dashboard/teacher-detail/${admin._id}`)
+                      }
+                      className="flex items-center justify-center gap-1.5 px-4 py-3 text-xs font-bold text-white transition-all duration-200 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-xl shadow-lg hover:from-emerald-700 hover:to-teal-700 hover:shadow-xl transform hover:scale-105 active:scale-95 cursor-pointer"
+                    >
+                      <span>View Details</span>
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}

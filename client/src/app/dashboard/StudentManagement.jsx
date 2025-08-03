@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+
 import {
   Users,
   BookOpen,
@@ -11,6 +12,7 @@ import {
   Check,
   X,
   Upload,
+  Sparkles,
   Edit,
   Moon,
   Star,
@@ -136,16 +138,24 @@ const StudentManagement = () => {
   });
 
   return (
-    <div className="p-4 md:p-6">
+    <div className="p-4 md:p-6 bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
       <IslamicPattern />
       <div className="flex flex-col mb-6 space-y-4 md:flex-row md:justify-between md:items-center md:space-y-0">
-        <div>
-          <h2 className="mb-2 text-xl font-bold md:text-2xl text-emerald-800">
-            Student Management
-          </h2>
-          <p className="text-sm text-emerald-600">
-            Manage Your students registrations and approvals
-          </p>
+        <div className="relative">
+          <div className="flex items-center gap-3 mb-3">
+            <div>
+              <h2 className="text-xl font-bold text-transparent md:text-2xl bg-gradient-to-r from-green-700 to-emerald-800 bg-clip-text">
+                Your Students
+              </h2>
+              <div className="flex items-center gap-2 mt-1">
+                <Sparkles className="w-4 h-4 text-green-500" />
+                <p className="text-xs font-medium text-green-600 md:text-sm">
+                  Manage Your Students Registration
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="w-24 h-1 rounded-full bg-gradient-to-r from-green-500 to-emerald-600"></div>
         </div>
         <div className="flex flex-col space-y-4 md:flex-row md:items-center md:space-y-0 md:space-x-4">
           <div className="flex space-x-2">
@@ -314,107 +324,199 @@ const StudentManagement = () => {
           </div>
         </div>
       ) : (
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {filteredStudents.map((student) => (
             <div
               key={student._id || student.id}
-              className="p-4 transition-shadow border shadow-md bg-white/80 backdrop-blur-sm rounded-xl border-emerald-200/20 hover:shadow-lg"
+              className="relative overflow-hidden transition-all duration-300 transform border border-emerald-200/30 shadow-lg bg-gradient-to-br from-emerald-50/90 via-white/95 to-teal-50/90 backdrop-blur-sm rounded-2xl hover:shadow-xl hover:scale-[1.02] hover:border-emerald-300/50 group"
             >
-              <div className="relative flex flex-col items-center justify-center mb-3">
-                <div className="flex items-center justify-center flex-shrink-0 w-10 h-10 mb-2 text-sm font-semibold text-white rounded-full md:w-12 md:h-12 bg-gradient-to-br from-indigo-400 to-indigo-600">
-                  {student.name?.charAt(0)}
-                </div>
-                <div className="flex flex-col items-center justify-center">
-                  <div className="text-base font-medium text-emerald-800">
-                    {student.name}
-                  </div>
-                  <div className="text-sm text-emerald-600">
-                    {student.email}
-                  </div>
-                </div>
-                <div className="w-full mt-2 text-center">
-                  <span
-                    className={`px-3 py-1 text-[9px] md:text-[10px] font-medium ${
-                      student.status == "registered"
-                        ? "text-green-800 bg-green-300"
-                        : "text-yellow-800 bg-yellow-300"
-                    }   rounded-full`}
-                  >
-                    {student.status === "registered"
-                      ? "Registered ✔️"
-                      : "Pending ⏱"}
-                  </span>
-                </div>
+              {/* Decorative Islamic Pattern Overlay */}
+              <div className="absolute top-0 right-0 w-20 h-20 transition-opacity duration-300 opacity-5 group-hover:opacity-10">
+                <svg
+                  viewBox="0 0 100 100"
+                  className="w-full h-full text-emerald-600"
+                >
+                  <circle cx="50" cy="20" r="8" fill="currentColor" />
+                  <circle cx="50" cy="50" r="12" fill="currentColor" />
+                  <circle cx="50" cy="80" r="8" fill="currentColor" />
+                  <circle cx="20" cy="35" r="6" fill="currentColor" />
+                  <circle cx="80" cy="35" r="6" fill="currentColor" />
+                  <circle cx="20" cy="65" r="6" fill="currentColor" />
+                  <circle cx="80" cy="65" r="6" fill="currentColor" />
+                </svg>
               </div>
 
-              <div className="px-1 pb-3 space-y-3">
-                <div className="space-y-2 text-xs text-gray-600 md:text-sm">
-                  <p className="flex items-center gap-2">
-                    <span className="text-blue-500">Country 🌎 :</span>
-                    <span>{student.country}</span>
-                  </p>
-                  <p className="flex items-center gap-2">
-                    <span className="text-blue-500 ">Course 📚 :</span>
-                    <span className=" line-clamp-1">{student.course}</span>
-                  </p>
-                  <p className="flex items-center gap-2">
-                    <span className="text-blue-500">Teacher 👨‍🏫 :</span>
-                    <span>{student.teacherName}</span>
-                  </p>
-                  <p className="flex items-center gap-2">
-                    <span className="text-blue-500">Contact 📞 :</span>
-                    <span>{student.whatsapp}</span>
-                  </p>
-                  <p className="flex items-center gap-2">
-                    <span className="text-blue-500">Join on 📅 :</span>
-                    <span>
-                      {student.joinDate
-                        ? new Date(student.joinDate).toLocaleString("en-GB", {
-                            day: "2-digit",
-                            month: "short",
-                            year: "numeric",
-                          })
-                        : "N/A"}
+              <div className="relative p-5">
+                {/* Header Section */}
+                <div className="flex flex-col items-center mb-4">
+                  <div className="relative mb-3">
+                    <div className="flex items-center justify-center w-16 h-16 text-lg font-bold text-white rounded-full shadow-lg bg-gradient-to-br from-emerald-500 via-emerald-600 to-teal-600 ring-4 ring-emerald-100">
+                      {student.name?.charAt(0)}
+                    </div>
+                    {/* Status indicator dot */}
+                    <div
+                      className={`absolute -bottom-1 -right-1 w-5 h-5 rounded-full border-2 border-white shadow-sm ${
+                        student.status === "registered"
+                          ? "bg-green-500"
+                          : "bg-amber-500"
+                      }`}
+                    >
+                      <div
+                        className={`w-full h-full rounded-full animate-pulse ${
+                          student.status === "registered"
+                            ? "bg-green-400"
+                            : "bg-amber-400"
+                        }`}
+                      ></div>
+                    </div>
+                  </div>
+
+                  <div className="text-center">
+                    <h3 className="mb-1 text-base font-semibold leading-tight text-emerald-900">
+                      {student.name}
+                    </h3>
+                    <p className="mb-2 text-sm text-emerald-700/80">
+                      {student.email}
+                    </p>
+                    <span
+                      className={`inline-flex items-center px-3 py-1.5 text-[9px] md:text-[10px] font-semibold rounded-full shadow-sm ${
+                        student.status === "registered"
+                          ? "text-emerald-800 bg-emerald-100 border border-emerald-200"
+                          : "text-amber-800 bg-amber-100 border border-amber-200"
+                      }`}
+                    >
+                      {student.status === "registered"
+                        ? "✔️ Registered"
+                        : "⏱ Pending"}
                     </span>
-                  </p>
+                  </div>
+                </div>
 
-                  <p className="flex items-center gap-2 ">
-                    <span className="text-blue-500">Fee Status 💲 :</span>
-                    <span className="capitalize ">{student.feeStatus}</span>
-                  </p>
+                {/* Information Section */}
+                <div className="mb-5 space-y-3">
+                  <div className="p-3 border rounded-xl bg-gradient-to-r from-emerald-50/50 to-teal-50/50 border-emerald-100/50">
+                    <div className="grid grid-cols-1 gap-2.5 text-xs md:text-sm">
+                      <div className="flex items-center justify-between">
+                        <span className="flex items-center gap-1.5 text-emerald-700 font-medium">
+                          <span className="text-emerald-600">🌎</span>
+                          Country
+                        </span>
+                        <span className="font-medium text-right text-emerald-900">
+                          {student.country}
+                        </span>
+                      </div>
+
+                      <div className="flex items-center justify-between">
+                        <span className="flex items-center gap-1.5 text-emerald-700 font-medium">
+                          <span className="text-emerald-600">📚</span>
+                          Course
+                        </span>
+                        <span
+                          className="font-medium text-right text-emerald-900 line-clamp-1"
+                          title={student.course}
+                        >
+                          {student.course}
+                        </span>
+                      </div>
+
+                      <div className="flex items-center justify-between">
+                        <span className="flex items-center gap-1.5 text-emerald-700 font-medium">
+                          <span className="text-emerald-600">👨‍🏫</span>
+                          Teacher
+                        </span>
+                        <span className="font-medium text-right text-emerald-900">
+                          {student.teacherName}
+                        </span>
+                      </div>
+
+                      <div className="flex items-center justify-between">
+                        <span className="flex items-center gap-1.5 text-emerald-700 font-medium">
+                          <span className="text-emerald-600">📞</span>
+                          Contact
+                        </span>
+                        <span className="font-medium text-right text-emerald-900">
+                          {student.whatsapp}
+                        </span>
+                      </div>
+
+                      <div className="flex items-center justify-between">
+                        <span className="flex items-center gap-1.5 text-emerald-700 font-medium">
+                          <span className="text-emerald-600">📅</span>
+                          Joined
+                        </span>
+                        <span className="font-medium text-right text-emerald-900">
+                          {student.joinDate
+                            ? new Date(student.joinDate).toLocaleString(
+                                "en-GB",
+                                {
+                                  day: "2-digit",
+                                  month: "short",
+                                  year: "numeric",
+                                }
+                              )
+                            : "N/A"}
+                        </span>
+                      </div>
+
+                      <div className="flex items-center justify-between">
+                        <span className="flex items-center gap-1.5 text-emerald-700 font-medium">
+                          <span className="text-emerald-600">💲</span>
+                          Fee Status
+                        </span>
+                        <span
+                          className={`text-right font-semibold capitalize px-2 py-0.5 rounded-md text-xs ${
+                            student.feeStatus?.toLowerCase() === "paid"
+                              ? "text-emerald-800 bg-emerald-100"
+                              : student.feeStatus?.toLowerCase() === "pending"
+                              ? "text-amber-800 bg-amber-100"
+                              : "text-slate-800 bg-slate-100"
+                          }`}
+                        >
+                          {student.feeStatus}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="space-y-3">
+                  {student.status?.toLowerCase() === "pending" && (
+                    <button
+                      onClick={() => handleApprove(student._id)}
+                      className="w-full flex items-center justify-center gap-2 px-4 py-2.5 text-xs font-semibold text-white transition-all duration-200 bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-xl shadow-md hover:from-emerald-700 hover:to-emerald-800 hover:shadow-lg transform hover:scale-[1.02] active:scale-[0.98]"
+                    >
+                      <Check className="w-3.5 h-3.5" />
+                      <span>Approve Student</span>
+                    </button>
+                  )}
+
+                  <div className="grid grid-cols-2 gap-2">
+                    <a
+                      href={`https://wa.me/${student.whatsapp}?text=Assalam O Alikum ! Welcome to Noor ul Quran , How can we Help you?`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center gap-1.5 px-3 py-2.5 text-xs font-semibold text-white transition-all duration-200 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-xl shadow-md hover:from-emerald-700 hover:to-teal-700 hover:shadow-lg transform hover:scale-[1.02] active:scale-[0.98]"
+                    >
+                      <FaWhatsapp className="w-3.5 h-3.5" />
+                      <span>WhatsApp</span>
+                    </a>
+
+                    <button
+                      onClick={() =>
+                        handleDeleteStudent(student._id || student.id)
+                      }
+                      className="flex items-center justify-center gap-1.5 px-3 py-2.5 text-xs font-semibold text-white transition-all duration-200 bg-gradient-to-r from-red-500 to-red-600 rounded-xl shadow-md hover:from-red-600 hover:to-red-700 hover:shadow-lg transform hover:scale-[1.02] active:scale-[0.98]"
+                    >
+                      <IoTrashBinSharp className="w-3.5 h-3.5" />
+                      <span>Delete</span>
+                    </button>
+                  </div>
                 </div>
               </div>
-              <div className="flex gap-2">
-                {student.status?.toLowerCase() === "pending" && (
-                  <button
-                    onClick={() => handleApprove(student._id)}
-                    className="flex items-center px-3 py-1 space-x-1 text-xs text-white transition-colors bg-green-600 rounded-lg hover:bg-green-700"
-                  >
-                    <Check className="w-3 h-3" />
-                    <span>Approve</span>
-                  </button>
-                )}
-                <div className="flex justify-center w-full gap-2">
-                  <a
-                    href={`https://wa.me/${student.whatsapp}?text=Assalam O Alikum ! Welcome to Noor ul Quran , How can we Help you?`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center w-full gap-1 px-3 py-2 text-xs font-medium text-white transition-colors duration-200 bg-green-600 rounded-lg shadow-sm hover:bg-green-700"
-                  >
-                    <FaWhatsapp className="w-4 h-4" />
-                    <span>Whatsapp</span>
-                  </a>
-                  <button
-                    onClick={() =>
-                      handleDeleteStudent(student._id || student.id)
-                    }
-                    className="flex items-center justify-center w-full gap-1 px-3 py-2 text-xs font-medium text-white transition-colors duration-200 bg-red-600 rounded-lg shadow-sm hover:bg-red-700"
-                  >
-                    <IoTrashBinSharp className="w-4 h-4" />
-                    <span>Delete</span>
-                  </button>
-                </div>
-              </div>
+
+              {/* Subtle gradient border effect */}
+              <div className="absolute inset-0 transition-opacity duration-300 opacity-0 pointer-events-none rounded-2xl bg-gradient-to-br from-emerald-200/20 via-transparent to-teal-200/20 group-hover:opacity-100"></div>
             </div>
           ))}
         </div>

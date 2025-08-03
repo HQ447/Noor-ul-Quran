@@ -29,7 +29,7 @@ function Dashboard() {
   return (
     <div className="flex ">
       <Sidebar className="md:w-[30%]" />
-      <div className="flex-1 h-screen overflow-auto">
+      <div className="flex-1 h-screen overflow-auto bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
         <Outlet />
       </div>
     </div>

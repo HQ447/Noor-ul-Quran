@@ -18,8 +18,24 @@ export const getAdminProfile = async (req, res) => {
 // @route   PUT /admin/profile/:id
 export const updateAdminProfile = async (req, res) => {
   try {
-    const { name, email, designation, qualification, experience } = req.body;
-    const updates = { name, email, designation, qualification, experience };
+    const {
+      name,
+      email,
+      designation,
+      qualification,
+      experience,
+      whatsapp,
+      country,
+    } = req.body;
+    const updates = {
+      name,
+      email,
+      designation,
+      qualification,
+      experience,
+      country,
+      whatsapp,
+    };
 
     if (req.file && req.file.path) {
       updates.img = req.file.path; // Cloudinary image URL

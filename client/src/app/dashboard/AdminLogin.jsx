@@ -31,6 +31,8 @@ export default function AdminLogin() {
         localStorage.setItem("token", data.token);
         localStorage.setItem("role", data.user.role);
         localStorage.setItem("name", data.user.name);
+        localStorage.setItem("userImg", data.user.img);
+        localStorage.setItem("user", data.user);
       } else {
         // Handle error response
         setloading(false);

@@ -1,4 +1,4 @@
-import { Upload, Edit, Star } from "lucide-react";
+import { Upload, Edit, Star, Sparkles } from "lucide-react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -25,6 +25,8 @@ const Setting = () => {
     designation: "",
     qualification: "",
     experience: "",
+    whatsapp: "",
+    country: "",
     img: "",
   });
   const [imageFile, setImageFile] = useState(null);
@@ -70,6 +72,8 @@ const Setting = () => {
       formData.append("email", admin.email);
       formData.append("designation", admin.designation);
       formData.append("qualification", admin.qualification);
+      formData.append("whatsapp", admin.whatsapp);
+      formData.append("country", admin.country);
       formData.append("experience", admin.experience);
       if (imageFile) formData.append("img", imageFile);
 
@@ -89,13 +93,21 @@ const Setting = () => {
 
   return (
     <div className="p-4 md:p-6">
-      <div className="mb-6">
-        <h2 className="mb-2 text-xl font-bold md:text-2xl text-emerald-800">
-          Profile Settings
-        </h2>
-        <p className="text-sm text-emerald-600">
-          Manage your admin profile and preferences
-        </p>
+      <div className="relative mb-3">
+        <div className="flex items-center gap-3 mb-3">
+          <div>
+            <h2 className="text-xl font-bold text-transparent md:text-2xl bg-gradient-to-r from-green-700 to-emerald-800 bg-clip-text">
+              Settings
+            </h2>
+            <div className="flex items-center gap-2 mt-1">
+              <Sparkles className="w-4 h-4 text-green-500" />
+              <p className="text-xs font-medium text-green-600 md:text-sm">
+                Manage Your Profile and Preference
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className="w-24 h-1 rounded-full bg-gradient-to-r from-green-500 to-emerald-600"></div>
       </div>
 
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 md:gap-6">
@@ -152,6 +164,30 @@ const Setting = () => {
                 name="email"
                 type="email"
                 value={admin.email}
+                onChange={handleChange}
+                className="w-full px-3 py-2 text-sm border rounded-lg border-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              />
+            </div>
+            <div>
+              <label className="block mb-2 text-sm font-medium text-emerald-700">
+                Phone
+              </label>
+              <input
+                name="whatsapp"
+                type="number"
+                value={admin.whatsapp}
+                onChange={handleChange}
+                className="w-full px-3 py-2 text-sm border rounded-lg border-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              />
+            </div>
+            <div>
+              <label className="block mb-2 text-sm font-medium text-emerald-700">
+                Country
+              </label>
+              <input
+                name="country"
+                type="text"
+                value={admin.country}
                 onChange={handleChange}
                 className="w-full px-3 py-2 text-sm border rounded-lg border-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-500"
               />

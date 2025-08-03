@@ -56,14 +56,12 @@ function TeacherDetails() {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      if (!res.ok) {
-        throw new Error("Failed to fetch teacher");
+      if (res.ok) {
+        const data = await res.json();
+        setTeacher(data);
+        console.log("admin data is ", data);
+        setPreview(data.img);
       }
-
-      const data = await res.json();
-      setTeacher(data);
-      console.log(data);
-      setPreview(data.img);
     } catch (err) {
       console.error("Failed to fetch profile:", err);
     } finally {
@@ -87,7 +85,6 @@ function TeacherDetails() {
         ? result
         : result.students || [];
       setStudents(studentList);
-      console.log(result.students);
     } catch (error) {
       console.error("Error fetching students:", error);
     }
@@ -107,12 +104,13 @@ function TeacherDetails() {
     rating: teacher.rating || 4.8,
     totalStudents: students.length || 0,
     completedCourses: teacher.completedCourses || 120,
-    joiningDate: teacher.joiningDate || "2020-01-15",
+    whatsapp: teacher.whatsapp || 33423442,
+    joiningDate: teacher.createdAt || "2020-01-15",
     location: teacher.location || teacher.country || "Pakistan",
     timezone: teacher.timezone || "PKT (UTC+5)",
     availability: teacher.availability || "Mon-Fri: 9 AM - 6 PM",
     bio:
-      teacher.bio ||
+      teacher.designation ||
       "Dedicated Quran teacher with passion for Islamic education and student development.",
   });
 
@@ -142,7 +140,7 @@ function TeacherDetails() {
     );
   }
 
-  const enhancedTeacher = getEnhancedTeacherData(teacher);
+  const enhancedTeacher = getEnhancedTeacherData(teacher || {});
 
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50">
@@ -153,7 +151,7 @@ function TeacherDetails() {
         <div className="mb-6">
           <button
             onClick={() => window.history.back()}
-            className="flex items-center gap-2 px-4 py-2 transition-all duration-200 border shadow-sm text-emerald-700 bg-white/80 backdrop-blur-sm rounded-xl hover:bg-emerald-100 border-emerald-200"
+            className="flex items-center gap-2 px-4 py-2 text-sm transition-all duration-200 border shadow-sm text-emerald-700 bg-white/80 backdrop-blur-sm rounded-xl hover:bg-emerald-100 border-emerald-200"
           >
             <ArrowLeft className="w-4 h-4" />
             Back to Teachers
@@ -163,10 +161,10 @@ function TeacherDetails() {
         {/* Teacher Profile Header */}
         <div className="mb-8 overflow-hidden border shadow-xl bg-white/70 backdrop-blur-sm rounded-2xl border-emerald-200/50">
           <div className="p-8 text-white bg-gradient-to-r from-emerald-500 to-green-600">
-            <div className="flex flex-col items-center gap-8 lg:flex-row">
+            <div className="flex flex-col items-center gap-3 md:gap-8 lg:flex-row">
               {/* Profile Image */}
               <div className="relative">
-                <div className="w-32 h-32 overflow-hidden border-4 rounded-full shadow-2xl border-white/30">
+                <div className="overflow-hidden border-4 rounded-full shadow-2xl w-22 h-22 md:w-28 md:h-28 border-white/30">
                   {preview ? (
                     <img
                       src={preview}
@@ -179,40 +177,38 @@ function TeacherDetails() {
                     </div>
                   )}
                 </div>
-                <div className="absolute flex items-center justify-center w-10 h-10 bg-white rounded-full shadow-lg -bottom-2 -right-2">
-                  <Star className="w-5 h-5 text-yellow-500 fill-current" />
+                <div className="absolute flex items-center justify-center w-5 h-5 bg-white rounded-full shadow-lg md:w-7 md:h-7 bottom-2 -right-1">
+                  <Star className="w-3 h-3 text-yellow-500 fill-current md:w-5 md:h-5" />
                 </div>
               </div>
 
               {/* Basic Info */}
               <div className="flex-1 text-center lg:text-left">
-                <h1 className="mb-2 text-3xl font-bold lg:text-4xl">
+                <h1 className="mb-2 text-2xl font-bold lg:text-3xl">
                   {enhancedTeacher.name || "Teacher Name"}
                 </h1>
-                <p className="mb-4 text-lg text-emerald-100">
-                  {enhancedTeacher.specialization}
+                <p className="mb-2 text-sm text-emerald-100">
+                  {enhancedTeacher.designation}
                 </p>
 
-                <div className="flex flex-wrap justify-center gap-4 mb-4 lg:justify-start">
+                <div className="flex flex-wrap justify-center gap-4 mb-2 lg:justify-start">
                   <div className="flex items-center gap-2">
                     <Star className="w-4 h-4 text-yellow-300 fill-current" />
-                    <span className="font-semibold">
+                    <span className="text-sm font-semibold">
                       {enhancedTeacher.rating}
                     </span>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 text-sm">
                     <Users className="w-4 h-4" />
                     <span>{enhancedTeacher.totalStudents} Students</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Award className="w-4 h-4" />
+                    <Award className="w-4 h-4 text-sm" />
                     <span>{enhancedTeacher.experience}</span>
                   </div>
                 </div>
 
-                <p className="max-w-2xl text-emerald-100">
-                  {enhancedTeacher.bio}
-                </p>
+                <p className="max-w-2xl text-sm text-emerald-100">Available</p>
               </div>
 
               {/* Quick Actions */}
@@ -221,12 +217,17 @@ function TeacherDetails() {
                   href={`https://wa.me/${enhancedTeacher.whatsapp}?text=Assalam O Alikum! I would like to discuss about teaching.`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-6 py-3 font-medium text-white transition-all duration-200 bg-white/20 backdrop-blur-sm rounded-xl hover:bg-white/30"
+                  className="flex items-center gap-2 px-4 py-2 text-xs font-medium text-white transition-all duration-200 md:px-6 md:py-3 bg-white/20 backdrop-blur-sm rounded-xl hover:bg-white/30"
                 >
                   <FaWhatsapp className="w-5 h-5" />
                   Contact
                 </a>
-                <button className="flex items-center gap-2 px-6 py-3 font-medium text-white transition-all duration-200 bg-white/20 backdrop-blur-sm rounded-xl hover:bg-white/30">
+                <button
+                  onClick={() =>
+                    alert("This Feature will comming soon InshaAllah")
+                  }
+                  className="flex items-center gap-2 px-4 py-2 text-xs font-medium text-white transition-all duration-200 md:px-6 md:py-3 bg-white/20 backdrop-blur-sm rounded-xl hover:bg-white/30"
+                >
                   <Video className="w-5 h-5" />
                   Schedule
                 </button>
@@ -240,12 +241,11 @@ function TeacherDetails() {
               {[
                 { key: "overview", label: "Overview", icon: Eye },
                 { key: "students", label: "Students", icon: Users },
-                { key: "schedule", label: "Schedule", icon: Calendar },
               ].map(({ key, label, icon: Icon }) => (
                 <button
                   key={key}
                   onClick={() => setSelectedView(key)}
-                  className={`flex items-center gap-2 px-6 py-4 font-medium transition-all duration-200 border-b-2 whitespace-nowrap ${
+                  className={`flex items-center gap-2 text-xs md:text-sm  px-6 py-4 font-medium transition-all duration-200 border-b-2 whitespace-nowrap ${
                     selectedView === key
                       ? "text-emerald-600 border-emerald-600 bg-emerald-50"
                       : "text-gray-600 border-transparent hover:text-emerald-600 hover:bg-emerald-50"
@@ -264,7 +264,7 @@ function TeacherDetails() {
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
             {/* Contact Information */}
             <div className="p-6 border shadow-xl bg-white/70 backdrop-blur-sm rounded-2xl border-emerald-200/50">
-              <h3 className="flex items-center gap-2 mb-6 text-xl font-bold text-emerald-800">
+              <h3 className="flex items-center gap-2 mb-6 text-sm font-bold md:text-lg text-emerald-800">
                 <Mail className="w-5 h-5" />
                 Contact Information
               </h3>
@@ -273,7 +273,7 @@ function TeacherDetails() {
                   <Mail className="w-5 h-5 text-emerald-600" />
                   <div>
                     <p className="text-sm font-medium text-gray-600">Email</p>
-                    <p className="font-semibold text-gray-800">
+                    <p className="font-semibold text-[13px] text-gray-800">
                       {enhancedTeacher.email || "N/A"}
                     </p>
                   </div>
@@ -283,8 +283,8 @@ function TeacherDetails() {
                   <Phone className="w-5 h-5 text-green-600" />
                   <div>
                     <p className="text-sm font-medium text-gray-600">Phone</p>
-                    <p className="font-semibold text-gray-800">
-                      {enhancedTeacher.phone || "N/A"}
+                    <p className="font-semibold text-[13px] text-gray-800">
+                      {enhancedTeacher.whatsapp || "N/A"}
                     </p>
                   </div>
                 </div>
@@ -295,7 +295,7 @@ function TeacherDetails() {
                     <p className="text-sm font-medium text-gray-600">
                       Location
                     </p>
-                    <p className="font-semibold text-gray-800">
+                    <p className="font-semibold text-[13px] text-gray-800">
                       {enhancedTeacher.location}
                     </p>
                   </div>
@@ -307,7 +307,7 @@ function TeacherDetails() {
                     <p className="text-sm font-medium text-gray-600">
                       Timezone
                     </p>
-                    <p className="font-semibold text-gray-800">
+                    <p className="font-semibold text-[13px] text-gray-800">
                       {enhancedTeacher.timezone}
                     </p>
                   </div>
@@ -317,7 +317,7 @@ function TeacherDetails() {
 
             {/* Academic Information */}
             <div className="p-6 border shadow-xl bg-white/70 backdrop-blur-sm rounded-2xl border-emerald-200/50">
-              <h3 className="flex items-center gap-2 mb-6 text-xl font-bold text-emerald-800">
+              <h3 className="flex items-center gap-2 mb-6 text-sm font-bold md:text-lg text-emerald-800">
                 <GraduationCap className="w-5 h-5" />
                 Academic Details
               </h3>
@@ -328,7 +328,7 @@ function TeacherDetails() {
                     <p className="text-sm font-medium text-gray-600">
                       Specialization
                     </p>
-                    <p className="font-semibold text-gray-800">
+                    <p className="font-semibold text-[13px] text-gray-800">
                       {enhancedTeacher.specialization}
                     </p>
                   </div>
@@ -340,7 +340,7 @@ function TeacherDetails() {
                     <p className="text-sm font-medium text-gray-600">
                       Qualification
                     </p>
-                    <p className="font-semibold text-gray-800">
+                    <p className="font-semibold text-[13px] text-gray-800">
                       {enhancedTeacher.qualification}
                     </p>
                   </div>
@@ -352,7 +352,7 @@ function TeacherDetails() {
                     <p className="text-sm font-medium text-gray-600">
                       Experience
                     </p>
-                    <p className="font-semibold text-gray-800">
+                    <p className="font-semibold text-[13px] text-gray-800">
                       {enhancedTeacher.experience}
                     </p>
                   </div>
@@ -364,7 +364,7 @@ function TeacherDetails() {
                     <p className="text-sm font-medium text-gray-600">
                       Languages
                     </p>
-                    <p className="font-semibold text-gray-800">
+                    <p className="font-semibold text-[13px] text-gray-800">
                       {enhancedTeacher.language}
                     </p>
                   </div>
@@ -374,13 +374,13 @@ function TeacherDetails() {
 
             {/* Statistics */}
             <div className="p-6 border shadow-xl bg-white/70 backdrop-blur-sm rounded-2xl border-emerald-200/50">
-              <h3 className="flex items-center gap-2 mb-6 text-xl font-bold text-emerald-800">
+              <h3 className="flex items-center gap-2 mb-6 text-sm font-bold md:text-lg text-emerald-800">
                 <Badge className="w-5 h-5" />
                 Statistics
               </h3>
               <div className="space-y-6">
                 <div className="p-4 text-center bg-gradient-to-r from-emerald-100 to-green-100 rounded-xl">
-                  <div className="mb-1 text-3xl font-bold text-emerald-800">
+                  <div className="mb-1 text-2xl font-bold text-emerald-800">
                     {enhancedTeacher.totalStudents}
                   </div>
                   <div className="text-sm font-medium text-emerald-600">
@@ -389,7 +389,7 @@ function TeacherDetails() {
                 </div>
 
                 <div className="p-4 text-center bg-gradient-to-r from-blue-100 to-teal-100 rounded-xl">
-                  <div className="mb-1 text-3xl font-bold text-blue-800">
+                  <div className="mb-1 text-2xl font-bold text-blue-800 md:text-3xl">
                     {enhancedTeacher.completedCourses}
                   </div>
                   <div className="text-sm font-medium text-blue-600">
@@ -398,7 +398,7 @@ function TeacherDetails() {
                 </div>
 
                 <div className="p-4 text-center bg-gradient-to-r from-amber-100 to-yellow-100 rounded-xl">
-                  <div className="mb-1 text-3xl font-bold text-amber-800">
+                  <div className="mb-1 text-2xl font-bold text-amber-800">
                     {enhancedTeacher.rating}
                   </div>
                   <div className="flex items-center justify-center gap-1 text-sm font-medium text-amber-600">
@@ -408,7 +408,7 @@ function TeacherDetails() {
                 </div>
 
                 <div className="p-4 bg-gradient-to-r from-purple-100 to-pink-100 rounded-xl">
-                  <div className="mb-2 text-sm font-medium text-purple-600">
+                  <div className="mb-2 text-xs font-medium text-purple-600">
                     Member Since
                   </div>
                   <div className="font-semibold text-purple-800">
@@ -432,18 +432,18 @@ function TeacherDetails() {
             <div className="p-6 border-b border-emerald-200 bg-gradient-to-r from-emerald-50 to-green-50">
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="mb-2 text-2xl font-bold text-emerald-800">
+                  <h3 className="mb-2 text-xl font-bold md:text-2xl text-emerald-800">
                     Assigned Students
                   </h3>
-                  <p className="text-emerald-600">
+                  <p className="text-xs text-emerald-600">
                     {students.length} students currently enrolled
                   </p>
                 </div>
                 <div className="text-right">
-                  <div className="text-3xl font-bold text-emerald-800">
+                  <div className="text-2xl font-bold text-emerald-800">
                     {students.length}
                   </div>
-                  <div className="text-sm text-emerald-600">Total Students</div>
+                  <div className="text-xs text-emerald-600">Total Students</div>
                 </div>
               </div>
             </div>
@@ -458,14 +458,14 @@ function TeacherDetails() {
                     >
                       {/* Student Header */}
                       <div className="flex items-center gap-4 mb-4">
-                        <div className="flex items-center justify-center w-12 h-12 font-bold text-white rounded-full bg-gradient-to-br from-emerald-500 to-green-600">
+                        <div className="flex items-center justify-center w-10 h-10 font-bold text-white rounded-full md:w-12 md:h-12 bg-gradient-to-br from-emerald-500 to-green-600">
                           {student.name?.charAt(0) || "S"}
                         </div>
                         <div className="flex-1">
-                          <h4 className="text-lg font-semibold text-emerald-800">
+                          <h4 className="text-sm font-semibold md:text-lg text-emerald-800">
                             {student.name || "Student Name"}
                           </h4>
-                          <p className="text-sm text-emerald-600">
+                          <p className="text-xs md:text-sm text-emerald-600">
                             {student.email || "No email provided"}
                           </p>
                         </div>

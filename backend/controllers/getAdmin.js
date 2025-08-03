@@ -2,7 +2,7 @@ import User from "../models/User.js";
 
 const getAdmins = async (req, res) => {
   try {
-    const admins = await User.find({ role: "admin" });
+    const admins = await User.find({ role: { $ne: "student" } });
     if (!admins) return res.json({ message: "no admins found" });
 
     res.json({ message: "admins fetch successfully", admins });

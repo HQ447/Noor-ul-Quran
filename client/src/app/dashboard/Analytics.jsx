@@ -9,6 +9,7 @@ import {
   Plus,
   Trash2,
   Check,
+  Sparkles,
   X,
   Upload,
   Edit,
@@ -16,6 +17,7 @@ import {
   Star,
 } from "lucide-react";
 import { NavLink } from "react-router";
+import NotFound from "../main/Not Found/NotFound";
 
 // Islamic Pattern Component
 const IslamicPattern = () => (
@@ -44,6 +46,8 @@ const Analytics = () => {
   const [students, setStudents] = useState([]);
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
+  const name = localStorage.getItem("name");
+  const role = localStorage.getItem("role");
   const BASE_URL = "http://localhost:8000";
   useEffect(() => {
     const fetchData = async () => {
@@ -182,15 +186,27 @@ const Analytics = () => {
     );
   }
 
+  if (!role) return <NotFound />;
+
   return (
-    <div className="p-4 md:p-6">
-      <div className="mb-6">
-        <h2 className="mb-2 text-xl font-bold md:text-2xl text-emerald-800">
-          Analytics Dashboard
-        </h2>
-        <p className="text-sm text-emerald-600">
-          Overview of your Islamic learning platform
-        </p>
+    <div className="p-4 md:p-6 bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
+      <div className="relative mb-4">
+        <div className="flex items-center gap-3 mb-3">
+          <div>
+            <h2 className="text-xl font-bold text-transparent md:text-2xl bg-gradient-to-r from-green-700 to-emerald-800 bg-clip-text">
+              Welcome {name}
+            </h2>
+            <div className="flex items-center gap-2 mt-1">
+              <Sparkles className="w-4 h-4 text-green-500" />
+              <p className="text-xs font-medium text-green-600 md:text-sm">
+                {role == "admin"
+                  ? "View and Manage Your Students Data"
+                  : "View and Manage Overall Plateform Data"}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className="w-24 h-1 rounded-full bg-gradient-to-r from-green-500 to-emerald-600"></div>
       </div>
 
       <div className="grid grid-cols-2 gap-3 mb-6 md:grid-cols-3 lg:grid-cols-5 md:gap-4 md:mb-8">
