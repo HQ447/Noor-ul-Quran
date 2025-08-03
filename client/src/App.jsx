@@ -25,6 +25,7 @@ import BooksManagement from "./app/dashboard/Books";
 import NotFound from "./app/main/Not Found/NotFound";
 import AllStudents from "./app/dashboard/AllStudents";
 import TeacherDetails from "./app/dashboard/TeacherDetails";
+import TeacherDetail from "./app/main/Teacher Details/TeacherDetail";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
           <Route path="/library" element={<Books />} />
           <Route path="/register-student" element={<RegStudent />} />
           <Route path="/course-detail/:id" element={<CourseDetail />} />
+          <Route path="/teacher-detail/:id" element={<TeacherDetail />} />
 
           <Route path="/fee" element={<Fee />} />
         </Route>

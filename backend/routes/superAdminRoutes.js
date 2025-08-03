@@ -11,7 +11,7 @@ const router = express.Router();
 //get all teachers/admins
 router.get("/getAllTeachers", getAllTeachers);
 router.get("/getAllStudents", tokenVerifier, getAllStudents);
-router.get("/getTeacher/:id", tokenVerifier, getTeacher);
+router.get("/getTeacher/:id", getTeacher);
 router.get("/getStudents/:id", tokenVerifier, getStudents);
 
 export default router;

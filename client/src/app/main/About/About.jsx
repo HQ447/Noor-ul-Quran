@@ -1,10 +1,11 @@
 import React from "react";
 import { BookOpen, Users, Award, Heart, Globe, Star } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 
 function About() {
   const [teamData, setTeamData] = useState([]);
+  const navigate = useNavigate();
   const BASE_URL = "http://localhost:8000";
   const stats = [
     { number: "10,000+", label: "Students Worldwide", icon: Users },
@@ -66,6 +67,163 @@ function About() {
             Dedicated to spreading the beautiful teachings of Islam through
             authentic Quranic education and spiritual guidance
           </p>
+        </div>
+      </section>
+      {/* Team Section */}
+      <section className="py-16 bg-gradient-to-br from-green-50 to-emerald-50">
+        <div className="max-w-6xl px-6 mx-auto lg:px-12">
+          <div className="mb-12 text-center">
+            <div className="inline-flex items-center gap-2 px-4 py-2 mb-4 text-xs font-semibold text-green-800 bg-green-100 rounded-full">
+              👥 Our Team
+            </div>
+            <h2 className="mb-4 text-2xl font-bold text-gray-800 lg:text-3xl">
+              Meet Our Scholars
+            </h2>
+            <p className="max-w-2xl mx-auto text-sm text-gray-600">
+              Learn from qualified Islamic scholars and experienced educators
+            </p>
+          </div>
+
+          <div className="grid gap-8 md:grid-cols-3">
+            {teamData.map((member) => (
+              <div
+                key={member._id}
+                className="relative p-6 transition-all duration-300 border shadow-xl bg-white/95 backdrop-blur-sm rounded-2xl border-emerald-200/50 hover:shadow-2xl hover:-translate-y-1 hover:border-emerald-300/70 group"
+              >
+                {/* Decorative Islamic Pattern Overlay - Fixed z-index */}
+                <div className="absolute top-0 right-0 w-20 h-20 transition-opacity duration-300 pointer-events-none opacity-5 group-hover:opacity-10">
+                  <svg
+                    viewBox="0 0 100 100"
+                    className="w-full h-full text-emerald-600"
+                  >
+                    <circle cx="50" cy="20" r="8" fill="currentColor" />
+                    <circle cx="50" cy="50" r="12" fill="currentColor" />
+                    <circle cx="50" cy="80" r="8" fill="currentColor" />
+                    <circle cx="20" cy="35" r="6" fill="currentColor" />
+                    <circle cx="80" cy="35" r="6" fill="currentColor" />
+                    <circle cx="20" cy="65" r="6" fill="currentColor" />
+                    <circle cx="80" cy="65" r="6" fill="currentColor" />
+                  </svg>
+                </div>
+
+                {/* Role badge */}
+                <div className="absolute z-20 px-3 py-1 text-xs font-bold text-white capitalize rounded-full shadow-md top-4 right-4 bg-gradient-to-r from-yellow-500 to-orange-500">
+                  🔰 {member.role === "admin" ? "Teacher" : "Super Admin"}
+                </div>
+
+                {/* Main content with proper z-index */}
+                <div className="relative z-10">
+                  <div className="flex flex-col items-center mb-6">
+                    <div className="mb-4">
+                      {member.img ? (
+                        <img
+                          src={member.img}
+                          alt={member.name}
+                          className="object-cover w-16 h-16 transition-shadow border-4 border-green-200 rounded-full shadow-lg md:w-20 md:h-20 group-hover:shadow-xl"
+                        />
+                      ) : (
+                        <div className="flex items-center justify-center w-16 h-16 text-2xl font-bold text-white transition-shadow rounded-full shadow-lg md:w-20 md:h-20 bg-gradient-to-br from-green-500 to-emerald-600 group-hover:shadow-xl">
+                          {member?.name?.charAt(0).toUpperCase() || "A"}
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="text-center">
+                      <h3 className="mb-1 text-lg font-bold text-green-800">
+                        {member.name}
+                      </h3>
+                      <p className="mb-3 text-sm text-green-600">
+                        {member.email}
+                      </p>
+                      <div className="inline-flex items-center px-3 py-1 text-xs font-semibold text-white rounded-full shadow-md bg-gradient-to-r from-indigo-500 to-purple-600">
+                        <Award className="w-3 h-3 mr-1" />
+                        {member.designation || "Teacher"}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Information Section with better visibility */}
+                  {/* <div className="mb-5 space-y-3">
+                    <div className="p-4 border rounded-xl bg-gradient-to-r from-emerald-50/80 to-teal-50/80 border-emerald-200/60">
+                      <div className="grid grid-cols-1 gap-3 text-xs md:text-sm">
+                        <div className="flex items-center justify-between">
+                          <span className="flex items-center gap-1.5 text-emerald-700 font-semibold">
+                            <span className="text-emerald-600">🌎</span>
+                            Country
+                          </span>
+                          <span className="font-semibold text-right text-emerald-900">
+                            {admin.country || "N/A"}
+                          </span>
+                        </div>
+
+                        <div className="flex items-center justify-between">
+                          <span className="flex items-center gap-1.5 text-emerald-700 font-semibold">
+                            <span className="text-emerald-600">🎓</span>
+                            Qualification
+                          </span>
+                          <span
+                            className="font-semibold text-right text-emerald-900 line-clamp-1"
+                            title={admin.qualification}
+                          >
+                            {admin.qualification || "N/A"}
+                          </span>
+                        </div>
+
+                        <div className="flex items-center justify-between">
+                          <span className="flex items-center gap-1.5 text-emerald-700 font-semibold">
+                            <span className="text-emerald-600">👨‍🏫</span>
+                            Experience
+                          </span>
+                          <span className="font-semibold text-right text-emerald-900">
+                            {admin.experience || "N/A"}
+                          </span>
+                        </div>
+
+                        <div className="flex items-center justify-between">
+                          <span className="flex items-center gap-1.5 text-emerald-700 font-semibold">
+                            <span className="text-emerald-600">📞</span>
+                            Contact
+                          </span>
+                          <span className="font-semibold text-right text-emerald-900">
+                            {admin.whatsapp || "87278328"}
+                          </span>
+                        </div>
+
+                        <div className="flex items-center justify-between">
+                          <span className="flex items-center gap-1.5 text-emerald-700 font-semibold">
+                            <span className="text-emerald-600">📅</span>
+                            Joined
+                          </span>
+                          <span className="font-semibold text-right text-emerald-900">
+                            {admin.createdAt
+                              ? new Date(admin.createdAt).toLocaleString(
+                                  "en-GB",
+                                  {
+                                    day: "2-digit",
+                                    month: "short",
+                                    year: "numeric",
+                                  }
+                                )
+                              : "N/A"}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div> */}
+
+                  {/* Action Buttons with proper z-index and contrast */}
+                  <div className="flex justify-center">
+                    <button
+                      onClick={() => navigate(`/teacher-detail/${member._id}`)}
+                      className="flex items-center justify-center gap-1.5 px-4 py-3 text-xs font-bold text-white transition-all duration-200 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-xl shadow-lg hover:from-emerald-700 hover:to-teal-700 hover:shadow-xl transform hover:scale-105 active:scale-95 cursor-pointer"
+                    >
+                      <span>View Details</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -134,67 +292,6 @@ function About() {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Team Section */}
-      <section className="py-16 bg-gradient-to-br from-green-50 to-emerald-50">
-        <div className="max-w-6xl px-6 mx-auto lg:px-12">
-          <div className="mb-12 text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 mb-4 text-xs font-semibold text-green-800 bg-green-100 rounded-full">
-              👥 Our Team
-            </div>
-            <h2 className="mb-4 text-2xl font-bold text-gray-800 lg:text-3xl">
-              Meet Our Scholars
-            </h2>
-            <p className="max-w-2xl mx-auto text-sm text-gray-600">
-              Learn from qualified Islamic scholars and experienced educators
-            </p>
-          </div>
-
-          <div className="grid gap-8 md:grid-cols-3">
-            {teamData.map((member, index) => (
-              <div
-                key={index}
-                className="overflow-hidden transition-shadow bg-white shadow-lg rounded-xl hover:shadow-xl"
-              >
-                <div className="p-8 text-center">
-                  <div className="flex justify-center mb-4 text-6xl">
-                    {member.img ? (
-                      <img
-                        src={member.img}
-                        alt={member.name}
-                        className="object-cover w-12 h-12 mx-auto rounded-full md:w-18 md:h-18"
-                      />
-                    ) : (
-                      <div className="flex items-center justify-center w-12 h-12 overflow-hidden text-xl font-bold text-white rounded-full md:w-18 md:h-18 bg-gradient-to-br from-emerald-400 to-emerald-600 md:text-2xl">
-                        {member?.name?.charAt(0).toUpperCase() || "A"}
-                      </div>
-                    )}
-                  </div>
-                  <h3 className="mb-2 text-xl font-bold text-gray-800">
-                    {member.name}
-                  </h3>
-                  <div className="mb-3 text-sm">
-                    {member.designation ? (
-                      <p className="font-semibold text-green-600">
-                        {member.designation}
-                      </p>
-                    ) : (
-                      <p className="font-semibold text-green-600">Teacher</p>
-                    )}
-                  </div>
-                  <p className="mb-2 text-xs text-gray-600">
-                    {member.qualification || "Expert in Quran Education"}
-                  </p>
-                  <div className="inline-flex items-center gap-1 px-3 py-1 mt-2 text-sm font-medium text-green-800 bg-green-100 rounded-full">
-                    <Award className="w-4 h-4" />
-                    {member.experience || 3} Years
-                  </div>
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       </section>

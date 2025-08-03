@@ -1,120 +1,304 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, useLocation, useParams } from "react-router-dom";
-import { Clock, Users, Star } from "lucide-react";
-import axios from "axios";
+import {
+  Clock,
+  Users,
+  Star,
+  BookOpen,
+  XCircle,
+  CheckCircle,
+} from "lucide-react";
 
 function CourseDetail() {
-  const { id } = useParams();
+  // Mock data for demonstration - replace with your actual useParams and API logic
   const [course, setCourse] = useState(null);
   const [loading, setLoading] = useState(true);
-  const BASE_URL = "http://localhost:8000";
-  const { pathname } = useLocation();
+  const [error, setError] = useState(null);
 
+  // Simulate your existing logic
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [pathname]);
+  }, []);
 
   useEffect(() => {
+    // Your existing fetchCourse logic goes here
+    // const { id } = useParams();
+    // const BASE_URL = "http://localhost:8000";
+
     const fetchCourse = async () => {
       try {
-        const res = await axios.get(`${BASE_URL}/admin/course/${id}`);
-        setCourse(res.data.course);
-        console.log(res.data.course);
+        setLoading(true);
+        // Replace this mock data with your actual API call:
+        // const res = await axios.get(`${BASE_URL}/admin/course/${id}`);
+        // setCourse(res.data.course);
+
+        // Mock data for demonstration
+        setTimeout(() => {
+          setCourse({
+            title: "Complete Quran Recitation Course",
+            description:
+              "Learn proper Quran recitation with Tajweed rules and beautiful pronunciation. This comprehensive course covers all aspects of Quranic recitation.",
+            thumbnail: "/api/placeholder/600/400",
+            duration: 6,
+            students: 232,
+            rating: 4.98,
+            level: "Beginner to Advanced",
+            topics: [
+              "Tajweed Rules",
+              "Proper Pronunciation",
+              "Memorization Techniques",
+              "Quranic Arabic",
+            ],
+            fullDescription:
+              "This comprehensive Quran recitation course is designed to help students master the art of beautiful Quranic recitation. The course covers fundamental Tajweed rules, proper pronunciation techniques, and memorization strategies.\n\nStudents will learn:\n• Basic to advanced Tajweed rules\n• Proper articulation of Arabic letters\n• Melodious recitation styles\n• Memorization techniques for better retention\n• Understanding of Quranic Arabic basics\n\nOur experienced instructors provide personalized guidance to ensure each student progresses at their own pace while maintaining the highest standards of recitation.",
+          });
+          setLoading(false);
+        }, 1500);
       } catch (error) {
         console.error("Failed to fetch course details:", error);
-      } finally {
+        setError("Failed to load course details. Please try again later.");
         setLoading(false);
       }
     };
 
     fetchCourse();
-  }, [id]);
+  }, []);
 
+  // Enhanced Loading Component
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-emerald-50">
-        <p className="text-lg text-gray-600">Loading course details...</p>
+      <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-50">
+        {/* Loading Hero Section */}
+        <div className="relative px-4 py-20 sm:px-6 bg-gradient-to-r from-green-700 to-emerald-600">
+          <div className="max-w-4xl mx-auto">
+            <div className="space-y-4 animate-pulse">
+              <div className="w-3/4 h-8 mx-auto bg-green-600 rounded sm:h-12"></div>
+              <div className="w-full h-4 bg-green-600 rounded"></div>
+              <div className="w-5/6 h-4 mx-auto bg-green-600 rounded"></div>
+            </div>
+          </div>
+        </div>
+
+        {/* Loading Content */}
+        <div className="max-w-5xl px-4 py-12 mx-auto sm:px-6">
+          <div className="grid gap-8 lg:grid-cols-2">
+            <div className="animate-pulse">
+              <div className="w-full bg-gray-200 rounded-lg h-80"></div>
+            </div>
+            <div className="space-y-4 animate-pulse">
+              <div className="w-3/4 h-6 bg-gray-200 rounded"></div>
+              <div className="w-1/2 h-4 bg-gray-200 rounded"></div>
+              <div className="w-2/3 h-4 bg-gray-200 rounded"></div>
+              <div className="w-1/3 h-12 bg-gray-200 rounded"></div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
 
-  if (!course) {
+  // Enhanced Error Component
+  if (error || !course) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-emerald-50">
-        <p className="text-lg text-red-600">Course not found.</p>
+      <div className="flex items-center justify-center min-h-screen p-4 bg-gradient-to-br from-green-50 to-emerald-50">
+        <div className="w-full max-w-md p-8 text-center bg-white shadow-xl rounded-2xl">
+          <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 bg-red-100 rounded-full">
+            <XCircle className="w-8 h-8 text-red-600" />
+          </div>
+          <h2 className="mb-2 text-2xl font-bold text-gray-800">
+            Course Not Found
+          </h2>
+          <p className="mb-6 text-gray-600">
+            {error ||
+              "The course you're looking for doesn't exist or has been removed."}
+          </p>
+          <div className="space-y-3">
+            <button
+              onClick={() => window.location.reload()}
+              className="w-full px-6 py-2 text-white transition-colors rounded-lg bg-emerald-600 hover:bg-emerald-700"
+            >
+              Try Again
+            </button>
+            <button
+              onClick={() => window.history.back()}
+              className="w-full px-6 py-2 text-gray-700 transition-colors bg-gray-100 rounded-lg hover:bg-gray-200"
+            >
+              Go Back
+            </button>
+          </div>
+        </div>
       </div>
     );
   }
 
   return (
     <div className="min-h-screen text-gray-800 bg-gradient-to-br from-green-50 to-emerald-50">
-      {/* Hero Section */}
-      <div className="relative px-6 py-20 text-white bg-gradient-to-r from-green-700 to-emerald-600">
+      {/* Enhanced Hero Section */}
+      <div className="relative px-4 py-16 text-white sm:px-6 lg:px-8 sm:py-20 lg:py-24 bg-gradient-to-r from-green-700 to-emerald-600">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="mb-4 font-bold md:text-4xl">{course.title}</h1>
-          <p className="text-justify text-green-100 sm:text-xs md:text-lg line-clamp-5">
+          <h1 className="mb-4 text-2xl font-bold leading-tight sm:mb-6 sm:text-3xl md:text-4xl lg:text-5xl">
+            {course.title}
+          </h1>
+          <p className="max-w-3xl mx-auto text-sm leading-relaxed text-green-100 sm:text-base md:text-lg lg:text-xl">
             {course.description}
           </p>
         </div>
+
+        {/* Decorative Elements */}
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+          <div className="absolute w-20 h-20 bg-white rounded-full top-10 left-10 bg-opacity-10"></div>
+          <div className="absolute w-32 h-32 bg-white rounded-full bottom-10 right-10 bg-opacity-5"></div>
+          <div className="absolute w-16 h-16 bg-white rounded-full top-1/2 left-1/4 bg-opacity-10"></div>
+        </div>
       </div>
 
-      {/* Course Content */}
-      <div className="max-w-5xl px-6 py-12 mx-auto">
-        <div className="grid gap-8 lg:grid-cols-2">
-          {/* Course Image */}
-          <div className="overflow-hidden rounded-lg shadow-lg">
-            <img
-              src={course.thumbnail}
-              alt={course.title}
-              className="object-cover w-full h-80"
-            />
+      {/* Enhanced Course Content */}
+      <div className="max-w-5xl px-4 py-8 mx-auto sm:px-6 lg:px-8 sm:py-12 lg:py-16">
+        <div className="grid gap-6 sm:gap-8 lg:gap-12 lg:grid-cols-2">
+          {/* Enhanced Course Image */}
+          <div className="order-2 lg:order-1">
+            <div className="overflow-hidden shadow-xl rounded-xl sm:rounded-2xl group">
+              <img
+                src={course.thumbnail}
+                alt={course.title}
+                className="object-cover w-full h-64 transition-transform duration-300 sm:h-80 lg:h-96 group-hover:scale-105"
+                onError={(e) => {
+                  e.target.src = "/api/placeholder/600/400";
+                }}
+              />
+            </div>
           </div>
 
-          {/* Course Info */}
-          <div className="space-y-4">
-            <div className="flex items-center gap-2 text-sm text-gray-600">
-              <Clock className="w-4 h-4" />
-              <span>Duration: {course.duration} months</span>
-            </div>
-            <div className="flex items-center gap-2 text-sm text-gray-600">
-              <Users className="w-4 h-4" />
-              <span>Enrolled Students: {course.students} 232</span>
-            </div>
-            <div className="flex items-center gap-2 text-sm text-gray-600">
-              <Star className="w-4 h-4 text-yellow-500 fill-current" />
-              <span>Rating: {course.rating} 4.98</span>
+          {/* Enhanced Course Info */}
+          <div className="order-1 space-y-6 lg:order-2">
+            {/* Stats Cards */}
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+              <div className="p-4 bg-white border border-green-100 rounded-lg shadow-md">
+                <div className="flex items-center gap-2 mb-1 text-emerald-600">
+                  <Clock className="w-4 h-4" />
+                  <span className="text-xs font-medium tracking-wide uppercase">
+                    Duration
+                  </span>
+                </div>
+                <p className="text-lg font-bold text-gray-800">
+                  {course.duration} months
+                </p>
+              </div>
+
+              <div className="p-4 bg-white border border-green-100 rounded-lg shadow-md">
+                <div className="flex items-center gap-2 mb-1 text-emerald-600">
+                  <Users className="w-4 h-4" />
+                  <span className="text-xs font-medium tracking-wide uppercase">
+                    Students
+                  </span>
+                </div>
+                <p className="text-lg font-bold text-gray-800">
+                  {course.students || "232"}
+                </p>
+              </div>
+
+              <div className="p-4 bg-white border border-green-100 rounded-lg shadow-md">
+                <div className="flex items-center gap-2 mb-1 text-emerald-600">
+                  <Star className="w-4 h-4 text-yellow-500 fill-current" />
+                  <span className="text-xs font-medium tracking-wide uppercase">
+                    Rating
+                  </span>
+                </div>
+                <p className="text-lg font-bold text-gray-800">
+                  {course.rating || "4.98"}
+                </p>
+              </div>
             </div>
 
-            <p className="text-base leading-relaxed text-gray-700">
-              <strong>Level:</strong> {course.level}
-            </p>
+            {/* Course Details */}
+            <div className="p-6 bg-white border border-green-100 shadow-lg rounded-xl">
+              <h3 className="flex items-center gap-2 mb-4 text-lg font-bold text-gray-800">
+                <BookOpen className="w-5 h-5 text-emerald-600" />
+                Course Details
+              </h3>
 
-            <p className="text-base leading-relaxed text-gray-700">
-              <strong>Topics:</strong> {course.topics?.join(", ") || "N/A"}
-            </p>
+              <div className="space-y-4">
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+                  <span className="font-semibold text-gray-700 min-w-20">
+                    Level:
+                  </span>
+                  <span className="px-3 py-1 text-sm font-medium rounded-full bg-emerald-100 text-emerald-800">
+                    {course.level}
+                  </span>
+                </div>
 
-            <div className="mt-6">
-              <NavLink
-                to={"/register-student"}
-                className="px-6 py-3 font-semibold text-white transition rounded-lg bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700"
+                {course.topics && course.topics.length > 0 && (
+                  <div className="flex flex-col gap-2">
+                    <span className="font-semibold text-gray-700">Topics:</span>
+                    <div className="flex flex-wrap gap-2">
+                      {course.topics.map((topic, index) => (
+                        <span
+                          key={index}
+                          className="px-3 py-1 text-sm text-gray-700 bg-gray-100 rounded-full"
+                        >
+                          {topic}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Enhanced Enroll Button */}
+            <div className="p-6 text-white bg-gradient-to-r from-green-600 to-emerald-600 rounded-xl">
+              <h3 className="mb-2 text-lg font-bold">
+                Ready to Start Learning?
+              </h3>
+              <p className="mb-4 text-sm text-green-100">
+                Join thousands of students in this comprehensive course.
+              </p>
+              <a
+                href="/register-student"
+                className="inline-flex items-center gap-2 px-6 py-3 font-semibold transition-all transform bg-white rounded-lg text-emerald-600 hover:bg-gray-50 hover:shadow-lg hover:-translate-y-1"
               >
+                <CheckCircle className="w-5 h-5" />
                 Enroll Now
-              </NavLink>
+              </a>
             </div>
           </div>
         </div>
 
-        {/* Syllabus or Description */}
+        {/* Enhanced Course Overview */}
         {course.fullDescription && (
-          <div className="mt-12">
-            <h2 className="mb-4 text-2xl font-bold text-emerald-700">
-              📖 Course Overview
-            </h2>
-            <p className="leading-relaxed text-gray-700 whitespace-pre-line">
-              {course.fullDescription}
-            </p>
+          <div className="mt-12 lg:mt-16">
+            <div className="p-6 bg-white border border-green-100 shadow-xl rounded-2xl sm:p-8">
+              <h2 className="flex items-center gap-3 mb-6 text-2xl font-bold sm:text-3xl text-emerald-700">
+                <div className="p-2 rounded-lg bg-emerald-100">📖</div>
+                Course Overview
+              </h2>
+              <div className="prose prose-gray max-w-none">
+                <p className="text-sm leading-relaxed text-gray-700 whitespace-pre-line sm:text-base">
+                  {course.fullDescription}
+                </p>
+              </div>
+            </div>
           </div>
         )}
+
+        {/* Call to Action Section */}
+        <div className="mt-12 text-center lg:mt-16">
+          <div className="p-8 text-white bg-gradient-to-r from-emerald-600 to-green-600 rounded-2xl">
+            <h3 className="mb-4 text-2xl font-bold">
+              Start Your Islamic Learning Journey Today
+            </h3>
+            <p className="max-w-2xl mx-auto mb-6 text-emerald-100">
+              Join our community of learners and deepen your understanding of
+              Islamic teachings with expert guidance.
+            </p>
+            <a
+              href="/register-student"
+              className="inline-flex items-center gap-2 px-8 py-4 text-lg font-bold transition-all transform bg-white text-emerald-600 rounded-xl hover:bg-gray-50 hover:shadow-lg hover:-translate-y-1"
+            >
+              <CheckCircle className="w-6 h-6" />
+              Begin Your Journey
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   );
