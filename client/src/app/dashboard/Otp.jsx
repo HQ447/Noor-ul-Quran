@@ -113,7 +113,7 @@ export default function Otp() {
             <div className="relative">
               <input
                 type="text"
-                className="w-full px-4 py-3 font-mono text-lg tracking-widest text-center text-teal-800 placeholder-teal-400 transition-all duration-300 border-2 border-teal-200  md:py-4 rounded-xl focus:outline-none focus:ring-4 focus:ring-teal-200 focus:border-teal-500 bg-white/80"
+                className="w-full px-4 py-3 font-mono text-lg tracking-widest text-center text-teal-800 placeholder-teal-400 transition-all duration-300 border-2 border-teal-200 md:py-4 rounded-xl focus:outline-none focus:ring-4 focus:ring-teal-200 focus:border-teal-500 bg-white/80"
                 value={otp}
                 onChange={(e) => setOtp(e.target.value)}
                 placeholder="000000"

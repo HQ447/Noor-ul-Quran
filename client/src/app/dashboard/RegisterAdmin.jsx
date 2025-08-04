@@ -118,7 +118,7 @@ export default function RegisterAdmin() {
             </p>
           </div>
 
-          <div className="p-8 space-y-5">
+          <div className="p-6 space-y-5 md:p-8">
             {/* Name Field */}
             <div>
               <label
@@ -135,7 +135,7 @@ export default function RegisterAdmin() {
                   onChange={(e) => setName(e.target.value)}
                   required
                   placeholder="Ali Hamza"
-                  className="w-full py-3 pl-12 pr-4 transition-all duration-300 border-2 outline-none border-emerald-200 rounded-xl focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 bg-white/70 backdrop-blur-sm"
+                  className="w-full py-2 pl-12 pr-4 transition-all duration-300 border-2 outline-none md:py-3 placeholder:text-xs border-emerald-200 rounded-xl focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 bg-white/70 backdrop-blur-sm"
                 />
                 <div className="absolute transform -translate-y-1/2 left-4 top-1/2 text-emerald-500">
                   <svg
@@ -169,7 +169,7 @@ export default function RegisterAdmin() {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   placeholder="admin@example.com"
-                  className="w-full py-3 pl-12 pr-4 transition-all duration-300 border-2 outline-none border-emerald-200 rounded-xl focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 bg-white/70 backdrop-blur-sm"
+                  className="w-full py-2 pl-12 pr-4 transition-all duration-300 border-2 outline-none md:py-3 placeholder:text-xs border-emerald-200 rounded-xl focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 bg-white/70 backdrop-blur-sm"
                 />
                 <div className="absolute transform -translate-y-1/2 left-4 top-1/2 text-emerald-500">
                   <svg
@@ -200,7 +200,7 @@ export default function RegisterAdmin() {
                   onChange={(e) => setSecret(e.target.value)}
                   required
                   placeholder="Enter admin authorization key"
-                  className="w-full py-3 pl-12 pr-4 transition-all duration-300 border-2 outline-none border-emerald-200 rounded-xl focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 bg-white/70 backdrop-blur-sm"
+                  className="w-full py-2 pl-12 pr-4 transition-all duration-300 border-2 outline-none md:py-3 placeholder:text-xs border-emerald-200 rounded-xl focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 bg-white/70 backdrop-blur-sm"
                 />
                 <div className="absolute transform -translate-y-1/2 left-4 top-1/2 text-emerald-500">
                   <svg
@@ -234,7 +234,7 @@ export default function RegisterAdmin() {
                   onChange={handlePasswordChange}
                   required
                   placeholder="Choose a secure password"
-                  className="w-full py-3 pl-12 pr-4 transition-all duration-300 border-2 outline-none border-emerald-200 rounded-xl focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 bg-white/70 backdrop-blur-sm"
+                  className="w-full py-2 pl-12 pr-4 transition-all duration-300 border-2 outline-none md:py-3 placeholder:text-xs border-emerald-200 rounded-xl focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 bg-white/70 backdrop-blur-sm"
                 />
                 <div className="absolute transform -translate-y-1/2 left-4 top-1/2 text-emerald-500">
                   <svg
@@ -268,7 +268,7 @@ export default function RegisterAdmin() {
                   onChange={handleConfirmPasswordChange}
                   required
                   placeholder="Re-enter your password"
-                  className={`w-full pl-12 pr-4 py-3 border-2 rounded-xl focus:ring-4 outline-none transition-all duration-300 bg-white/70 backdrop-blur-sm ${
+                  className={` placeholder:text-xs w-full pl-12 pr-4 py-2 md:py-3 border-2 rounded-xl focus:ring-4 outline-none transition-all duration-300 bg-white/70 backdrop-blur-sm ${
                     !passwordMatch && confirmPassword
                       ? "border-red-300 focus:border-red-500 focus:ring-red-100"
                       : "border-emerald-200 focus:border-emerald-500 focus:ring-emerald-100"
@@ -331,7 +331,7 @@ export default function RegisterAdmin() {
               type="submit"
               onClick={handleSubmit}
               disabled={loading || !passwordMatch}
-              className="w-full bg-gradient-to-r from-emerald-600 to-green-600 text-white py-3 px-6 rounded-xl font-semibold text-lg shadow-lg hover:from-emerald-700 hover:to-green-700 focus:ring-4 focus:ring-emerald-200 transform transition-all duration-300 hover:scale-[1.02] disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none relative overflow-hidden"
+              className="w-full bg-gradient-to-r from-emerald-600 to-green-600 text-white py-3 px-6 rounded-xl font-semibold text-sm shadow-lg hover:from-emerald-700 hover:to-green-700 focus:ring-4 focus:ring-emerald-200 transform transition-all duration-300 hover:scale-[1.02] disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none relative overflow-hidden"
             >
               {loading && (
                 <div className="absolute inset-0 flex items-center justify-center bg-emerald-700">
@@ -376,7 +376,7 @@ export default function RegisterAdmin() {
             <div className="text-center">
               <button
                 onClick={() => navigate("/admin-Login")}
-                className="inline-flex items-center justify-center w-full py-3 px-6 border-2 border-emerald-600 text-emerald-600 rounded-xl font-semibold hover:bg-emerald-50 transition-all duration-300 hover:scale-[1.02] focus:ring-4 focus:ring-emerald-100 bg-transparent cursor-pointer"
+                className="inline-flex text-sm items-center justify-center w-full py-3 px-6 border-2 border-emerald-600 text-emerald-600 rounded-xl font-semibold hover:bg-emerald-50 transition-all duration-300 hover:scale-[1.02] focus:ring-4 focus:ring-emerald-100 bg-transparent cursor-pointer"
               >
                 Sign In to Existing Account
               </button>

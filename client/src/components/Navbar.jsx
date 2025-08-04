@@ -60,10 +60,10 @@ function Navbar() {
                 className="w-8 h-8 rounded-full md:w-13 md:h-13"
               />
               <NavLink to={"/"} className="flex flex-col">
-                <h1 className="text-xs font-bold text-gray-800 sm:text-base lg:text-xl">
+                <h1 className="text-sm font-bold text-gray-800 sm:text-base lg:text-xl">
                   Noor ul Quran
                 </h1>
-                <p className=" text-[6px] md:text-[10px] text-gray-600 sm:block sm:text-xs">
+                <p className=" text-[8px] md:text-[10px] text-gray-600 sm:block sm:text-xs">
                   Distance Learning Academy
                 </p>
               </NavLink>
@@ -118,7 +118,7 @@ function Navbar() {
                   {/* Admin Login: Only on large screen */}
                   <NavLink
                     to="admin-Login"
-                    className="hidden px-3 py-2 text-xs font-medium border border-green-500 rounded-sm green-500 lg:inline hover:bg-green-600 hover:text-white hover:shadow-lg"
+                    className="hidden px-3 py-2 text-xs font-medium border rounded-sm border-emerald-500 green-500 lg:inline hover:bg-emerald-600 hover:text-white hover:shadow-lg"
                   >
                     Admin Login
                   </NavLink>
@@ -126,7 +126,7 @@ function Navbar() {
                   {/* Register Now: Always visible */}
                   <NavLink
                     to="register-student"
-                    className="px-2 py-1 text-xs font-medium text-white bg-green-500 rounded-sm sm:px-3 sm:py-2 hover:bg-green-600 hover:shadow-lg"
+                    className="px-2 py-2 text-xs font-medium text-white rounded-sm bg-gradient-to-r from-emerald-500 to-emerald-600 sm:px-3 sm:py-2 hover:bg-green-700 hover:shadow-lg"
                   >
                     Register Now
                   </NavLink>

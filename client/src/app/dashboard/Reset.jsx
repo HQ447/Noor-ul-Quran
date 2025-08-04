@@ -48,7 +48,7 @@ export default function Reset() {
   };
 
   return (
-    <div className="relative flex items-center justify-center min-h-screen p-2 overflow-hidden md:p-4 bg-gradient-to-br from-green-50 via-emerald-50 to-teal-100">
+    <div className="relative flex items-center justify-center min-h-screen p-4 overflow-hidden md:p-4 bg-gradient-to-br from-green-50 via-emerald-50 to-teal-100">
       {/* Islamic Decorative Pattern Background */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute w-48 h-48 transform rotate-45 border-4 border-green-600 top-20 left-20">

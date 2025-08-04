@@ -39,7 +39,7 @@ export default function Forgot() {
   };
 
   return (
-    <div className="relative flex items-center justify-center min-h-screen p-2 overflow-hidden md:p-4 bg-gradient-to-br from-emerald-50 via-teal-50 to-green-100">
+    <div className="relative flex items-center justify-center min-h-screen p-4 overflow-hidden md:p-4 bg-gradient-to-br from-emerald-50 via-teal-50 to-green-100">
       {/* Islamic Pattern Background */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute w-32 h-32 transform rotate-45 border-4 rounded-full top-10 left-10 border-emerald-600"></div>

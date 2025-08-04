@@ -48,7 +48,7 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="relative flex items-center justify-center min-h-screen px-2 py-2 overflow-hidden md:px-4 md:py-12 bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50">
+    <div className="relative flex items-center justify-center min-h-screen px-4 py-2 overflow-hidden md:px-4 md:py-12 bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50">
       {/* Islamic Pattern Background */}
       <div className="absolute inset-0 opacity-5">
         <div
