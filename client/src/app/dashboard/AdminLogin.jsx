@@ -48,7 +48,7 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="relative flex items-center justify-center min-h-screen px-4 py-12 overflow-hidden bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50">
+    <div className="relative flex items-center justify-center min-h-screen px-2 py-2 overflow-hidden md:px-4 md:py-12 bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50">
       {/* Islamic Pattern Background */}
       <div className="absolute inset-0 opacity-5">
         <div
@@ -95,7 +95,7 @@ export default function AdminLogin() {
               </div>
             </div>
 
-            <h2 className="text-2xl font-bold text-center text-white">
+            <h2 className="text-xl font-bold text-center text-white md:text-2xl">
               Admin Portal
             </h2>
             <p className="mt-1 text-sm text-center text-emerald-100">
@@ -103,7 +103,7 @@ export default function AdminLogin() {
             </p>
           </div>
 
-          <div className="p-8 space-y-6">
+          <div className="p-5 space-y-6 md:p-8">
             {/* Error Message Display */}
             {error && (
               <div className="p-4 border border-red-200 rounded-xl bg-red-50">
@@ -140,7 +140,7 @@ export default function AdminLogin() {
                     onChange={(e) => setEmail(e.target.value)}
                     required
                     placeholder="admin@example.com"
-                    className="w-full py-3 pl-12 pr-4 transition-all duration-300 border-2 outline-none border-emerald-200 rounded-xl focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 bg-white/70 backdrop-blur-sm"
+                    className="w-full py-2 pl-12 pr-4 transition-all duration-300 border-2 outline-none md:py-3 placeholder:text-sm border-emerald-200 rounded-xl focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 bg-white/70 backdrop-blur-sm"
                   />
                   <div className="absolute transform -translate-y-1/2 left-4 top-1/2 text-emerald-500">
                     <svg
@@ -170,7 +170,7 @@ export default function AdminLogin() {
                     onChange={(e) => setPassword(e.target.value)}
                     required
                     placeholder="Enter secure password"
-                    className="w-full py-3 pl-12 pr-4 transition-all duration-300 border-2 outline-none border-emerald-200 rounded-xl focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 bg-white/70 backdrop-blur-sm"
+                    className="w-full py-2 pl-12 pr-4 transition-all duration-300 border-2 outline-none md:py-3 placeholder:text-sm border-emerald-200 rounded-xl focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 bg-white/70 backdrop-blur-sm"
                   />
                   <div className="absolute transform -translate-y-1/2 left-4 top-1/2 text-emerald-500">
                     <svg
@@ -193,10 +193,10 @@ export default function AdminLogin() {
               type="submit"
               onClick={handleSubmit}
               disabled={loading}
-              className="w-full bg-gradient-to-r from-emerald-600 to-green-600 text-white py-3 px-6 rounded-xl font-semibold text-lg shadow-lg hover:from-emerald-700 hover:to-green-700 focus:ring-4 focus:ring-emerald-200 transform transition-all duration-300 hover:scale-[1.02] disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none relative overflow-hidden"
+              className="w-full bg-gradient-to-r from-emerald-600 to-green-600 text-white py-2 text-sm md:py-3 px-6 rounded-xl font-semibold  shadow-lg hover:from-emerald-700 hover:to-green-700 focus:ring-4 focus:ring-emerald-200 transform transition-all duration-300 hover:scale-[1.02] disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none relative overflow-hidden"
             >
               {loading && (
-                <div className="absolute inset-0 flex items-center justify-center bg-emerald-700">
+                <div className="absolute inset-0 flex items-center justify-center text-sm bg-emerald-700">
                   <svg
                     className="w-5 h-5 mr-2 text-white animate-spin"
                     fill="none"
@@ -247,7 +247,7 @@ export default function AdminLogin() {
             <div className="text-center">
               <NavLink
                 to={"/admin-Register"}
-                className="inline-flex items-center justify-center w-full py-3 px-6 border-2 border-emerald-600 text-emerald-600 rounded-xl font-semibold hover:bg-emerald-50 transition-all duration-300 hover:scale-[1.02] focus:ring-4 focus:ring-emerald-100 bg-transparent cursor-pointer"
+                className="inline-flex items-center justify-center w-full md:py-3 md:px-6 text-sm py-2 px-4 border-2 border-emerald-600 text-emerald-600 rounded-xl font-semibold hover:bg-emerald-50 transition-all duration-300 hover:scale-[1.02] focus:ring-4 focus:ring-emerald-100 bg-transparent cursor-pointer"
               >
                 Create Admin Account
               </NavLink>

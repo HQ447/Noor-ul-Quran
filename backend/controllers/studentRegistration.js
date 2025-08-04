@@ -50,7 +50,7 @@ const registerStudent = async (req, res) => {
     <div style="padding: 30px;">
       <h2 style="color: #333;">Hi ${name},</h2>
       <p style="font-size: 16px; color: #555;">
-        Your registration application has been submitted to ${teacherId.name}.
+        Your registration application has been submitted to ${teacherName}.
       </p>
       <p style="font-size: 16px; color: #555;">
         We will inform you once it is approved by an instructor. Thank you for joining Noor ul Quran.

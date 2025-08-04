@@ -7,11 +7,13 @@ import {
   XCircle,
   CheckCircle,
 } from "lucide-react";
+import { useParams } from "react-router";
 
 function CourseDetail() {
-  // Mock data for demonstration - replace with your actual useParams and API logic
   const [course, setCourse] = useState(null);
   const [loading, setLoading] = useState(true);
+  const { id } = useParams();
+  const BASE_URL = "http://localhost:8000";
   const [error, setError] = useState(null);
 
   // Simulate your existing logic
@@ -19,40 +21,18 @@ function CourseDetail() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
-  useEffect(() => {
-    // Your existing fetchCourse logic goes here
-    // const { id } = useParams();
-    // const BASE_URL = "http://localhost:8000";
+  // Your existing fetchCourse logic goes here
 
+  useEffect(() => {
     const fetchCourse = async () => {
       try {
         setLoading(true);
-        // Replace this mock data with your actual API call:
-        // const res = await axios.get(`${BASE_URL}/admin/course/${id}`);
-        // setCourse(res.data.course);
-
-        // Mock data for demonstration
-        setTimeout(() => {
-          setCourse({
-            title: "Complete Quran Recitation Course",
-            description:
-              "Learn proper Quran recitation with Tajweed rules and beautiful pronunciation. This comprehensive course covers all aspects of Quranic recitation.",
-            thumbnail: "/api/placeholder/600/400",
-            duration: 6,
-            students: 232,
-            rating: 4.98,
-            level: "Beginner to Advanced",
-            topics: [
-              "Tajweed Rules",
-              "Proper Pronunciation",
-              "Memorization Techniques",
-              "Quranic Arabic",
-            ],
-            fullDescription:
-              "This comprehensive Quran recitation course is designed to help students master the art of beautiful Quranic recitation. The course covers fundamental Tajweed rules, proper pronunciation techniques, and memorization strategies.\n\nStudents will learn:\n• Basic to advanced Tajweed rules\n• Proper articulation of Arabic letters\n• Melodious recitation styles\n• Memorization techniques for better retention\n• Understanding of Quranic Arabic basics\n\nOur experienced instructors provide personalized guidance to ensure each student progresses at their own pace while maintaining the highest standards of recitation.",
-          });
+        const res = await fetch(`${BASE_URL}/admin/course/${id}`);
+        const result = await res.json();
+        if (res.ok) {
+          setCourse(result.course);
           setLoading(false);
-        }, 1500);
+        }
       } catch (error) {
         console.error("Failed to fetch course details:", error);
         setError("Failed to load course details. Please try again later.");
@@ -77,8 +57,7 @@ function CourseDetail() {
             </div>
           </div>
         </div>
-
-        {/* Loading Content */}
+        Loading Content
         <div className="max-w-5xl px-4 py-12 mx-auto sm:px-6">
           <div className="grid gap-8 lg:grid-cols-2">
             <div className="animate-pulse">
@@ -142,13 +121,6 @@ function CourseDetail() {
             {course.description}
           </p>
         </div>
-
-        {/* Decorative Elements */}
-        <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-          <div className="absolute w-20 h-20 bg-white rounded-full top-10 left-10 bg-opacity-10"></div>
-          <div className="absolute w-32 h-32 bg-white rounded-full bottom-10 right-10 bg-opacity-5"></div>
-          <div className="absolute w-16 h-16 bg-white rounded-full top-1/2 left-1/4 bg-opacity-10"></div>
-        </div>
       </div>
 
       {/* Enhanced Course Content */}
@@ -159,11 +131,8 @@ function CourseDetail() {
             <div className="overflow-hidden shadow-xl rounded-xl sm:rounded-2xl group">
               <img
                 src={course.thumbnail}
-                alt={course.title}
+                alt={course.thumbnail}
                 className="object-cover w-full h-64 transition-transform duration-300 sm:h-80 lg:h-96 group-hover:scale-105"
-                onError={(e) => {
-                  e.target.src = "/api/placeholder/600/400";
-                }}
               />
             </div>
           </div>
@@ -254,9 +223,9 @@ function CourseDetail() {
               </p>
               <a
                 href="/register-student"
-                className="inline-flex items-center gap-2 px-6 py-3 font-semibold transition-all transform bg-white rounded-lg text-emerald-600 hover:bg-gray-50 hover:shadow-lg hover:-translate-y-1"
+                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold transition-all transform bg-white rounded-lg md:px-6 md:py-3 text-emerald-600 hover:bg-gray-50 hover:shadow-lg hover:-translate-y-1"
               >
-                <CheckCircle className="w-5 h-5" />
+                <CheckCircle className="w-4 h-4 md:w-5 md:h-5" />
                 Enroll Now
               </a>
             </div>
@@ -292,9 +261,9 @@ function CourseDetail() {
             </p>
             <a
               href="/register-student"
-              className="inline-flex items-center gap-2 px-8 py-4 text-lg font-bold transition-all transform bg-white text-emerald-600 rounded-xl hover:bg-gray-50 hover:shadow-lg hover:-translate-y-1"
+              className="inline-flex items-center gap-2 px-6 py-3 text-sm font-bold transition-all transform bg-white text-emerald-600 rounded-xl hover:bg-gray-50 hover:shadow-lg hover:-translate-y-1"
             >
-              <CheckCircle className="w-6 h-6" />
+              <CheckCircle className="w-4 h-4 md:w-6 md:h-6" />
               Begin Your Journey
             </a>
           </div>

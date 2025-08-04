@@ -129,10 +129,10 @@ const CourseManagement = () => {
   if (!token) return <NotFound />;
 
   return (
-    <div className="relative min-h-screen p-6 bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 ">
+    <div className="relative min-h-screen p-4 md:p-6 bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 ">
       <IslamicPattern />
 
-      <div className="relative z-10 flex items-center justify-between mb-6">
+      <div className="relative z-10 flex flex-col justify-between gap-5 mb-6 md:gap-0 md:items-center md:flex-row">
         <div className="relative">
           <div className="flex items-center gap-3 mb-3">
             <div>
@@ -151,10 +151,10 @@ const CourseManagement = () => {
         </div>
         <button
           onClick={() => setShowModal(true)}
-          className="flex items-center px-2 py-2 text-xs text-white transition-colors rounded-lg md:px-4 md:py-2 md:text-sm bg-emerald-600 hover:bg-emerald-700"
+          className="flex items-center justify-center gap-2 px-6 py-2 text-xs font-bold text-white transition-all duration-300 transform shadow-lg md:py-3 md:text-sm rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 hover:shadow-xl hover:-translate-y-1 group"
         >
-          <Plus className="hidden w-4 h-4 mr-2 md:flex" />
-          Add Course
+          <Plus className="w-5 h-5 transition-transform group-hover:rotate-90" />
+          <span>Add New Course</span>
         </button>
       </div>
 

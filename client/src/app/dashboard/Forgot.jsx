@@ -39,7 +39,7 @@ export default function Forgot() {
   };
 
   return (
-    <div className="relative flex items-center justify-center min-h-screen p-4 overflow-hidden bg-gradient-to-br from-emerald-50 via-teal-50 to-green-100">
+    <div className="relative flex items-center justify-center min-h-screen p-2 overflow-hidden md:p-4 bg-gradient-to-br from-emerald-50 via-teal-50 to-green-100">
       {/* Islamic Pattern Background */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute w-32 h-32 transform rotate-45 border-4 rounded-full top-10 left-10 border-emerald-600"></div>
@@ -103,7 +103,7 @@ export default function Forgot() {
             <div className="relative">
               <input
                 type="email"
-                className="w-full px-4 py-3 transition-all duration-300 border-2 md:py-4 border-emerald-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-emerald-200 focus:border-emerald-500 bg-white/80 text-emerald-800 placeholder-emerald-400"
+                className="w-full px-4 py-3 transition-all duration-300 border-2 placeholder:text-sm md:py-4 border-emerald-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-emerald-200 focus:border-emerald-500 bg-white/80 text-emerald-800 placeholder-emerald-400"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email address"
@@ -130,7 +130,7 @@ export default function Forgot() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 md:py-4 text-white font-semibold bg-gradient-to-r from-emerald-600 to-teal-600 rounded-xl hover:from-emerald-700 hover:to-teal-700 focus:outline-none focus:ring-4 focus:ring-emerald-200 transition-all duration-300 transform hover:scale-[1.02] shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+            className="w-full text-sm py-2 md:py-4 text-white font-semibold bg-gradient-to-r from-emerald-600 to-teal-600 rounded-xl hover:from-emerald-700 hover:to-teal-700 focus:outline-none focus:ring-4 focus:ring-emerald-200 transition-all duration-300 transform hover:scale-[1.02] shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
           >
             <span className="flex items-center justify-center">
               {loading ? (

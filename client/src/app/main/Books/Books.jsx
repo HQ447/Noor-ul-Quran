@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { Book, Download, Eye } from "lucide-react";
+import { Book, Download, Eye, FileText } from "lucide-react";
 // import quran from "../../../assets/pdf/quran.pdf";
 // import qaida from "../../../assets/pdf/qaida.pdf";
 // import book from "../../../assets/pdf/book.pdf";
@@ -16,7 +16,7 @@ const IslamicLibrary = () => {
       },
     })
       .then((res) => res.json())
-      .then((data) => setBooks(data.books || []));
+      .then((data) => setBooks(data.books));
   }, []);
   // const books = [
   //   {
@@ -86,78 +86,101 @@ const IslamicLibrary = () => {
 
       <div className="container px-4 py-8 mx-auto">
         {/* Books Grid */}
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {books.map((book) => (
-            <div
-              key={book.id}
-              className="overflow-hidden transition-all duration-300 bg-white rounded-lg shadow-lg hover:shadow-xl group"
-            >
-              {/* Book Cover */}
-              <div className="relative h-48 overflow-hidden bg-gray-200">
-                <img
-                  src={book.thumbnail}
-                  alt={book.title}
-                  className="object-cover w-full h-full"
-                />
-                <div className="absolute inset-0 bg-black/10"></div>
-                <div>{book.title}</div>
-                <div>{book.author}</div>
-                {/* Overlay Actions */}
-                <div className="absolute inset-0 flex items-center justify-center gap-3 transition-opacity duration-300 opacity-0 bg-black/60 group-hover:opacity-100">
-                  <a
-                    href={book.pdf}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-2 text-white transition-all rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30"
-                    title="View PDF"
-                  >
-                    <Eye className="w-5 h-5" />
-                  </a>
-                  <a
-                    href={book.pdf}
-                    target="_blank"
-                    download
-                    className="p-2 text-white transition-all rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30"
-                    title="Download PDF"
-                  >
-                    <Download className="w-5 h-5" />
-                  </a>
-                </div>
-              </div>
+        <div className="">
+          {books.length == 0 ? (
+            <p className="flex text-xl font-bold justify-self-center text-bold">
+              No Book Found
+            </p>
+          ) : (
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {books.map((book) => (
+                <div
+                  key={book._id}
+                  className="overflow-hidden transition-all duration-300 bg-white rounded-lg shadow-lg hover:shadow-xl group"
+                >
+                  {" "}
+                  <div className="p-3 mb-4 border rounded-xl bg-gradient-to-r from-emerald-50/60 to-teal-50/60 border-emerald-100/60">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="flex items-center gap-1 font-medium text-emerald-700">
+                        <FileText className="w-3 h-3" />
+                        PDF Format
+                      </span>
+                      <span className="px-2 py-1 font-semibold rounded-full text-emerald-800 bg-emerald-100">
+                        Available
+                      </span>
+                    </div>
+                  </div>
+                  {/* Book Cover */}
+                  <div className="relative h-48 overflow-hidden bg-gray-200">
+                    <img
+                      src={book.thumbnail}
+                      alt={book.title}
+                      className="object-cover w-full h-full"
+                    />
+                    <div className="absolute inset-0 bg-black/10"></div>
+                    <div>{book.title}</div>
+                    <div>{book.author}</div>
+                    {/* Book Info */}
 
-              {/* Book Details */}
-              <div className="p-4">
-                <div className="mb-3">
-                  <h3 className="mb-1 text-lg font-bold text-gray-800 line-clamp-2">
-                    {book.title}
-                  </h3>
-                  <p className="mb-2 text-sm text-gray-600">{book.author}</p>
-                </div>
+                    {/* Overlay Actions */}
+                    <div className="absolute inset-0 flex items-center justify-center gap-3 transition-opacity duration-300 opacity-0 bg-black/60 group-hover:opacity-100">
+                      <a
+                        href={book.pdf}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-2 text-white transition-all rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30"
+                        title="View PDF"
+                      >
+                        <Eye className="w-5 h-5" />
+                      </a>
+                      <a
+                        href={book.pdf}
+                        target="_blank"
+                        download
+                        className="p-2 text-white transition-all rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30"
+                        title="Download PDF"
+                      >
+                        <Download className="w-5 h-5" />
+                      </a>
+                    </div>
+                  </div>
+                  {/* Book Details */}
+                  <div className="p-4">
+                    <div className="mb-3">
+                      <h3 className="mb-1 text-lg font-bold text-gray-800 line-clamp-2">
+                        {book.title}
+                      </h3>
+                      <p className="mb-2 text-sm text-gray-600">
+                        {book.author}
+                      </p>
+                    </div>
 
-                {/* Action Buttons */}
-                <div className="flex gap-2">
-                  <a
-                    href={book.pdf}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center flex-1 gap-1 px-3 py-2 text-sm font-medium text-white transition-all duration-300 rounded-md bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700"
-                  >
-                    <Eye className="w-4 h-4" />
-                    View
-                  </a>
-                  <a
-                    href={book.pdf}
-                    target="_blank"
-                    download
-                    className="flex items-center justify-center flex-1 gap-1 px-3 py-2 text-sm font-medium text-white transition-all duration-300 rounded-md bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-700 hover:to-emerald-700"
-                  >
-                    <Download className="w-4 h-4" />
-                    Download
-                  </a>
+                    {/* Action Buttons */}
+                    <div className="flex gap-2">
+                      <a
+                        href={book.pdf}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center flex-1 gap-1 px-3 py-2 text-sm font-medium text-white transition-all duration-300 rounded-md bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700"
+                      >
+                        <Eye className="w-4 h-4" />
+                        View
+                      </a>
+                      <a
+                        href={book.pdf}
+                        target="_blank"
+                        download
+                        className="flex items-center justify-center flex-1 gap-1 px-3 py-2 text-sm font-medium text-white transition-all duration-300 rounded-md bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-700 hover:to-emerald-700"
+                      >
+                        <Download className="w-4 h-4" />
+                        Download
+                      </a>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              ))}
             </div>
-          ))}
+          )}
         </div>
       </div>
     </div>

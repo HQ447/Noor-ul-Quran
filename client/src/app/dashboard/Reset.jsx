@@ -48,7 +48,7 @@ export default function Reset() {
   };
 
   return (
-    <div className="relative flex items-center justify-center min-h-screen p-4 overflow-hidden bg-gradient-to-br from-green-50 via-emerald-50 to-teal-100">
+    <div className="relative flex items-center justify-center min-h-screen p-2 overflow-hidden md:p-4 bg-gradient-to-br from-green-50 via-emerald-50 to-teal-100">
       {/* Islamic Decorative Pattern Background */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute w-48 h-48 transform rotate-45 border-4 border-green-600 top-20 left-20">
@@ -101,7 +101,7 @@ export default function Reset() {
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
-                className="w-full px-4 py-3 pr-12 text-green-800 placeholder-green-400 transition-all duration-300 border-2 border-green-200 md:py-4 rounded-xl focus:outline-none focus:ring-4 focus:ring-green-200 focus:border-green-500 bg-white/80"
+                className="w-full px-4 py-2 pr-12 text-green-800 placeholder-green-400 transition-all duration-300 border-2 border-green-200 placeholder:text-sm md:py-4 rounded-xl focus:outline-none focus:ring-4 focus:ring-green-200 focus:border-green-500 bg-white/80"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter new password"
@@ -160,7 +160,7 @@ export default function Reset() {
             <div className="relative">
               <input
                 type={showConfirm ? "text" : "password"}
-                className="w-full px-4 py-3 pr-12 text-green-800 placeholder-green-400 transition-all duration-300 border-2 border-green-200 md:py-4 rounded-xl focus:outline-none focus:ring-4 focus:ring-green-200 focus:border-green-500 bg-white/80"
+                className="w-full px-4 py-2 pr-12 text-green-800 placeholder-green-400 transition-all duration-300 border-2 border-green-200 placeholder:text-sm md:py-4 rounded-xl focus:outline-none focus:ring-4 focus:ring-green-200 focus:border-green-500 bg-white/80"
                 value={confirm}
                 onChange={(e) => setConfirm(e.target.value)}
                 placeholder="Confirm new password"
@@ -232,7 +232,7 @@ export default function Reset() {
           <button
             type="submit"
             disabled={!password || !confirm || password !== confirm || loading}
-            className="w-full py-3 md:py-4 text-white font-semibold bg-gradient-to-r from-green-600 to-emerald-600 rounded-xl hover:from-green-700 hover:to-emerald-700 focus:outline-none focus:ring-4 focus:ring-green-200 transition-all duration-300 transform hover:scale-[1.02] shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none relative overflow-hidden"
+            className="w-full py-2 text-sm md:py-4 text-white font-semibold bg-gradient-to-r from-green-600 to-emerald-600 rounded-xl hover:from-green-700 hover:to-emerald-700 focus:outline-none focus:ring-4 focus:ring-green-200 transition-all duration-300 transform hover:scale-[1.02] shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none relative overflow-hidden"
           >
             {loading ? (
               <span className="flex items-center justify-center">

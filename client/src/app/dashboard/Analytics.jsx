@@ -194,7 +194,7 @@ const Analytics = () => {
         <div className="flex items-center gap-3 mb-3">
           <div>
             <h2 className="text-xl font-bold text-transparent md:text-2xl bg-gradient-to-r from-green-700 to-emerald-800 bg-clip-text">
-              Welcome {name}
+              Welcome {name.split(" ")[0]}
             </h2>
             <div className="flex items-center gap-2 mt-1">
               <Sparkles className="w-4 h-4 text-green-500" />
@@ -209,7 +209,7 @@ const Analytics = () => {
         <div className="w-24 h-1 rounded-full bg-gradient-to-r from-green-500 to-emerald-600"></div>
       </div>
 
-      <div className="grid grid-cols-2 gap-3 mb-6 md:grid-cols-3 lg:grid-cols-5 md:gap-4 md:mb-8">
+      <div className="grid grid-cols-3 gap-3 mb-6 md:grid-cols-3 lg:grid-cols-5 md:gap-4 md:mb-8">
         <StatCard
           title="Total Students"
           value={analytics.totalStudents}

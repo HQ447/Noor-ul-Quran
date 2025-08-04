@@ -110,7 +110,7 @@ const Books = () => {
       <IslamicPattern />
 
       {/* Header Section */}
-      <div className="relative z-10 p-6 md:p-8">
+      <div className="relative z-10 p-4 md:p-6">
         <div className="flex flex-col justify-between gap-6 mb-8 md:flex-row md:items-center">
           <div className="relative">
             <div className="flex items-center gap-3 mb-3">

@@ -161,7 +161,7 @@ const StudentManagement = () => {
           <div className="flex space-x-2">
             <button
               onClick={() => handleFilterChange("all")}
-              className={`px-3 py-1 text-sm rounded-lg transition-colors ${
+              className={`px-3 py-1 text-xs md:text-sm rounded-lg transition-colors ${
                 statusFilter === "all"
                   ? "bg-emerald-600 text-white"
                   : "bg-emerald-50 text-emerald-800 hover:bg-emerald-200"
@@ -171,7 +171,7 @@ const StudentManagement = () => {
             </button>
             <button
               onClick={() => handleFilterChange("registered")}
-              className={`px-3 py-1 text-sm rounded-lg transition-colors ${
+              className={`px-3 py-1 text-xs md:text-sm rounded-lg transition-colors ${
                 statusFilter === "registered"
                   ? "bg-emerald-600 text-white"
                   : "bg-emerald-50 text-emerald-800 hover:bg-emerald-200"
@@ -184,7 +184,7 @@ const StudentManagement = () => {
                 console.log("click");
                 handleFilterChange("pending");
               }}
-              className={`px-3 py-1 text-sm rounded-lg transition-colors ${
+              className={`px-3 py-1 text-xs md:text-sm rounded-lg transition-colors ${
                 statusFilter === "pending"
                   ? "bg-emerald-600 text-white"
                   : "bg-emerald-50 text-emerald-800 hover:bg-emerald-200"

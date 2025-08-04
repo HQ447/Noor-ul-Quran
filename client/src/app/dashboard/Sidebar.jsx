@@ -46,10 +46,10 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
     <>
       {/* Toggle Button - only on small screens */}
       <button
-        className="fixed z-50 p-2 text-white rounded-md top-4 left-4 bg-emerald-700 md:hidden"
+        className="fixed z-50 p-2 text-white rounded-md top-4 right-6 bg-emerald-700 md:hidden"
         onClick={toggleSidebar}
       >
-        {isOpen ? <X size={20} /> : <Menu size={20} />}
+        {isOpen ? <X size={17} /> : <Menu size={17} />}
       </button>
 
       {/* Sidebar */}
@@ -61,13 +61,14 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
       >
         <div className="p-4 border-b border-emerald-700/50">
           <div className="flex items-center space-x-3">
-            <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-br from-emerald-400 to-emerald-600"></div>
-            <div className="hidden md:block lg:block">
+            <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-br from-emerald-400 to-emerald-600">
+              🕮
+            </div>
+            <div className="">
               <h1 className="text-lg font-bold text-white">Noor ul Quran</h1>
               <p className="text-xs text-emerald-200">Dashboard Panel</p>
             </div>
           </div>
-          <p className="text-xs text-white">{role}</p>
         </div>
 
         <nav className="px-2 mt-4">

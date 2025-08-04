@@ -22,10 +22,10 @@ const updateStatus = async (req, res) => {
     <!-- Body -->
     <div style="padding: 30px;">
       <h2 style="color: #333;">Congratulaion ${student.name} 🎉,</h2>
-      <p style="font-size: 16px; color: #555;">
+      <p style="font-size: 14px; color: #555;">
         We Review Your Registration Application
       </p>
-      <p style="font-size: 16px; color: #555;">
+      <p style="font-size: 14px; color: #555;">
        After carefull consideration , Our Instructor successfully Approved Your Registration. Happy Learning. Thank you for joining Noor ul Quran.
       </p>
     </div>

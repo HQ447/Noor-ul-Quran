@@ -113,7 +113,7 @@ export default function Otp() {
             <div className="relative">
               <input
                 type="text"
-                className="w-full px-4 py-3 font-mono text-lg tracking-widest text-center text-teal-800 placeholder-teal-400 transition-all duration-300 border-2 border-teal-200 md:py-4 rounded-xl focus:outline-none focus:ring-4 focus:ring-teal-200 focus:border-teal-500 bg-white/80"
+                className="w-full px-4 py-3 font-mono text-lg tracking-widest text-center text-teal-800 placeholder-teal-400 transition-all duration-300 border-2 border-teal-200  md:py-4 rounded-xl focus:outline-none focus:ring-4 focus:ring-teal-200 focus:border-teal-500 bg-white/80"
                 value={otp}
                 onChange={(e) => setOtp(e.target.value)}
                 placeholder="000000"
@@ -144,7 +144,7 @@ export default function Otp() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 md:py-4 text-white font-semibold bg-gradient-to-r from-teal-600 to-emerald-600 rounded-xl hover:from-teal-700 hover:to-emerald-700 focus:outline-none focus:ring-4 focus:ring-teal-200 transition-all duration-300 transform hover:scale-[1.02] shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+            className="w-full py-2 text-sm md:py-4 text-white font-semibold bg-gradient-to-r from-teal-600 to-emerald-600 rounded-xl hover:from-teal-700 hover:to-emerald-700 focus:outline-none focus:ring-4 focus:ring-teal-200 transition-all duration-300 transform hover:scale-[1.02] shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
           >
             <span className="flex items-center justify-center">
               {loading ? (

@@ -71,7 +71,7 @@ function Navbar() {
 
             {/* Desktop Nav Links */}
             <div className="items-center hidden space-x-8 lg:flex">
-              {["", "courses", "fee", "library", "contact", "about"].map(
+              {["", "courses", "about", "fee", "library", "contact"].map(
                 (link) => (
                   <NavLink
                     key={link}
@@ -145,73 +145,94 @@ function Navbar() {
         )}
 
         {/* Mobile Sidebar */}
-        <div
-          className={`fixed top-0 left-0 h-full w-80 bg-white shadow-xl transform transition-transform duration-300 ease-in-out z-50 lg:hidden ${
-            isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
-          }`}
-        >
-          <div className="flex items-center justify-between p-4 border-b">
-            <div className="flex items-center gap-2 sm:gap-3">
-              <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-green-500 to-emerald-600">
-                <div className="flex items-center justify-center w-6 h-6 bg-white rounded-full">
-                  <span className="text-sm font-bold text-green-600">🕌</span>
+        <>
+          {/* Backdrop/Overlay */}
+          <div
+            className={`fixed inset-0 bg-black bg-opacity-50 transition-opacity duration-300 z-40 lg:hidden ${
+              isMobileMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+            }`}
+            onClick={closeMobileMenu}
+          />
+
+          {/* Sidebar */}
+          <div
+            className={`fixed top-0 left-0 h-full w-80 bg-white shadow-xl transform transition-transform duration-300 ease-in-out z-50 lg:hidden ${
+              isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+            }`}
+          >
+            {/* Header */}
+            <div className="flex items-center justify-between p-6 border-b border-gray-100 bg-gradient-to-r from-emerald-50 to-green-50">
+              <div className="flex items-center gap-3">
+                <div className="flex items-center justify-center w-12 h-12 shadow-md rounded-xl bg-gradient-to-br from-emerald-500 to-green-600">
+                  <div className="flex items-center justify-center w-8 h-8 bg-white rounded-lg">
+                    <span className="text-lg font-bold text-emerald-600">
+                      🕌
+                    </span>
+                  </div>
+                </div>
+                <div>
+                  <h2 className="text-lg font-bold leading-tight text-gray-800">
+                    Noor ul Quran
+                  </h2>
+                  <p className="text-xs font-medium text-gray-600">
+                    Distance Learning Plateform
+                  </p>
                 </div>
               </div>
-              <div>
-                <h2 className="font-bold text-gray-800">Islamic Center</h2>
-                <p className="text-xs text-gray-600">Learn Online Quran</p>
-              </div>
-            </div>
-            <button
-              onClick={closeMobileMenu}
-              className="p-2 text-gray-600 rounded-md hover:bg-gray-100"
-            >
-              <X className="w-5 h-5" />
-            </button>
-          </div>
-
-          {/* Sidebar Links */}
-          <div className="py-4">
-            {[
-              { to: "", label: "🏠 Home" },
-              { to: "courses", label: "📚 Courses" },
-              { to: "fee", label: "💰 Fee Plan" },
-              { to: "library", label: "📖 Library" },
-              { to: "contact", label: "📞 Contact" },
-              { to: "about", label: "ℹ️ About" },
-            ].map((link) => (
-              <NavLink
-                key={link.to}
-                onClick={closeMobileMenu}
-                to={link.to}
-                className="block w-full px-6 py-3 font-semibold text-left text-red-800 transition-colors hover:text-green-800 hover:bg-gray-50"
-              >
-                {link.label}
-              </NavLink>
-            ))}
-          </div>
-
-          {/* Sidebar Bottom - Admin Login for non-authenticated users */}
-          <div className="p-4 space-y-3 border-t">
-            {!role ? (
-              <NavLink
-                to="admin-Login"
-                onClick={closeMobileMenu}
-                className="block w-full px-4 py-2 text-sm font-semibold text-center text-white bg-blue-500 rounded-lg hover:bg-blue-600"
-              >
-                Admin Login
-              </NavLink>
-            ) : (
               <button
-                onClick={handleLogout}
-                className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-white bg-red-500 rounded-full hover:bg-red-600"
+                onClick={closeMobileMenu}
+                className="p-2 text-gray-500 transition-colors rounded-lg hover:bg-white hover:text-gray-700"
               >
-                <LogOut className="w-4 h-4" />
-                <span className=" sm:inline">Logout</span>
+                <X className="w-5 h-5" />
               </button>
-            )}
+            </div>
+
+            {/* Navigation Links */}
+            <div className="py-2">
+              {[
+                { to: "", label: "Home", icon: "🏠" },
+                { to: "courses", label: "Courses", icon: "📚" },
+                { to: "about", label: "About", icon: "ℹ️" },
+                { to: "fee", label: "Fee Plan", icon: "💰" },
+                { to: "library", label: "Library", icon: "📖" },
+                { to: "contact", label: "Contact", icon: "📞" },
+              ].map((link) => (
+                <NavLink
+                  key={link.to}
+                  onClick={closeMobileMenu}
+                  to={link.to}
+                  className="flex items-center gap-4 px-4 py-3 mx-4 my-1 font-medium text-gray-700 transition-all duration-200 rounded-lg hover:text-emerald-700 hover:bg-emerald-50 active:bg-emerald-100 group"
+                >
+                  <span className="text-lg transition-transform duration-200 group-hover:scale-110">
+                    {link.icon}
+                  </span>
+                  <span className="font-semibold">{link.label}</span>
+                </NavLink>
+              ))}
+            </div>
+
+            {/* Bottom Section */}
+            <div className="absolute bottom-0 left-0 right-0 p-6 border-t border-gray-100 bg-gray-50">
+              {!role ? (
+                <NavLink
+                  to="admin-Login"
+                  onClick={closeMobileMenu}
+                  className="flex items-center justify-center w-full gap-2 px-4 py-3 text-sm font-semibold text-white transition-all duration-200 transform shadow-md bg-gradient-to-r from-blue-600 to-blue-700 rounded-xl hover:from-blue-700 hover:to-blue-800 hover:shadow-lg hover:scale-105"
+                >
+                  <span>Admin Login</span>
+                </NavLink>
+              ) : (
+                <button
+                  onClick={handleLogout}
+                  className="flex items-center justify-center w-full gap-3 px-4 py-3 text-sm font-semibold text-white transition-all duration-200 transform shadow-md bg-gradient-to-r from-red-500 to-red-600 rounded-xl hover:from-red-600 hover:to-red-700 hover:shadow-lg hover:scale-105"
+                >
+                  <LogOut className="w-4 h-4" />
+                  <span>Logout</span>
+                </button>
+              )}
+            </div>
           </div>
-        </div>
+        </>
       </nav>
     </>
   );
