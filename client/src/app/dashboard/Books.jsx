@@ -7,6 +7,9 @@ import {
   Download,
   Eye,
   BookOpen,
+  Loader2,
+  AlertCircle,
+  CheckCircle,
 } from "lucide-react";
 import { IoTrashBin } from "react-icons/io5";
 
@@ -27,6 +30,46 @@ const IslamicPattern = () => (
   </div>
 );
 
+// Loading Spinner Component
+const LoadingSpinner = ({ size = "w-5 h-5" }) => (
+  <Loader2 className={`${size} animate-spin`} />
+);
+
+// Progress Bar Component
+const ProgressBar = ({ progress }) => (
+  <div className="w-full h-2 overflow-hidden bg-gray-200 rounded-full">
+    <div
+      className="h-full transition-all duration-300 ease-out rounded-full bg-gradient-to-r from-emerald-500 to-teal-600"
+      style={{ width: `${progress}%` }}
+    />
+  </div>
+);
+
+// Error/Success Message Component
+const Message = ({ type, message, onClose }) => {
+  const isError = type === "error";
+
+  return (
+    <div
+      className={`flex items-center gap-2 p-3 mb-4 rounded-xl border ${
+        isError
+          ? "bg-red-50 border-red-200 text-red-700"
+          : "bg-green-50 border-green-200 text-green-700"
+      }`}
+    >
+      {isError ? (
+        <AlertCircle className="flex-shrink-0 w-4 h-4" />
+      ) : (
+        <CheckCircle className="flex-shrink-0 w-4 h-4" />
+      )}
+      <span className="flex-1 text-sm">{message}</span>
+      <button onClick={onClose} className="text-gray-400 hover:text-gray-600">
+        <X className="w-4 h-4" />
+      </button>
+    </div>
+  );
+};
+
 const Books = () => {
   const [books, setBooks] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
@@ -37,9 +80,49 @@ const Books = () => {
     thumbnail: null,
     pdf: null,
   });
+
+  // Loading states
+  const [loading, setLoading] = useState(true);
+  const [uploading, setUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [deleting, setDeleting] = useState({});
+
+  // Message states
+  const [message, setMessage] = useState(null);
+
   const BASE_URL = "http://localhost:8000";
 
+  // Show message helper
+  const showMessage = (type, text) => {
+    setMessage({ type, text });
+    setTimeout(() => setMessage(null), 5000);
+  };
+  const fetchBooks = async () => {
+    try {
+      setLoading(true);
+      const res = await fetch(`${BASE_URL}/api/books`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        setBooks(data.books || []);
+      } else {
+        showMessage("error", "Failed to fetch books");
+      }
+    } catch (error) {
+      console.error("Error fetching books:", error);
+      showMessage("error", "Network error occurred while fetching books");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleDeleteBook = async (id) => {
+    setDeleting((prev) => ({ ...prev, [id]: true }));
+
     try {
       const res = await fetch(`${BASE_URL}/api/deleteBook/${id}`, {
         method: "DELETE",
@@ -51,57 +134,100 @@ const Books = () => {
 
       if (res.ok) {
         fetchBooks();
+        showMessage("success", "Book deleted successfully!");
       } else {
-        console.error("Failed to delete book");
+        const errorData = await res.json();
+        showMessage("error", errorData.message || "Failed to delete book");
       }
     } catch (error) {
       console.error("Error deleting book:", error);
+      showMessage("error", "Network error occurred while deleting book");
+    } finally {
+      setDeleting((prev) => ({ ...prev, [id]: false }));
     }
-  };
-
-  const fetchBooks = async () => {
-    fetch(`${BASE_URL}/api/books`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => setBooks(data.books || []));
   };
 
   useEffect(() => {
     fetchBooks();
   }, []);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append("title", newBook.title);
-    formData.append("author", newBook.author);
-    formData.append("description", newBook.description);
-    formData.append("thumbnail", newBook.thumbnail);
-    formData.append("pdf", newBook.pdf);
-
-    const res = await fetch(`${BASE_URL}/api/add-book`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-      body: formData,
-    });
-
-    const result = await res.json();
-    if (res.ok) {
-      setBooks((prev) => [...prev, result.book]);
-      setModalOpen(false);
-      setNewBook({
-        title: "",
-        author: "",
-        thumbnail: null,
-        pdf: null,
+  const simulateUploadProgress = () => {
+    setUploadProgress(0);
+    const interval = setInterval(() => {
+      setUploadProgress((prev) => {
+        if (prev >= 95) {
+          clearInterval(interval);
+          return 95;
+        }
+        return prev + Math.random() * 15;
       });
-    } else {
-      alert(result.message || "Error adding book");
+    }, 200);
+    return interval;
+  };
+
+  const handleSubmit = async () => {
+    // Validate form
+    if (
+      !newBook.title ||
+      !newBook.author ||
+      !newBook.description ||
+      !newBook.thumbnail ||
+      !newBook.pdf
+    ) {
+      showMessage("error", "Please fill in all required fields");
+      return;
+    }
+
+    setUploading(true);
+
+    // Start upload progress simulation
+    const progressInterval = simulateUploadProgress();
+
+    try {
+      const formData = new FormData();
+      formData.append("title", newBook.title);
+      formData.append("author", newBook.author);
+      formData.append("description", newBook.description);
+      formData.append("thumbnail", newBook.thumbnail);
+      formData.append("pdf", newBook.pdf);
+
+      const res = await fetch(`${BASE_URL}/api/add-book`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: formData,
+      });
+
+      const result = await res.json();
+
+      // Complete progress
+      clearInterval(progressInterval);
+      setUploadProgress(100);
+
+      if (res.ok) {
+        setBooks((prev) => [...prev, result.book]);
+        setModalOpen(false);
+        setNewBook({
+          title: "",
+          author: "",
+          description: "",
+          thumbnail: null,
+          pdf: null,
+        });
+        showMessage("success", "Book added successfully!");
+      } else {
+        showMessage("error", result.message || "Failed to add book");
+      }
+    } catch (error) {
+      console.error("Error adding book:", error);
+      clearInterval(progressInterval);
+      showMessage("error", "Network error occurred while adding book");
+    } finally {
+      setTimeout(() => {
+        setUploading(false);
+        setUploadProgress(0);
+      }, 1000);
     }
   };
 
@@ -111,6 +237,15 @@ const Books = () => {
 
       {/* Header Section */}
       <div className="relative z-10 p-4 md:p-6">
+        {/* Message Display */}
+        {message && (
+          <Message
+            type={message.type}
+            message={message.text}
+            onClose={() => setMessage(null)}
+          />
+        )}
+
         <div className="flex flex-col justify-between gap-6 mb-8 md:flex-row md:items-center">
           <div className="relative">
             <div className="flex items-center gap-3 mb-3">
@@ -131,15 +266,31 @@ const Books = () => {
 
           <button
             onClick={() => setModalOpen(true)}
-            className="flex items-center justify-center gap-2 px-6 py-2 text-xs font-bold text-white transition-all duration-300 transform shadow-lg md:py-3 md:text-sm rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 hover:shadow-xl hover:-translate-y-1 group"
+            disabled={uploading}
+            className="flex items-center justify-center gap-2 px-6 py-2 text-xs font-bold text-white transition-all duration-300 transform shadow-lg md:py-3 md:text-sm rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 hover:shadow-xl hover:-translate-y-1 group disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
           >
-            <Plus className="w-5 h-5 transition-transform group-hover:rotate-90" />
+            {uploading ? (
+              <LoadingSpinner />
+            ) : (
+              <Plus className="w-5 h-5 transition-transform group-hover:rotate-90" />
+            )}
             <span>Add New Book</span>
           </button>
         </div>
 
-        {/* Books Grid */}
-        {books.length === 0 ? (
+        {/* Loading State */}
+        {loading ? (
+          <div className="relative z-10 flex flex-col items-center justify-center px-4 py-16 text-center border shadow-xl bg-white/90 backdrop-blur-sm rounded-2xl border-emerald-200/50">
+            <LoadingSpinner size="w-8 h-8" />
+            <h3 className="mt-4 mb-2 text-lg font-bold text-gray-800">
+              Loading Books...
+            </h3>
+            <p className="max-w-md text-xs text-gray-600">
+              Please wait while we fetch your library collection
+            </p>
+          </div>
+        ) : /* Books Grid */
+        books.length === 0 ? (
           <div className="relative z-10 flex flex-col items-center justify-center px-4 py-16 text-center border shadow-xl bg-white/90 backdrop-blur-sm rounded-2xl border-emerald-200/50">
             <div className="flex items-center justify-center mb-6 rounded-full w-17 h-17 bg-gradient-to-br from-emerald-100 to-teal-100">
               <BookOpen className="w-6 h-6 text-emerald-600" />
@@ -190,11 +341,23 @@ const Books = () => {
                       📚 Islamic Book
                     </span>
                   </div>
+
+                  {/* Delete Button with Loading */}
                   <div
-                    onClick={() => handleDeleteBook(book._id)}
-                    className="absolute p-2 bg-white rounded-md top-4 right-4"
+                    onClick={() =>
+                      !deleting[book._id] && handleDeleteBook(book._id)
+                    }
+                    className={`absolute p-2 bg-white rounded-md top-4 right-4 ${
+                      deleting[book._id]
+                        ? "cursor-not-allowed opacity-50"
+                        : "cursor-pointer hover:bg-red-50"
+                    }`}
                   >
-                    <IoTrashBin className="w-5 h-5 text-red-600" />
+                    {deleting[book._id] ? (
+                      <LoadingSpinner size="w-5 h-5" />
+                    ) : (
+                      <IoTrashBin className="w-5 h-5 text-red-600" />
+                    )}
                   </div>
                 </div>
 
@@ -257,15 +420,13 @@ const Books = () => {
       {modalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
           <div className="relative w-full max-w-md mx-auto">
-            <form
-              onSubmit={handleSubmit}
-              className="relative p-4 text-sm border shadow-2xl bg-white/95 backdrop-blur-lg rounded-2xl border-emerald-200/50"
-            >
+            <div className="relative p-4 text-sm border shadow-2xl bg-white/95 backdrop-blur-lg rounded-2xl border-emerald-200/50">
               {/* Close Button */}
               <button
-                onClick={() => setModalOpen(false)}
+                onClick={() => !uploading && setModalOpen(false)}
                 type="button"
-                className="absolute p-2 text-gray-500 transition-colors rounded-full top-3 right-3 hover:text-red-500 hover:bg-red-50"
+                disabled={uploading}
+                className="absolute p-2 text-gray-500 transition-colors rounded-full top-3 right-3 hover:text-red-500 hover:bg-red-50 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -276,11 +437,27 @@ const Books = () => {
                   <h2 className="text-lg font-bold text-gray-900">
                     Add New Book
                   </h2>
+                  {uploading && <LoadingSpinner />}
                 </div>
                 <p className="text-xs text-gray-600">
                   Fill in the details to add a new book to your library
                 </p>
               </div>
+
+              {/* Upload Progress */}
+              {uploading && (
+                <div className="mb-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm font-medium text-emerald-700">
+                      Uploading...
+                    </span>
+                    <span className="text-sm text-emerald-600">
+                      {Math.round(uploadProgress)}%
+                    </span>
+                  </div>
+                  <ProgressBar progress={uploadProgress} />
+                </div>
+              )}
 
               {/* Form Fields */}
               <div className="space-y-4">
@@ -292,23 +469,25 @@ const Books = () => {
                     type="text"
                     placeholder="Enter book title"
                     required
-                    className="w-full px-3 py-2 text-sm text-gray-900 placeholder-gray-500 transition-colors border-2 border-gray-200 rounded-xl focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 focus:outline-none"
+                    disabled={uploading}
+                    className="w-full px-3 py-2 text-sm text-gray-900 placeholder-gray-500 transition-colors border-2 border-gray-200 rounded-xl focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
                     value={newBook.title}
                     onChange={(e) =>
                       setNewBook({ ...newBook, title: e.target.value })
                     }
                   />
                 </div>
+
                 <div>
                   <label className="block mb-1 text-xs font-medium text-gray-700">
                     Description *
                   </label>
                   <textarea
-                    type="text"
-                    placeholder="Enter book title"
+                    placeholder="Enter book description"
                     rows={1}
                     required
-                    className="w-full px-3 py-2 text-sm text-gray-900 placeholder-gray-500 transition-colors border-2 border-gray-200 rounded-xl focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 focus:outline-none"
+                    disabled={uploading}
+                    className="w-full px-3 py-2 text-sm text-gray-900 placeholder-gray-500 transition-colors border-2 border-gray-200 rounded-xl focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
                     value={newBook.description}
                     onChange={(e) =>
                       setNewBook({ ...newBook, description: e.target.value })
@@ -324,7 +503,8 @@ const Books = () => {
                     type="text"
                     placeholder="Enter author name"
                     required
-                    className="w-full px-3 py-2 text-sm text-gray-900 placeholder-gray-500 transition-colors border-2 border-gray-200 rounded-xl focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 focus:outline-none"
+                    disabled={uploading}
+                    className="w-full px-3 py-2 text-sm text-gray-900 placeholder-gray-500 transition-colors border-2 border-gray-200 rounded-xl focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
                     value={newBook.author}
                     onChange={(e) =>
                       setNewBook({ ...newBook, author: e.target.value })
@@ -340,7 +520,8 @@ const Books = () => {
                     type="file"
                     accept="image/*"
                     required
-                    className="w-full px-3 py-2 text-sm text-gray-900 transition-colors border-2 border-gray-200 rounded-xl focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 focus:outline-none file:mr-3 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100"
+                    disabled={uploading}
+                    className="w-full px-3 py-2 text-sm text-gray-900 transition-colors border-2 border-gray-200 rounded-xl focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 focus:outline-none file:mr-3 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 disabled:opacity-50 disabled:cursor-not-allowed"
                     onChange={(e) =>
                       setNewBook({ ...newBook, thumbnail: e.target.files[0] })
                     }
@@ -355,7 +536,8 @@ const Books = () => {
                     type="file"
                     accept="application/pdf"
                     required
-                    className="w-full px-3 py-2 text-sm text-gray-900 transition-colors border-2 border-gray-200 rounded-xl focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 focus:outline-none file:mr-3 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100"
+                    disabled={uploading}
+                    className="w-full px-3 py-2 text-sm text-gray-900 transition-colors border-2 border-gray-200 rounded-xl focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 focus:outline-none file:mr-3 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 disabled:opacity-50 disabled:cursor-not-allowed"
                     onChange={(e) =>
                       setNewBook({ ...newBook, pdf: e.target.files[0] })
                     }
@@ -368,18 +550,27 @@ const Books = () => {
                 <button
                   type="button"
                   onClick={() => setModalOpen(false)}
-                  className="flex-1 px-4 py-2 text-xs font-semibold text-gray-700 transition-all duration-200 transform bg-gray-100 rounded-xl hover:bg-gray-200 hover:scale-105 active:scale-95"
+                  disabled={uploading}
+                  className="flex-1 px-4 py-2 text-xs font-semibold text-gray-700 transition-all duration-200 transform bg-gray-100 rounded-xl hover:bg-gray-200 hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                 >
                   Cancel
                 </button>
                 <button
-                  type="submit"
-                  className="flex-1 px-4 py-2 text-xs font-semibold text-white transition-all duration-200 transform shadow-lg bg-gradient-to-r from-emerald-600 to-teal-600 rounded-xl hover:from-emerald-700 hover:to-teal-700 hover:shadow-xl hover:scale-105 active:scale-95"
+                  onClick={handleSubmit}
+                  disabled={uploading}
+                  className="flex items-center justify-center flex-1 gap-2 px-4 py-2 text-xs font-semibold text-white transition-all duration-200 transform shadow-lg bg-gradient-to-r from-emerald-600 to-teal-600 rounded-xl hover:from-emerald-700 hover:to-teal-700 hover:shadow-xl hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                 >
-                  Add Book
+                  {uploading ? (
+                    <>
+                      <LoadingSpinner />
+                      <span>Uploading...</span>
+                    </>
+                  ) : (
+                    <span>Add Book</span>
+                  )}
                 </button>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       )}
