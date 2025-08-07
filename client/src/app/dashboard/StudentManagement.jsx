@@ -18,11 +18,9 @@ import {
   Star,
   Grid,
   Table,
+  Loader2,
+  MessageCircle,
 } from "lucide-react";
-import { FaWhatsapp } from "react-icons/fa";
-import { FaUserCheck } from "react-icons/fa";
-
-import { IoTrashBinSharp } from "react-icons/io5";
 
 const BASE_URL = "http://localhost:8000";
 
@@ -47,6 +45,7 @@ const StudentManagement = () => {
   const [students, setStudents] = useState([]);
   const [viewMode, setViewMode] = useState("grid"); // table or grid
   const [statusFilter, setStatusFilter] = useState("all"); // all, registered, pending
+  const [loadingStates, setLoadingStates] = useState({}); // Track loading for individual students
 
   const fetchStudents = async () => {
     try {
@@ -70,6 +69,9 @@ const StudentManagement = () => {
   }, []);
 
   const handleApprove = async (studentId) => {
+    // Set loading state for this specific student
+    setLoadingStates((prev) => ({ ...prev, [`approve_${studentId}`]: true }));
+
     try {
       const res = await fetch(`${BASE_URL}/admin/updateStatus/${studentId}`, {
         method: "PUT",
@@ -93,10 +95,20 @@ const StudentManagement = () => {
       }
     } catch (error) {
       console.error("Error updating student status:", error);
+    } finally {
+      // Remove loading state
+      setLoadingStates((prev) => {
+        const newState = { ...prev };
+        delete newState[`approve_${studentId}`];
+        return newState;
+      });
     }
   };
 
   const handleDeleteStudent = async (studentId) => {
+    // Set loading state for this specific student
+    setLoadingStates((prev) => ({ ...prev, [`delete_${studentId}`]: true }));
+
     try {
       const res = await fetch(`${BASE_URL}/admin/deleteStudent/${studentId}`, {
         method: "DELETE",
@@ -113,6 +125,13 @@ const StudentManagement = () => {
       }
     } catch (error) {
       console.error("Error deleting student:", error);
+    } finally {
+      // Remove loading state
+      setLoadingStates((prev) => {
+        const newState = { ...prev };
+        delete newState[`delete_${studentId}`];
+        return newState;
+      });
     }
   };
 
@@ -299,22 +318,50 @@ const StudentManagement = () => {
                           onClick={() =>
                             handleApprove(student._id || student.id)
                           }
-                          className="flex items-center px-2 py-1 space-x-1 text-xs text-white transition-colors bg-green-600 rounded-lg hover:bg-green-700 md:px-3"
+                          disabled={
+                            loadingStates[
+                              `approve_${student._id || student.id}`
+                            ]
+                          }
+                          className="flex items-center px-2 py-1 space-x-1 text-xs text-white transition-colors bg-green-600 rounded-lg hover:bg-green-700 md:px-3 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
-                          <FaUserCheck className="w-3 h-3" />
-                          <span className="hidden sm:inline">Approve</span>
+                          {loadingStates[
+                            `approve_${student._id || student.id}`
+                          ] ? (
+                            <Loader2 className="w-3 h-3 animate-spin" />
+                          ) : (
+                            <UserCheck className="w-3 h-3" />
+                          )}
+                          <span className="hidden sm:inline">
+                            {loadingStates[
+                              `approve_${student._id || student.id}`
+                            ]
+                              ? "Approving..."
+                              : "Approve"}
+                          </span>
                         </button>
                       )}
-                      <IoTrashBinSharp
-                        className="text-2xl text-red-600 transition-all cursor-pointer hover:scale-95"
+                      <button
                         onClick={() => handleDeleteStudent(student._id)}
-                      />
+                        disabled={
+                          loadingStates[`delete_${student._id || student.id}`]
+                        }
+                        className="disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        {loadingStates[
+                          `delete_${student._id || student.id}`
+                        ] ? (
+                          <Loader2 className="text-2xl text-red-600 animate-spin" />
+                        ) : (
+                          <Trash2 className="text-xl text-red-600 transition-all cursor-pointer hover:scale-95" />
+                        )}
+                      </button>
                       <a
                         href={`https://wa.me/${student.whatsapp}?text=Assalam O Alikum ! Welcome to Noor ul Quran , How can we Help you?`}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        <FaWhatsapp className="text-2xl font-bold text-green-600 transition-all cursor-pointer hover:scale-95" />
+                        <MessageCircle className="text-xl font-bold text-green-600 transition-all cursor-pointer hover:scale-95" />
                       </a>
                     </td>
                   </tr>
@@ -484,10 +531,20 @@ const StudentManagement = () => {
                   {student.status?.toLowerCase() === "pending" && (
                     <button
                       onClick={() => handleApprove(student._id)}
-                      className="w-full flex items-center justify-center gap-2 px-4 py-2.5 text-xs font-semibold text-white transition-all duration-200 bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-xl shadow-md hover:from-emerald-700 hover:to-emerald-800 hover:shadow-lg transform hover:scale-[1.02] active:scale-[0.98]"
+                      disabled={loadingStates[`approve_${student._id}`]}
+                      className="w-full flex items-center justify-center gap-2 px-4 py-2.5 text-xs font-semibold text-white transition-all duration-200 bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-xl shadow-md hover:from-emerald-700 hover:to-emerald-800 hover:shadow-lg transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                     >
-                      <Check className="w-3.5 h-3.5" />
-                      <span>Approve Student</span>
+                      {loadingStates[`approve_${student._id}`] ? (
+                        <>
+                          <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                          <span>Approving...</span>
+                        </>
+                      ) : (
+                        <>
+                          <Check className="w-3.5 h-3.5" />
+                          <span>Approve Student</span>
+                        </>
+                      )}
                     </button>
                   )}
 
@@ -498,7 +555,7 @@ const StudentManagement = () => {
                       rel="noopener noreferrer"
                       className="flex items-center justify-center gap-1.5 px-3 py-2.5 text-xs font-semibold text-white transition-all duration-200 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-xl shadow-md hover:from-emerald-700 hover:to-teal-700 hover:shadow-lg transform hover:scale-[1.02] active:scale-[0.98]"
                     >
-                      <FaWhatsapp className="w-3.5 h-3.5" />
+                      <MessageCircle className="w-3.5 h-3.5" />
                       <span>WhatsApp</span>
                     </a>
 
@@ -506,10 +563,22 @@ const StudentManagement = () => {
                       onClick={() =>
                         handleDeleteStudent(student._id || student.id)
                       }
-                      className="flex items-center justify-center gap-1.5 px-3 py-2.5 text-xs font-semibold text-white transition-all duration-200 bg-gradient-to-r from-red-500 to-red-600 rounded-xl shadow-md hover:from-red-600 hover:to-red-700 hover:shadow-lg transform hover:scale-[1.02] active:scale-[0.98]"
+                      disabled={
+                        loadingStates[`delete_${student._id || student.id}`]
+                      }
+                      className="flex items-center justify-center gap-1.5 px-3 py-2.5 text-xs font-semibold text-white transition-all duration-200 bg-gradient-to-r from-red-500 to-red-600 rounded-xl shadow-md hover:from-red-600 hover:to-red-700 hover:shadow-lg transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                     >
-                      <IoTrashBinSharp className="w-3.5 h-3.5" />
-                      <span>Delete</span>
+                      {loadingStates[`delete_${student._id || student.id}`] ? (
+                        <>
+                          <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                          <span>Deleting...</span>
+                        </>
+                      ) : (
+                        <>
+                          <Trash2 className="w-3.5 h-3.5" />
+                          <span>Delete</span>
+                        </>
+                      )}
                     </button>
                   </div>
                 </div>

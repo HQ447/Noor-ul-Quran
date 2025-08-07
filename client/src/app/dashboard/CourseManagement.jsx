@@ -31,6 +31,8 @@ const CourseManagement = () => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [isUploading, setIsUploading] = useState(false);
   const [form, setForm] = useState({
     title: "",
     description: "",
@@ -94,6 +96,21 @@ const CourseManagement = () => {
     formData.append("duration", form.duration);
 
     console.log(formData);
+
+    setIsUploading(true);
+    setUploadProgress(0);
+
+    // Simulate upload progress
+    const progressInterval = setInterval(() => {
+      setUploadProgress((prev) => {
+        if (prev >= 95) {
+          clearInterval(progressInterval);
+          return 95;
+        }
+        return prev + Math.random() * 15;
+      });
+    }, 200);
+
     try {
       const res = await fetch(`${BASE_URL}/admin/create-course`, {
         method: "POST",
@@ -104,21 +121,32 @@ const CourseManagement = () => {
       });
 
       if (res.ok) {
-        await fetchCourses();
-        setShowModal(false);
-        setForm({
-          title: "",
-          description: "",
-          thumbnail: null,
-          level: "",
-          duration: "",
-        });
+        setUploadProgress(100);
+        setTimeout(async () => {
+          await fetchCourses();
+          setShowModal(false);
+          setForm({
+            title: "",
+            description: "",
+            thumbnail: null,
+            level: "",
+            duration: "",
+          });
+          setIsUploading(false);
+          setUploadProgress(0);
+        }, 500);
       } else {
         console.error("Failed to add course");
+        setIsUploading(false);
+        setUploadProgress(0);
       }
     } catch (err) {
       console.error("Error submitting course", err);
+      setIsUploading(false);
+      setUploadProgress(0);
     }
+
+    clearInterval(progressInterval);
   };
 
   useEffect(() => {
@@ -333,12 +361,34 @@ const CourseManagement = () => {
             <button
               onClick={() => setShowModal(false)}
               className="absolute text-gray-500 top-4 right-4 hover:text-gray-700"
+              disabled={isUploading}
             >
               <X className="w-5 h-5" />
             </button>
             <h3 className="mb-4 text-xl font-semibold text-emerald-800">
               Add New Course
             </h3>
+
+            {/* Upload Progress Bar */}
+            {isUploading && (
+              <div className="mb-4">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm font-medium text-emerald-700">
+                    Uploading Course...
+                  </span>
+                  <span className="text-sm font-medium text-emerald-700">
+                    {Math.round(uploadProgress)}%
+                  </span>
+                </div>
+                <div className="w-full bg-emerald-200 rounded-full h-2.5">
+                  <div
+                    className="bg-gradient-to-r from-emerald-600 to-teal-600 h-2.5 rounded-full transition-all duration-300 ease-out"
+                    style={{ width: `${uploadProgress}%` }}
+                  ></div>
+                </div>
+              </div>
+            )}
+
             <form className="space-y-4" onSubmit={handleSubmit}>
               <div>
                 <label className="block mb-1 text-sm font-medium text-emerald-700">
@@ -350,6 +400,7 @@ const CourseManagement = () => {
                   onChange={(e) => setForm({ ...form, title: e.target.value })}
                   className="w-full px-3 py-2 text-sm border rounded-lg border-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-500"
                   required
+                  disabled={isUploading}
                 />
               </div>
               <div>
@@ -363,6 +414,7 @@ const CourseManagement = () => {
                   }
                   rows="3"
                   className="w-full px-3 py-2 text-sm border rounded-lg border-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                  disabled={isUploading}
                 />
               </div>
               <div>
@@ -374,6 +426,7 @@ const CourseManagement = () => {
                   onChange={(e) => setForm({ ...form, level: e.target.value })}
                   required
                   className="w-full px-3 py-2 text-sm border rounded-lg border-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                  disabled={isUploading}
                 >
                   <option value="Basic">Basic</option>
                   <option value="Intermediate">Intermediate</option>
@@ -391,6 +444,7 @@ const CourseManagement = () => {
                   }
                   required
                   className="w-full px-3 py-2 text-sm border rounded-lg border-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                  disabled={isUploading}
                 />
               </div>
               <div>
@@ -405,6 +459,7 @@ const CourseManagement = () => {
                   }
                   className="w-full px-3 py-2 text-sm border rounded-lg border-emerald-200"
                   required
+                  disabled={isUploading}
                 />
               </div>
               <div className="flex justify-end pt-4 space-x-3">
@@ -412,14 +467,16 @@ const CourseManagement = () => {
                   type="button"
                   onClick={() => setShowModal(false)}
                   className="px-4 py-2 text-sm text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300"
+                  disabled={isUploading}
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 text-sm text-white rounded-lg bg-emerald-600 hover:bg-emerald-700"
+                  className="px-4 py-2 text-sm text-white rounded-lg bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                  disabled={isUploading}
                 >
-                  Add Course
+                  {isUploading ? "Uploading..." : "Add Course"}
                 </button>
               </div>
             </form>

@@ -93,17 +93,17 @@ function Navbar() {
                 <>
                   <div
                     onClick={() => navigate("/admin-dashboard")}
-                    className="flex items-center justify-center gap-2 px-2 py-1 bg-gray-100 rounded-full cursor-pointer "
+                    className="flex items-center justify-center gap-2 px-2 py-1 rounded-md cursor-pointer bg-emerald-700 md:py-2 md:px-2 "
                   >
                     <div className="relative flex items-center gap-1">
-                      <span className="text-[10px] capitalize sm:text-xs font-medium text-gray-800 ">
+                      <span className="text-[10px]  capitalize sm:text-xs font-medium text-white ">
                         {name?.split(" ")[0]}
                       </span>
                     </div>
                   </div>
                   <button
                     onClick={handleLogout}
-                    className="items-center hidden gap-2 px-3 py-2 text-sm font-medium text-white bg-red-500 rounded-full sm:flex hover:bg-red-600"
+                    className="items-center hidden gap-2 px-3 py-2 text-xs font-medium text-white bg-red-500 rounded-md sm:flex hover:bg-red-600"
                   >
                     <LogOut className="w-4 h-4" />
                     <span className=" sm:inline">Logout</span>
