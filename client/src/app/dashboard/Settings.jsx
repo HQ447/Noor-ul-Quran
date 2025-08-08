@@ -138,7 +138,7 @@ const Setting = () => {
                     type="file"
                     accept="image/*"
                     onChange={handleFileChange}
-                    className="hidden"
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                     required
                   />
                 </label>
