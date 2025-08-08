@@ -145,12 +145,25 @@ function TeacherDetail() {
         <div className="mb-5 overflow-hidden bg-white shadow-xl rounded-2xl">
           <div className="px-8 py-6 bg-gradient-to-r from-emerald-600 to-teal-600">
             <div className="flex flex-col items-center gap-2 md:gap-6 md:flex-row">
-              <div className="relative">
+              {/* <div className="relative">
                 <img
                   src={teacher?.img}
                   alt={teacher?.name}
                   className="object-cover border-4 border-white rounded-full shadow-lg w-22 h-22 md:w-32 md:h-32"
                 />
+              </div> */}
+              <div className="relative">
+                {teacher.img ? (
+                  <img
+                    src={teacher.img}
+                    alt={teacher.name}
+                    className="object-cover border-4 border-white rounded-full shadow-lg w-22 h-22 md:w-32 md:h-32"
+                  />
+                ) : (
+                  <div className="flex items-center justify-center text-2xl font-bold text-white transition-shadow rounded-full shadow-lg w-14 h-14 md:w-20 md:h-20 bg-gradient-to-br from-green-500 to-emerald-600 group-hover:shadow-xl">
+                    {teacher?.name?.charAt(0).toUpperCase() || "A"}
+                  </div>
+                )}
               </div>
 
               <div className="flex-1 text-center md:text-left">
@@ -158,10 +171,10 @@ function TeacherDetail() {
                   {teacher?.name}
                 </h1>
                 <p className="mb-1 text-sm md:text-lg text-emerald-100">
-                  {teacher?.designation}
+                  {teacher?.designation || "Teacher"}
                 </p>
                 <p className="text-sm text-emerald-200">
-                  {teacher?.qualification}
+                  {teacher?.qualification || "Expert in Quranic Education"}
                 </p>
               </div>
             </div>

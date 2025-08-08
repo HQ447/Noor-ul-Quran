@@ -13,6 +13,7 @@ import {
   GraduationCap,
   Users,
 } from "lucide-react";
+import { useLocation } from "react-router";
 
 const RegStudent = () => {
   const [courses, setCourses] = useState([]);
@@ -167,6 +168,11 @@ const RegStudent = () => {
       setLoading(false);
     }
   };
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [pathname]);
 
   useEffect(() => {
     fetchCourses();
@@ -256,7 +262,7 @@ const RegStudent = () => {
               بسم الله الرحمن الرحيم
             </h1>
             <h2 className="mb-6 text-xl font-bold text-gray-800 lg:text-3xl">
-              Complete Your Registration
+              Register Yourself Now!
             </h2>
             <p className="max-w-3xl mx-auto text-sm leading-relaxed text-gray-600 lg:text-lg">
               Embark on your spiritual journey with our comprehensive Quranic

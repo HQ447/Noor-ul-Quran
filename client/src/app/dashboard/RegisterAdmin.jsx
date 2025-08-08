@@ -7,6 +7,7 @@ export default function RegisterAdmin() {
   const [secret, setSecret] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [errorMessage, seterrorMessage] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordMatch, setPasswordMatch] = useState(true);
   const navigate = useNavigate();
@@ -33,12 +34,15 @@ export default function RegisterAdmin() {
       console.log(data);
       if (res.ok) {
         setLoading(false);
+        seterrorMessage("");
         navigate("/admin-Login");
       } else {
+        seterrorMessage(data.message);
         setLoading(false);
       }
     } catch (error) {
       setLoading(false);
+      seterrorMessage(error);
       console.error("Registration error:", error);
     }
   };
@@ -327,6 +331,7 @@ export default function RegisterAdmin() {
               )}
             </div>
 
+            <p className="text-sm text-red-500">{errorMessage}</p>
             <button
               type="submit"
               onClick={handleSubmit}

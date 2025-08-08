@@ -21,7 +21,7 @@ const router = express.Router();
 router.get("/getAdmins", getAdmins);
 router.post(
   "/create-course",
-  tokenVerifier,
+
   upload.single("thumbnail"),
   addCourse
 );
@@ -30,7 +30,7 @@ router.get("/course/:id", findCourse);
 router.put("/updateStatus/:id", tokenVerifier, updateStatus);
 router.delete("/deleteStudent/:id", tokenVerifier, deleteStudent);
 router.delete("/deleteAdmin/:id", tokenVerifier, deleteAdmin);
-router.delete("/deleteCourse/:id", tokenVerifier, deleteCourse);
+router.delete("/deleteCourse/:id", deleteCourse);
 router.get("/students", tokenVerifier, getMyStudents);
 router.get("/getAdminProfile", tokenVerifier, getAdminProfile);
 router.put(

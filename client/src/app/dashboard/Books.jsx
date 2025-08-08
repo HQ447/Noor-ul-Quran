@@ -11,19 +11,22 @@ import {
   AlertCircle,
   CheckCircle,
 } from "lucide-react";
-import { IoTrashBin } from "react-icons/io5";
+import { Trash2 } from "lucide-react";
 
-// Islamic Pattern Background Component
+// Optimized Islamic Pattern Background Component
 const IslamicPattern = () => (
   <div className="absolute inset-0 pointer-events-none opacity-5">
-    <div className="grid h-full grid-cols-12 gap-3">
-      {[...Array(96)].map((_, i) => (
+    <div className="grid h-full grid-cols-8 gap-6">
+      {[...Array(32)].map((_, i) => (
         <div
           key={i}
-          className="flex items-center justify-center text-emerald-400 animate-pulse"
-          style={{ animationDelay: `${i * 0.15}s` }}
+          className="flex items-center justify-center text-emerald-400"
+          style={{
+            animation: `pulse 3s ease-in-out infinite`,
+            animationDelay: `${i * 0.3}s`,
+          }}
         >
-          <BookOpen className="w-3 h-3" />
+          <BookOpen className="w-4 h-4" />
         </div>
       ))}
     </div>
@@ -70,6 +73,61 @@ const Message = ({ type, message, onClose }) => {
   );
 };
 
+// Book Skeleton Loader Component
+const BookSkeleton = () => (
+  <div className="relative overflow-hidden transition-all duration-500 transform border shadow-xl bg-white/95 backdrop-blur-sm rounded-2xl border-emerald-200/50 animate-pulse">
+    {/* Decorative Pattern */}
+    <div className="absolute top-0 right-0 w-16 h-16 pointer-events-none opacity-10">
+      <svg viewBox="0 0 100 100" className="w-full h-full text-emerald-500">
+        <circle cx="50" cy="20" r="6" fill="currentColor" />
+        <circle cx="50" cy="50" r="8" fill="currentColor" />
+        <circle cx="50" cy="80" r="6" fill="currentColor" />
+        <circle cx="20" cy="35" r="4" fill="currentColor" />
+        <circle cx="80" cy="35" r="4" fill="currentColor" />
+        <circle cx="20" cy="65" r="4" fill="currentColor" />
+        <circle cx="80" cy="65" r="4" fill="currentColor" />
+      </svg>
+    </div>
+
+    {/* Thumbnail Skeleton */}
+    <div className="relative overflow-hidden">
+      <div className="w-full h-64 bg-gray-300"></div>
+
+      {/* Category Badge Skeleton */}
+      <div className="absolute top-4 left-4">
+        <div className="w-24 h-6 bg-gray-400 rounded-full"></div>
+      </div>
+
+      {/* Delete Button Skeleton */}
+      <div className="absolute p-2 bg-white rounded-md top-4 right-4">
+        <div className="w-5 h-5 bg-gray-300 rounded"></div>
+      </div>
+    </div>
+
+    {/* Content Skeleton */}
+    <div className="relative z-10 px-4 py-3">
+      <div className="mb-2">
+        <div className="w-3/4 h-6 mb-2 bg-gray-300 rounded"></div>
+        <div className="w-1/2 h-4 bg-gray-300 rounded"></div>
+      </div>
+
+      {/* Info Box Skeleton */}
+      <div className="p-3 mb-4 border rounded-xl bg-gradient-to-r from-emerald-50/60 to-teal-50/60 border-emerald-100/60">
+        <div className="flex items-center justify-between">
+          <div className="w-20 h-3 bg-gray-300 rounded"></div>
+          <div className="w-16 h-5 bg-gray-300 rounded-full"></div>
+        </div>
+      </div>
+
+      {/* Action Buttons Skeleton */}
+      <div className="grid grid-cols-2 gap-3">
+        <div className="h-10 bg-gray-300 rounded-xl"></div>
+        <div className="h-10 bg-gray-300 rounded-xl"></div>
+      </div>
+    </div>
+  </div>
+);
+
 const Books = () => {
   const [books, setBooks] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
@@ -97,6 +155,7 @@ const Books = () => {
     setMessage({ type, text });
     setTimeout(() => setMessage(null), 5000);
   };
+
   const fetchBooks = async () => {
     try {
       setLoading(true);
@@ -278,16 +337,12 @@ const Books = () => {
           </button>
         </div>
 
-        {/* Loading State */}
+        {/* Loading State with Book Skeletons */}
         {loading ? (
-          <div className="relative z-10 flex flex-col items-center justify-center px-4 py-16 text-center border shadow-xl bg-white/90 backdrop-blur-sm rounded-2xl border-emerald-200/50">
-            <LoadingSpinner size="w-8 h-8" />
-            <h3 className="mt-4 mb-2 text-lg font-bold text-gray-800">
-              Loading Books...
-            </h3>
-            <p className="max-w-md text-xs text-gray-600">
-              Please wait while we fetch your library collection
-            </p>
+          <div className="relative z-10 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {[...Array(6)].map((_, index) => (
+              <BookSkeleton key={index} />
+            ))}
           </div>
         ) : /* Books Grid */
         books.length === 0 ? (
@@ -356,7 +411,7 @@ const Books = () => {
                     {deleting[book._id] ? (
                       <LoadingSpinner size="w-5 h-5" />
                     ) : (
-                      <IoTrashBin className="w-5 h-5 text-red-600" />
+                      <Trash2 className="w-5 h-5 text-red-600" />
                     )}
                   </div>
                 </div>

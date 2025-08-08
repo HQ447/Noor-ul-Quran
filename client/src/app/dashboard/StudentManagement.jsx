@@ -46,8 +46,10 @@ const StudentManagement = () => {
   const [viewMode, setViewMode] = useState("grid"); // table or grid
   const [statusFilter, setStatusFilter] = useState("all"); // all, registered, pending
   const [loadingStates, setLoadingStates] = useState({}); // Track loading for individual students
+  const [loading, setLoading] = useState(true);
 
   const fetchStudents = async () => {
+    setLoading(true); // Start loading
     try {
       const response = await fetch(`${BASE_URL}/admin/students`, {
         headers: {
@@ -61,6 +63,8 @@ const StudentManagement = () => {
       setStudents(studentList);
     } catch (error) {
       console.error("Error fetching students:", error);
+    } finally {
+      setLoading(false); // End loading
     }
   };
 
@@ -155,7 +159,22 @@ const StudentManagement = () => {
 
     return matchesSearch && matchesStatus;
   });
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-64 text-emerald-600">
+        <Loader2 className="w-6 h-6 mr-2 animate-spin" />
+        Loading students...
+      </div>
+    );
+  }
 
+  if (!loading && filteredStudents.length === 0) {
+    return (
+      <div className="flex items-center justify-center h-64 text-emerald-600">
+        No student found
+      </div>
+    );
+  }
   return (
     <div className="p-4 md:p-6 bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
       <IslamicPattern />
