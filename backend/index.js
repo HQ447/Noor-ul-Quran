@@ -35,7 +35,7 @@ app.use(
 
 // ✅ Enable CORS for preflight (OPTIONS) requests
 app.options(
-  "/*",
+  "*",
   cors({
     origin: ["https://islamic-center-beta.vercel.app"],
     methods: ["GET", "POST", "PUT", "DELETE"],
