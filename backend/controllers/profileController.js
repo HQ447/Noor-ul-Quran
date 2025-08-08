@@ -57,31 +57,43 @@ export const getAdminProfile = async (req, res) => {
 
 export const updateAdminProfile = async (req, res) => {
   try {
-    const allowedFields = [
-      "name",
-      "email",
-      "designation",
-      "qualification",
-      "experience",
-      "whatsapp",
-      "country",
-    ];
-
-    // 1️⃣ Get current admin from DB
+    // 1️⃣ Find the admin in the DB
     const admin = await User.findById(req.user.id).select("-password");
 
     if (!admin) {
       return res.status(404).json({ message: "Admin not found" });
     }
 
-    // 2️⃣ Update only provided fields
-    allowedFields.forEach((field) => {
-      if (req.body[field] !== undefined && req.body[field] !== "") {
-        admin[field] = req.body[field];
-      }
-    });
+    // 2️⃣ Manually update each field if sent in the request
+    if (req.body.name !== undefined && req.body.name !== "") {
+      admin.name = req.body.name;
+    }
 
-    // 3️⃣ If image is uploaded, update it
+    if (req.body.email !== undefined && req.body.email !== "") {
+      admin.email = req.body.email;
+    }
+
+    if (req.body.designation !== undefined && req.body.designation !== "") {
+      admin.designation = req.body.designation;
+    }
+
+    if (req.body.qualification !== undefined && req.body.qualification !== "") {
+      admin.qualification = req.body.qualification;
+    }
+
+    if (req.body.experience !== undefined && req.body.experience !== "") {
+      admin.experience = req.body.experience;
+    }
+
+    if (req.body.whatsapp !== undefined && req.body.whatsapp !== "") {
+      admin.whatsapp = req.body.whatsapp;
+    }
+
+    if (req.body.country !== undefined && req.body.country !== "") {
+      admin.country = req.body.country;
+    }
+
+    // 3️⃣ Handle image upload (only if a new one is provided)
     if (req.file && req.file.path) {
       admin.img = req.file.path;
     }

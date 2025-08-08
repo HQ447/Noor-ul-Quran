@@ -63,18 +63,20 @@ const Setting = () => {
   };
 
   const handleUpdate = async () => {
-    console.log(token);
     if (!admin.name && !admin.email) return alert("Fill all fields");
+
     try {
       const token = localStorage.getItem("token");
       const formData = new FormData();
-      formData.append("name", admin.name);
-      formData.append("email", admin.email);
-      formData.append("designation", admin.designation);
-      formData.append("qualification", admin.qualification);
-      formData.append("whatsapp", admin.whatsapp);
-      formData.append("country", admin.country);
-      formData.append("experience", admin.experience);
+
+      if (admin.name) formData.append("name", admin.name);
+      if (admin.email) formData.append("email", admin.email);
+      if (admin.designation) formData.append("designation", admin.designation);
+      if (admin.qualification)
+        formData.append("qualification", admin.qualification);
+      if (admin.whatsapp) formData.append("whatsapp", admin.whatsapp);
+      if (admin.country) formData.append("country", admin.country);
+      if (admin.experience) formData.append("experience", admin.experience);
       if (imageFile) formData.append("img", imageFile);
 
       await axios.put(`${BASE_URL}/admin/updateProfile`, formData, {
