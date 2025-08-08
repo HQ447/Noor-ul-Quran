@@ -13,7 +13,7 @@ function CourseDetail() {
   const [course, setCourse] = useState(null);
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
-  const BASE_URL = "http://localhost:8000";
+  const BASE_URL = "https://noor-ul-quran-backend-gq68.onrender.com";
   const [error, setError] = useState(null);
 
   // Simulate your existing logic
