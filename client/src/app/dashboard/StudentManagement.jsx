@@ -175,7 +175,7 @@ const StudentManagement = () => {
     );
   }
   return (
-    <div className="p-4 md:p-6 bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
+    <div className="p-6 bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
       <IslamicPattern />
       <div className="flex flex-col mb-6 space-y-4 md:flex-row md:justify-between md:items-center md:space-y-0">
         <div className="relative">

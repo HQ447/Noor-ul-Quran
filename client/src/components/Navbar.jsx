@@ -93,7 +93,7 @@ function Navbar() {
                 <>
                   <div
                     onClick={() => navigate("/admin-dashboard")}
-                    className="flex items-center justify-center gap-2 px-2 py-1 rounded-md cursor-pointer bg-emerald-700 md:py-2 md:px-2 "
+                    className="flex items-center justify-center gap-2 px-2 py-2 rounded-md cursor-pointer bg-emerald-700 md:py-2 md:px-2 "
                   >
                     <div className="relative flex items-center gap-1">
                       <span className="text-[10px]  capitalize sm:text-xs font-medium text-white ">

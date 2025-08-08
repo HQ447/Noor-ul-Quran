@@ -32,6 +32,7 @@ const Setting = () => {
   const [imageFile, setImageFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const BASE_URL = "https://noor-ul-quran-backend-gq68.onrender.com";
+  //const BASE_URL = "https://localhost:8000";
   const token = localStorage.getItem("token");
   // Fetch current admin info on mount
   useEffect(() => {
@@ -94,7 +95,7 @@ const Setting = () => {
   };
 
   return (
-    <div className="p-4 md:p-6">
+    <div className="p-6">
       <div className="relative mb-3">
         <div className="flex items-center gap-3 mb-3">
           <div>

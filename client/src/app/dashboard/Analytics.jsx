@@ -189,7 +189,7 @@ const Analytics = () => {
   if (!role) return <NotFound />;
 
   return (
-    <div className="p-4 md:p-6 bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
+    <div className="p-6 bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
       <div className="relative mb-4">
         <div className="flex items-center gap-3 mb-3">
           <div>

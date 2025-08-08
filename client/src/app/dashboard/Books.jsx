@@ -295,7 +295,7 @@ const Books = () => {
       <IslamicPattern />
 
       {/* Header Section */}
-      <div className="relative z-10 p-4 md:p-6">
+      <div className="relative z-10 p-6">
         {/* Message Display */}
         {message && (
           <Message

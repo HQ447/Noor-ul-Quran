@@ -228,7 +228,7 @@ const CourseManagement = () => {
   }
 
   return (
-    <div className="relative min-h-screen p-4 md:p-6 bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 ">
+    <div className="relative min-h-screen p-6 bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 ">
       <IslamicPattern />
 
       <div className="relative z-10 flex flex-col justify-between gap-5 mb-6 md:gap-0 md:items-center md:flex-row">
@@ -526,22 +526,30 @@ const CourseManagement = () => {
                 <label className="block mb-1 text-sm font-medium text-emerald-700">
                   Thumbnail Image *
                 </label>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) =>
-                    setForm({ ...form, thumbnail: e.target.files[0] })
-                  }
-                  className="w-full px-3 py-2 text-sm border rounded-lg border-emerald-200"
-                  required
-                  disabled={isUploading}
-                />
+
+                <label className="flex items-center justify-center w-full px-3 py-2 text-sm border rounded-lg cursor-pointer border-emerald-200">
+                  <span className="text-gray-600">
+                    {form.thumbnail ? form.thumbnail.name : "Choose an image"}
+                  </span>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) =>
+                      setForm({ ...form, thumbnail: e.target.files[0] })
+                    }
+                    className="hidden"
+                    required
+                    disabled={isUploading}
+                  />
+                </label>
+
                 {form.thumbnail && (
                   <p className="mt-1 text-xs text-gray-600">
                     Selected: {form.thumbnail.name}
                   </p>
                 )}
               </div>
+
               <div className="flex justify-end pt-4 space-x-3">
                 <button
                   type="button"

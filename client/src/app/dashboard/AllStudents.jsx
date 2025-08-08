@@ -284,7 +284,7 @@ const AllStudents = () => {
   });
 
   return (
-    <div className="p-4 md:p-6 bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
+    <div className="p-6 bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
       <IslamicPattern />
       <div className="flex flex-col mb-6 space-y-4 md:flex-row md:justify-between md:items-center md:space-y-0">
         <div className="relative">
@@ -308,7 +308,7 @@ const AllStudents = () => {
           <div className="flex space-x-2">
             <button
               onClick={() => handleFilterChange("all")}
-              className={`px-3 py-1 text-sm rounded-lg transition-colors ${
+              className={`px-3 py-2 text-sm rounded-lg transition-colors ${
                 statusFilter === "all"
                   ? "bg-emerald-600 text-white"
                   : "bg-emerald-50 text-emerald-800 hover:bg-emerald-200"
@@ -318,7 +318,7 @@ const AllStudents = () => {
             </button>
             <button
               onClick={() => handleFilterChange("registered")}
-              className={`px-3 py-1 text-sm rounded-lg transition-colors ${
+              className={`px-3 py-2 text-sm rounded-lg transition-colors ${
                 statusFilter === "registered"
                   ? "bg-emerald-600 text-white"
                   : "bg-emerald-50 text-emerald-800 hover:bg-emerald-200"
@@ -331,7 +331,7 @@ const AllStudents = () => {
                 console.log("click");
                 handleFilterChange("pending");
               }}
-              className={`px-3 py-1 text-sm rounded-lg transition-colors ${
+              className={`px-3 py-2 text-sm rounded-lg transition-colors ${
                 statusFilter === "pending"
                   ? "bg-emerald-600 text-white"
                   : "bg-emerald-50 text-emerald-800 hover:bg-emerald-200"

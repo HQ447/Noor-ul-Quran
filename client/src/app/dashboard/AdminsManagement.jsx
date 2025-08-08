@@ -96,7 +96,7 @@ export const AdminsManagement = () => {
       <FloatingParticles />
 
       {/* Header with enhanced styling */}
-      <div className="relative z-10 p-4 md:p-6">
+      <div className="relative z-10 p-6">
         <div className="flex flex-col justify-between gap-6 mb-8 md:flex-row md:items-center">
           <div className="relative">
             <div className="flex items-center gap-3 mb-3">
@@ -267,7 +267,7 @@ export const AdminsManagement = () => {
                         <img
                           src={admin.img}
                           alt={admin.name}
-                          className="object-cover w-16 h-16 transition-shadow border-4 border-green-200 rounded-full shadow-lg md:w-20 md:h-20 group-hover:shadow-xl"
+                          className="object-cover transition-shadow border-4 border-green-200 rounded-full shadow-lg w-18 h-18 md:w-20 md:h-20 group-hover:shadow-xl"
                         />
                       ) : (
                         <div className="flex items-center justify-center w-16 h-16 text-2xl font-bold text-white transition-shadow rounded-full shadow-lg md:w-20 md:h-20 bg-gradient-to-br from-green-500 to-emerald-600 group-hover:shadow-xl">

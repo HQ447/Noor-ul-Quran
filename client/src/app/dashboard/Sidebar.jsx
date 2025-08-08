@@ -46,7 +46,7 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
     <>
       {/* Toggle Button - only on small screens */}
       <button
-        className="fixed z-50 p-2 text-white rounded-md top-4 right-6 bg-emerald-700 md:hidden"
+        className="fixed z-50 p-3 text-white rounded-md top-3 right-4 bg-emerald-700 md:hidden"
         onClick={toggleSidebar}
       >
         {isOpen ? <X size={17} /> : <Menu size={17} />}
@@ -170,20 +170,20 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
           </NavLink>
         </nav>
 
-        <div className="absolute bottom-4 left-4 right-4 md:block lg:block">
+        <div className="absolute bottom-7 md:bottom-4 left-4 right-4 md:block lg:block">
           <div className="p-3 text-center rounded-lg bg-emerald-700/50">
             <Moon className="w-6 h-6 mx-auto mb-2 text-emerald-200" />
             <p className="text-xs text-emerald-200">اللَّهُمَّ بَارِكْ لَنَا</p>
             <p className="mt-1 text-xs text-emerald-300">May Allah bless us</p>
             <button
               onClick={handleLogout}
-              className="px-6 py-1 mt-2 mr-1 text-xs rounded-md bg-amber-50"
+              className="px-6 py-2 mt-2 mr-1 text-xs rounded-md bg-amber-50"
             >
               Logout
             </button>
             <NavLink
               to={"/"}
-              className="px-6 py-1 mt-2 text-xs rounded-md bg-amber-50"
+              className="px-6 py-2 mt-2 text-xs rounded-md bg-amber-50"
             >
               Home
             </NavLink>
