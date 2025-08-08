@@ -4,7 +4,7 @@ import {
   addBook,
   deleteBook,
   getBooks,
-} from "../controllers/BookController.js";
+} from "../controllers/bookController.js";
 import { tokenVerifier } from "../middlewares/tokenVerifier.js";
 
 const router = express.Router();
