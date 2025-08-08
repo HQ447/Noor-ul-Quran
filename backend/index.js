@@ -43,6 +43,9 @@ app.options(
   })
 );
 
+process.on("uncaughtException", (err) => {
+  console.error("Uncaught Exception:", err);
+});
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/auth", authRouter);
 app.use("/admin", adminRouter);
