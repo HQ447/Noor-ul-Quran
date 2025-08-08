@@ -67,38 +67,33 @@ export const updateAdminProfile = async (req, res) => {
       "country",
     ];
 
-    // Get current user first
-    const currentAdmin = await User.findById(req.user.id).select("-password");
+    // 1️⃣ Get current admin from DB
+    const admin = await User.findById(req.user.id).select("-password");
 
-    if (!currentAdmin) {
+    if (!admin) {
       return res.status(404).json({ message: "Admin not found" });
     }
 
-    // Start with existing data
-    const updates = { ...currentAdmin._doc };
-
-    // Overwrite only the fields sent in req.body
+    // 2️⃣ Update only provided fields
     allowedFields.forEach((field) => {
       if (req.body[field] !== undefined && req.body[field] !== "") {
-        updates[field] = req.body[field];
+        admin[field] = req.body[field];
       }
     });
 
-    // If image is uploaded, add it
+    // 3️⃣ If image is uploaded, update it
     if (req.file && req.file.path) {
-      updates.img = req.file.path;
+      admin.img = req.file.path;
     }
 
-    const updatedAdmin = await User.findByIdAndUpdate(
-      req.user.id,
-      { $set: updates },
-      { new: true }
-    ).select("-password");
+    // 4️⃣ Save changes
+    const updatedAdmin = await admin.save();
 
     res.status(200).json(updatedAdmin);
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Failed to update profile", error: error.message });
+    res.status(500).json({
+      message: "Failed to update profile",
+      error: error.message,
+    });
   }
 };

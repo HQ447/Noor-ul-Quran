@@ -33,7 +33,7 @@ app.use(
   })
 );
 
-// ✅ Enable CORS for preflight (OPTIONS) request
+// ✅ Enable CORS for preflight (OPTIONS) requests
 app.options(
   "*",
   cors({
