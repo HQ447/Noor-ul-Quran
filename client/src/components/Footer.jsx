@@ -10,7 +10,7 @@ import logo from "../assets/logo1.png";
 
 export default function Footer() {
   const [courses, setCourses] = useState([]);
-  const BASE_URL = "http://localhost:8000";
+  const BASE_URL = "https://noor-ul-quran-backend-gq68.onrender.com";
   const fetchCourses = async () => {
     try {
       const res = await fetch(`${BASE_URL}/admin/courses`, {
