@@ -22,7 +22,9 @@ connectDB(db_url);
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Middleware
+app.use(express.json());
+
+// ✅ Enable CORS for all main requests
 app.use(
   cors({
     origin: ["https://islamic-center-beta.vercel.app"],
@@ -30,7 +32,16 @@ app.use(
     credentials: true,
   })
 );
-app.use(express.json());
+
+// ✅ Enable CORS for preflight (OPTIONS) requests
+app.options(
+  "*",
+  cors({
+    origin: ["https://islamic-center-beta.vercel.app"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/auth", authRouter);
