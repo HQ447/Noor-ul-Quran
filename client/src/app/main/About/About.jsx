@@ -13,7 +13,7 @@ function About() {
     { number: "50+", label: "Countries Served", icon: Globe },
     { number: "99%", label: "Success Rate", icon: Star },
   ];
-
+ 
   useEffect(() => {
     fetch(`${BASE_URL}/admin/getAdmins`)
       .then((res) => res.json())

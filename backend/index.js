@@ -50,7 +50,7 @@ app.use("/super", superAdminRouter);
 app.use("/api", router);
 
 // Test route
-app.get("/", (req, res) => res.send("Server is running 🚀"));
+app.get("/", (req, res) => res.send("Server is running 🚀🚀🚀"));
 
 // Start server
 const PORT = process.env.PORT || 8080;
