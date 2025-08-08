@@ -67,9 +67,17 @@ export const updateAdminProfile = async (req, res) => {
       "country",
     ];
 
-    const updates = {};
+    // Get current user first
+    const currentAdmin = await User.findById(req.user.id).select("-password");
 
-    // Add only fields that exist in req.body
+    if (!currentAdmin) {
+      return res.status(404).json({ message: "Admin not found" });
+    }
+
+    // Start with existing data
+    const updates = { ...currentAdmin._doc };
+
+    // Overwrite only the fields sent in req.body
     allowedFields.forEach((field) => {
       if (req.body[field] !== undefined && req.body[field] !== "") {
         updates[field] = req.body[field];
@@ -78,7 +86,7 @@ export const updateAdminProfile = async (req, res) => {
 
     // If image is uploaded, add it
     if (req.file && req.file.path) {
-      updates.img = req.file.path; // Cloudinary image URL
+      updates.img = req.file.path;
     }
 
     const updatedAdmin = await User.findByIdAndUpdate(
