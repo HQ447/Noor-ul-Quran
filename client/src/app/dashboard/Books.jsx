@@ -148,7 +148,7 @@ const Books = () => {
   // Message states
   const [message, setMessage] = useState(null);
 
-  const BASE_URL = "http://localhost:8000";
+  const BASE_URL = "https://noor-ul-quran-backend-gq68.onrender.com";
 
   // Show message helper
   const showMessage = (type, text) => {

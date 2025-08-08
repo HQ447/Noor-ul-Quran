@@ -6,7 +6,7 @@ export default function Forgot() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const BASE_URL = `http://localhost:8000`;
+  const BASE_URL = `https://noor-ul-quran-backend-gq68.onrender.com`;
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -47,7 +47,7 @@ export const AdminsManagement = () => {
   const [loading, setLoading] = useState(true);
   const [viewMode, setViewMode] = useState("grid");
   const navigate = useNavigate();
-  const BASE_URL = "http://localhost:8000";
+  const BASE_URL = "https://noor-ul-quran-backend-gq68.onrender.com";
 
   const fetchAdmins = async () => {
     try {

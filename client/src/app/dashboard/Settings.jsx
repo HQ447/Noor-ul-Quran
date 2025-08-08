@@ -31,7 +31,7 @@ const Setting = () => {
   });
   const [imageFile, setImageFile] = useState(null);
   const [preview, setPreview] = useState(null);
-  const BASE_URL = "http://localhost:8000";
+  const BASE_URL = "https://noor-ul-quran-backend-gq68.onrender.com";
   const token = localStorage.getItem("token");
   // Fetch current admin info on mount
   useEffect(() => {

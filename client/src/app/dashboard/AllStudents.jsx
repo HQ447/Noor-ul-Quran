@@ -19,7 +19,7 @@ import {
   Table,
 } from "lucide-react";
 
-const BASE_URL = "http://localhost:8000";
+const BASE_URL = "https://noor-ul-quran-backend-gq68.onrender.com";
 
 // Islamic Pattern Component
 const IslamicPattern = () => (

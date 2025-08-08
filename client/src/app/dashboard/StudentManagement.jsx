@@ -22,8 +22,6 @@ import {
   MessageCircle,
 } from "lucide-react";
 
-const BASE_URL = "http://localhost:8000";
-
 // Islamic Pattern Component
 const IslamicPattern = () => (
   <div className="absolute inset-0 pointer-events-none opacity-5">
@@ -41,6 +39,7 @@ const IslamicPattern = () => (
 );
 
 const StudentManagement = () => {
+  const BASE_URL = "https://noor-ul-quran-backend-gq68.onrender.com";
   const [searchTerm, setSearchTerm] = useState("");
   const [students, setStudents] = useState([]);
   const [viewMode, setViewMode] = useState("grid"); // table or grid

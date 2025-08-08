@@ -9,7 +9,7 @@ export default function AdminLogin() {
   const navigate = useNavigate();
   // Mock navigation function for demo
 
-  const BASE_URL = `http://localhost:8000`;
+  const BASE_URL = `https://noor-ul-quran-backend-gq68.onrender.com`;
 
   const handleSubmit = async (e) => {
     setloading(true);

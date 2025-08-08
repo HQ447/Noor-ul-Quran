@@ -31,7 +31,7 @@ function TeacherDetails() {
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedView, setSelectedView] = useState("overview");
-  const BASE_URL = "http://localhost:8000";
+  const BASE_URL = "https://noor-ul-quran-backend-gq68.onrender.com";
   const token = localStorage.getItem("token");
 
   // Background decorative elements

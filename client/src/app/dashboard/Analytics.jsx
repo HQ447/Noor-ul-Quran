@@ -48,7 +48,7 @@ const Analytics = () => {
   const [loading, setLoading] = useState(true);
   const name = localStorage.getItem("name");
   const role = localStorage.getItem("role");
-  const BASE_URL = "http://localhost:8000";
+  const BASE_URL = "https://noor-ul-quran-backend-gq68.onrender.com";
   useEffect(() => {
     const fetchData = async () => {
       try {
