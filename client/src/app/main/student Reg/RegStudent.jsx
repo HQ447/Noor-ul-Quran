@@ -32,7 +32,7 @@ const RegStudent = () => {
     joinDate: "",
   });
 
-  const BASE_URL = `http://localhost:8000`;
+  const BASE_URL = `https://noor-ul-quran-backend-gq68.onrender.com`;
 
   const fetchCourses = async () => {
     try {

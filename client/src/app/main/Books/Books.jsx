@@ -7,7 +7,7 @@ import { Book, Download, Eye, FileText } from "lucide-react";
 const IslamicLibrary = () => {
   // Sample books data with PDF links
   const [books, setBooks] = useState([]);
-  const BASE_URL = "http://localhost:8000";
+  const BASE_URL = "https://noor-ul-quran-backend-gq68.onrender.com";
 
   useEffect(() => {
     fetch(`${BASE_URL}/api/books`, {

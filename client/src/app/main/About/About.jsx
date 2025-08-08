@@ -6,7 +6,7 @@ import { useLocation, useNavigate } from "react-router";
 function About() {
   const [teamData, setTeamData] = useState([]);
   const navigate = useNavigate();
-  const BASE_URL = "http://localhost:8000";
+  const BASE_URL = "https://noor-ul-quran-backend-gq68.onrender.com";
   const stats = [
     { number: "10,000+", label: "Students Worldwide", icon: Users },
     { number: "500+", label: "Certified Teachers", icon: Award },
