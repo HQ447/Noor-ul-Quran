@@ -12,6 +12,8 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
+import { Github, Linkedin, Mail, Code } from "lucide-react";
+import developer from "../../../assets/developer.jpg";
 
 // Team Member Skeleton Component
 const TeamMemberSkeleton = () => (
@@ -391,6 +393,226 @@ function About() {
         </div>
       </section>
 
+      <section className="py-16 bg-gradient-to-br from-slate-50 to-gray-100">
+        <div className="max-w-4xl px-6 mx-auto lg:px-12">
+          {/* Section Header */}
+          <div className="mb-12 text-center">
+            <div className="inline-flex items-center gap-2 px-4 py-2 mb-4 text-xs font-semibold text-indigo-800 bg-indigo-100 rounded-full">
+              💻 Meet The Developer
+            </div>
+            <h2 className="mb-4 text-2xl font-bold text-gray-800 lg:text-3xl">
+              Crafted with Passion
+            </h2>
+            <p className="max-w-2xl mx-auto text-sm text-gray-600 md:text-base">
+              Behind every great platform is a dedicated developer committed to
+              excellence
+            </p>
+          </div>
+
+          {/* Developer Card */}
+          <div className="relative p-8 transition-all duration-500 bg-white border shadow-2xl rounded-3xl border-slate-200 hover:shadow-3xl hover:-translate-y-2 group">
+            {/* Decorative Background Pattern */}
+            <div className="absolute top-0 right-0 w-32 h-32 transition-opacity duration-300 pointer-events-none opacity-5 group-hover:opacity-10">
+              <svg
+                viewBox="0 0 100 100"
+                className="w-full h-full text-indigo-600"
+              >
+                <circle cx="20" cy="20" r="4" fill="currentColor" />
+                <circle cx="50" cy="20" r="4" fill="currentColor" />
+                <circle cx="80" cy="20" r="4" fill="currentColor" />
+                <circle cx="20" cy="50" r="4" fill="currentColor" />
+                <circle cx="50" cy="50" r="6" fill="currentColor" />
+                <circle cx="80" cy="50" r="4" fill="currentColor" />
+                <circle cx="20" cy="80" r="4" fill="currentColor" />
+                <circle cx="50" cy="80" r="4" fill="currentColor" />
+                <circle cx="80" cy="80" r="4" fill="currentColor" />
+              </svg>
+            </div>
+
+            {/* Main Content */}
+            <div className="relative z-10">
+              <div className="flex flex-col items-center gap-8 md:flex-row">
+                {/* Profile Image */}
+                <div className="flex-shrink-0">
+                  <div className="relative">
+                    <div className="w-24 h-24 p-1 transition-all duration-300 rounded-full bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 md:w-28 md:h-28 group-hover:scale-105">
+                      <img
+                        src={developer}
+                        alt="Developer Profile"
+                        className="object-cover w-full h-full border-4 border-white rounded-full shadow-lg"
+                      />
+                    </div>
+                    {/* Status Indicator */}
+                    <div className="absolute flex items-center justify-center w-6 h-6 bg-green-500 border-white rounded-full bottom-1 right-1 border-3">
+                      <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Developer Info */}
+                <div className="flex-grow text-center md:text-left">
+                  <div className="mb-4">
+                    <h3 className="mb-2 text-2xl font-bold text-gray-800 md:text-3xl">
+                      Hammad Ahmad
+                    </h3>
+                    <div className="flex flex-col items-center gap-2 md:flex-row md:items-start">
+                      <span className="px-3 py-1 text-xs font-semibold text-white rounded-full bg-gradient-to-r from-indigo-500 to-purple-600">
+                        Full Stack Developer
+                      </span>
+                      <span className="px-3 py-1 text-xs font-semibold text-white rounded-full bg-gradient-to-r from-emerald-500 to-teal-600">
+                        MERN Stack Expert
+                      </span>
+                    </div>
+                  </div>
+
+                  <p className="mb-6 text-sm leading-relaxed text-gray-600 md:text-base">
+                    Passionate full-stack developer with 2+ years of experience
+                    in building scalable web applications. Specialized in
+                    React.js, Node.js, and modern web technologies. Committed to
+                    creating intuitive user experiences and robust backend
+                    solutions.
+                  </p>
+
+                  {/* Skills */}
+                  <div className="mb-6">
+                    <div className="flex flex-wrap justify-center gap-2 md:justify-start">
+                      {[
+                        "React",
+                        "Node.js",
+                        "MongoDB",
+                        "Express",
+                        "Tailwind CSS",
+                        "JavaScript",
+                        "Python",
+                      ].map((skill, index) => (
+                        <span
+                          key={index}
+                          className="px-3 py-1 text-xs font-medium text-gray-700 transition-colors bg-gray-100 rounded-full hover:bg-gray-200"
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Stats */}
+                  <div className="grid grid-cols-3 gap-4 mb-6 text-center md:gap-6">
+                    <div className="p-3 transition-colors bg-gray-50 rounded-xl hover:bg-gray-100">
+                      <div className="mb-1 text-lg font-bold text-indigo-600 md:text-xl">
+                        50+
+                      </div>
+                      <div className="text-xs text-gray-600 md:text-sm">
+                        Projects
+                      </div>
+                    </div>
+                    <div className="p-3 transition-colors bg-gray-50 rounded-xl hover:bg-gray-100">
+                      <div className="mb-1 text-lg font-bold text-emerald-600 md:text-xl">
+                        2+
+                      </div>
+                      <div className="text-xs text-gray-600 md:text-sm">
+                        Years Exp
+                      </div>
+                    </div>
+                    <div className="p-3 transition-colors bg-gray-50 rounded-xl hover:bg-gray-100">
+                      <div className="mb-1 text-lg font-bold text-purple-600 md:text-xl">
+                        100+
+                      </div>
+                      <div className="text-xs text-gray-600 md:text-sm">
+                        Happy Clients
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Contact & Social Links */}
+              <div className="pt-6 mt-6 border-t border-gray-100">
+                <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
+                  {/* Contact Info */}
+                  <div className="flex items-center gap-2 text-sm text-gray-600">
+                    <Mail className="w-4 h-4 text-indigo-500" />
+                    <span>hamadqur447@gmail.com</span>
+                  </div>
+
+                  {/* Social Links */}
+                  <div className="flex items-center gap-3">
+                    <a
+                      href="https://github.com/hq447"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center w-10 h-10 text-gray-600 transition-all duration-300 bg-gray-100 rounded-full hover:bg-gray-800 hover:text-white hover:scale-110"
+                      title="GitHub Profile"
+                    >
+                      <Github className="w-4 h-4" />
+                    </a>
+
+                    <a
+                      href="https://www.linkedin.com/in/hammad-ahmad-hq447/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center w-10 h-10 text-gray-600 transition-all duration-300 bg-gray-100 rounded-full hover:bg-blue-600 hover:text-white hover:scale-110"
+                      title="LinkedIn Profile"
+                    >
+                      <Linkedin className="w-4 h-4" />
+                    </a>
+
+                    <a
+                      href="https://hamad-1.vercel.app/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center w-10 h-10 text-gray-600 transition-all duration-300 bg-gray-100 rounded-full hover:bg-indigo-600 hover:text-white hover:scale-110"
+                      title="Portfolio Website"
+                    >
+                      <Globe className="w-4 h-4" />
+                    </a>
+                  </div>
+                </div>
+
+                {/* Call to Action */}
+                <div className="flex flex-col items-center gap-3 pt-6 mt-6 text-center border-t border-gray-100 sm:flex-row sm:justify-center">
+                  <a
+                    href="https://johndeveloper-portfolio.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 px-6 py-3 text-sm font-semibold text-white transition-all duration-300 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 hover:shadow-lg hover:scale-105"
+                  >
+                    <Globe className="w-4 h-4" />
+                    View Portfolio
+                  </a>
+
+                  <a
+                    href="mailto:john.alexander@developer.com"
+                    className="flex items-center gap-2 px-6 py-3 text-sm font-semibold text-indigo-600 transition-all duration-300 border-2 border-indigo-600 rounded-xl hover:bg-indigo-600 hover:text-white hover:shadow-lg hover:scale-105"
+                  >
+                    <Mail className="w-4 h-4" />
+                    Hire Me
+                  </a>
+                </div>
+              </div>
+
+              {/* Achievement Badge */}
+              <div className="absolute hidden top-4 right-4 md:block">
+                <div className="flex items-center gap-1 px-3 py-1 text-xs font-bold text-white rounded-full bg-gradient-to-r from-yellow-500 to-orange-500">
+                  <Award className="w-3 h-3" />
+                  Top Developer
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Quote */}
+          <div className="mt-8 text-center">
+            <blockquote className="max-w-2xl mx-auto text-sm italic text-gray-600 md:text-base">
+              "Code is like humor. When you have to explain it, it's bad. I
+              strive to write clean, self-documenting code that speaks for
+              itself."
+            </blockquote>
+            <cite className="block mt-2 text-xs font-semibold text-indigo-600">
+              - Hammad Ahmad
+            </cite>
+          </div>
+        </div>
+      </section>
       {/* CTA Section */}
       <section className="py-16 text-white bg-gradient-to-r from-green-600 to-emerald-600">
         <div className="max-w-4xl px-6 mx-auto text-center lg:px-12">

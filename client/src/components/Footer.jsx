@@ -132,14 +132,14 @@ export default function Footer() {
       </div>
 
       {/* Middle Footer */}
-      <div className="px-3 py-4 text-xs text-center text-gray-400 bg-black ">
+      <div className="flex justify-center gap-1 px-3 py-4 text-xs text-center text-gray-400 bg-black ">
         © 2025 Noor ul Quran . All rights reserved. Designed by{" "}
         <a
           href="https://hamad-1.vercel.app/"
           target="_blank"
-          className="font-bold text-green-500"
+          className="flex gap-1 font-bold text-green-500"
         >
-          Hammad Ahmad
+          Hammad <span className="hidden md:flex "> Ahmad</span>
         </a>
       </div>
     </footer>

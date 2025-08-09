@@ -163,11 +163,13 @@ function Navbar() {
             {/* Header */}
             <div className="flex items-center justify-between p-6 border-b border-gray-100 bg-gradient-to-r from-emerald-50 to-green-50">
               <div className="flex items-center gap-3">
-                <div className="flex items-center justify-center w-12 h-12 shadow-md rounded-xl bg-gradient-to-br from-emerald-500 to-green-600">
+                <div className="flex items-center justify-center w-12 h-12 shadow-md rounded-xl ">
                   <div className="flex items-center justify-center w-8 h-8 bg-white rounded-lg">
-                    <span className="text-lg font-bold text-emerald-600">
-                      🕌
-                    </span>
+                    <img
+                      src={logoImage}
+                      alt=""
+                      className="rounded-full w-9 h-9 md:w-13 md:h-13"
+                    />
                   </div>
                 </div>
                 <div>
