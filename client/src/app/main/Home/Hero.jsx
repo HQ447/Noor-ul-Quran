@@ -30,7 +30,7 @@ const Hero = () => {
   // Islamic-themed images for the carousel
   const carouselImages = [
     {
-      url: "https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      url: "https://images.unsplash.com/photo-1609599006353-e629aaabfeae?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       title: "Quran Recitation",
       subtitle: "Perfect your Tajweed with expert guidance",
       icon: BookOpen,
@@ -260,7 +260,7 @@ const Hero = () => {
                 {/* Carousel Container */}
                 <div className="relative">
                   {/* Main Image Display */}
-                  <div className="relative h-[500px] lg:h-[600px] rounded-3xl overflow-hidden shadow-2xl shadow-black/50 border border-white/10">
+                  <div className="relative h-[400px] lg:h-[500px] rounded-3xl overflow-hidden shadow-2xl shadow-black/50 border border-white/10">
                     {carouselImages.map((image, index) => (
                       <div
                         key={index}

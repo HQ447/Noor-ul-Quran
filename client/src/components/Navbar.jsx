@@ -45,9 +45,9 @@ function Navbar() {
                 className="p-2 text-gray-600 rounded-md hover:text-green-800 hover:bg-gray-100 focus:outline-none"
               >
                 {isMobileMenuOpen ? (
-                  <X className="w-6 h-6" />
+                  <X className="w-8 h-8" />
                 ) : (
-                  <Menu className="w-4 h-4" />
+                  <Menu className="w-6 h-6" />
                 )}
               </button>
             </div>
@@ -57,10 +57,10 @@ function Navbar() {
               <img
                 src={logoImage}
                 alt=""
-                className="w-8 h-8 rounded-full md:w-13 md:h-13"
+                className="rounded-full w-9 h-9 md:w-13 md:h-13"
               />
               <NavLink to={"/"} className="flex flex-col">
-                <h1 className="text-sm font-bold text-gray-800 sm:text-base lg:text-xl">
+                <h1 className="text-[16px] font-bold text-gray-800 sm:text-base lg:text-xl">
                   Noor ul Quran
                 </h1>
                 <p className=" text-[8px] md:text-[10px] text-gray-600 sm:block sm:text-xs">
@@ -126,7 +126,7 @@ function Navbar() {
                   {/* Register Now: Always visible */}
                   <NavLink
                     to="register-student"
-                    className="px-2 py-2 text-xs font-medium text-white rounded-sm bg-gradient-to-r from-emerald-500 to-emerald-600 sm:px-3 sm:py-2 hover:bg-green-700 hover:shadow-lg"
+                    className="px-2 py-2 text-xs font-medium text-white rounded-sm bg-gradient-to-r from-teal-500 to-teal-600 sm:px-3 sm:py-2 hover:bg-green-700 hover:shadow-lg"
                   >
                     Register Now
                   </NavLink>
