@@ -13,7 +13,7 @@ function About() {
     { number: "50+", label: "Countries Served", icon: Globe },
     { number: "99%", label: "Success Rate", icon: Star },
   ];
- 
+
   useEffect(() => {
     fetch(`${BASE_URL}/admin/getAdmins`)
       .then((res) => res.json())
@@ -119,7 +119,7 @@ function About() {
                         <img
                           src={member.img}
                           alt={member.name}
-                          className="object-cover w-16 h-16 transition-shadow border-4 border-green-200 rounded-full shadow-lg md:w-20 md:h-20 group-hover:shadow-xl"
+                          className="object-cover transition-shadow border-4 border-green-200 rounded-full shadow-lg w-18 h-18 md:w-20 md:h-20 group-hover:shadow-xl"
                         />
                       ) : (
                         <div className="flex items-center justify-center w-16 h-16 text-2xl font-bold text-white transition-shadow rounded-full shadow-lg md:w-20 md:h-20 bg-gradient-to-br from-green-500 to-emerald-600 group-hover:shadow-xl">

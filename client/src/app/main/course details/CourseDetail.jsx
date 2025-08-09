@@ -124,7 +124,7 @@ function CourseDetail() {
       </div>
 
       {/* Enhanced Course Content */}
-      <div className="max-w-5xl px-4 py-8 mx-auto sm:px-6 lg:px-8 sm:py-12 lg:py-16">
+      <div className="w-full px-4 py-8 mx-auto md:max-w-5xl sm:px-6 lg:px-8 sm:py-12 lg:py-16">
         <div className="grid gap-6 sm:gap-8 lg:gap-12 lg:grid-cols-2">
           {/* Enhanced Course Image */}
           <div className="order-2 lg:order-1">
