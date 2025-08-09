@@ -568,10 +568,15 @@ const Books = () => {
                 </div>
 
                 <div>
-                  <label className="block mb-1 text-xs font-medium text-gray-700">
+                  <label
+                    htmlFor="thumbnail-upload"
+                    className="block mb-1 text-xs font-medium text-gray-700"
+                  >
                     Book Thumbnail *
                   </label>
                   <input
+                    id="thumbnail-upload"
+                    name="thumbnail"
                     type="file"
                     accept="image/*"
                     required
@@ -580,14 +585,28 @@ const Books = () => {
                     onChange={(e) =>
                       setNewBook({ ...newBook, thumbnail: e.target.files[0] })
                     }
+                    style={{
+                      WebkitAppearance: "none",
+                      appearance: "none",
+                    }}
                   />
+                  {newBook.thumbnail && (
+                    <p className="mt-1 text-xs text-emerald-600">
+                      Selected: {newBook.thumbnail.name}
+                    </p>
+                  )}
                 </div>
 
                 <div>
-                  <label className="block mb-1 text-xs font-medium text-gray-700">
+                  <label
+                    htmlFor="pdf-upload"
+                    className="block mb-1 text-xs font-medium text-gray-700"
+                  >
                     PDF File *
                   </label>
                   <input
+                    id="pdf-upload"
+                    name="pdf"
                     type="file"
                     accept="application/pdf"
                     required
@@ -596,7 +615,16 @@ const Books = () => {
                     onChange={(e) =>
                       setNewBook({ ...newBook, pdf: e.target.files[0] })
                     }
+                    style={{
+                      WebkitAppearance: "none",
+                      appearance: "none",
+                    }}
                   />
+                  {newBook.pdf && (
+                    <p className="mt-1 text-xs text-emerald-600">
+                      Selected: {newBook.pdf.name}
+                    </p>
+                  )}
                 </div>
               </div>
 
