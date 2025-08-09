@@ -1,10 +1,150 @@
 import React, { useState, useEffect } from "react";
-import { BookOpen, ArrowRight, Clock, Users, Star } from "lucide-react";
+import {
+  BookOpen,
+  ArrowRight,
+  Clock,
+  Users,
+  Star,
+  AlertCircle,
+  Wifi,
+  RefreshCw,
+} from "lucide-react";
 import axios from "axios";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
+
+// Skeleton Loader Component
+const CourseSkeleton = () => (
+  <div className="relative overflow-hidden transition-all duration-500 border shadow-xl bg-gradient-to-br from-white via-emerald-50/30 to-white backdrop-blur-sm rounded-2xl border-emerald-200/40">
+    {/* Image Skeleton */}
+    <div className="relative h-52 bg-gradient-to-r from-emerald-50 via-emerald-50 to-emerald-50 animate-pulse">
+      <div className="absolute top-4 left-4">
+        <div className="w-20 h-6 rounded-full bg-emerald-100 animate-pulse"></div>
+      </div>
+      <div className="absolute top-4 right-4">
+        <div className="w-12 h-6 rounded-full bg-emerald-100 animate-pulse"></div>
+      </div>
+      <div className="absolute bottom-4 left-4">
+        <div className="w-24 h-5 rounded-md bg-emerald-100 animate-pulse"></div>
+      </div>
+    </div>
+
+    {/* Content Skeleton */}
+    <div className="relative z-10 px-6 py-6">
+      {/* Title and Description */}
+      <div className="mb-2">
+        <div className="w-3/4 h-6 mb-2 rounded bg-emerald-100 animate-pulse"></div>
+        <div className="w-full h-4 mb-1 rounded bg-emerald-100 animate-pulse"></div>
+        <div className="w-2/3 h-4 rounded bg-emerald-100 animate-pulse"></div>
+      </div>
+
+      {/* Stats Section */}
+      <div className="py-2 my-3 border rounded-xl bg-gradient-to-r from-emerald-50/60 to-teal-50/60 border-emerald-100/60">
+        <div className="grid grid-cols-2 gap-4">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-full bg-emerald-100 animate-pulse"></div>
+            <div>
+              <div className="w-12 h-3 mb-1 rounded bg-emerald-100 animate-pulse"></div>
+              <div className="w-16 h-3 rounded bg-emerald-100 animate-pulse"></div>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-full bg-emerald-100 animate-pulse"></div>
+            <div>
+              <div className="w-12 h-3 mb-1 rounded bg-emerald-100 animate-pulse"></div>
+              <div className="w-16 h-3 rounded bg-emerald-100 animate-pulse"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Price Section */}
+      <div className="flex items-center justify-between my-3">
+        <div className="text-right">
+          <div className="w-16 h-3 mb-1 rounded bg-emerald-100 animate-pulse"></div>
+          <div className="w-20 h-3 rounded bg-emerald-100 animate-pulse"></div>
+        </div>
+      </div>
+
+      {/* Button Skeleton */}
+      <div className="w-full h-10 bg-emerald-100 rounded-xl animate-pulse"></div>
+    </div>
+
+    {/* Footer badges */}
+    <div className="mb-3 border-t border-emerald-100/60">
+      <div className="flex items-center justify-center gap-4 pt-3">
+        <div className="w-16 h-3 rounded bg-emerald-100 animate-pulse"></div>
+        <div className="w-20 h-3 rounded bg-emerald-100 animate-pulse"></div>
+        <div className="w-20 h-3 rounded bg-emerald-100 animate-pulse"></div>
+      </div>
+    </div>
+  </div>
+);
+
+// Error Message Component
+const ErrorMessage = ({ error, onRetry }) => {
+  const isNetworkError =
+    error?.code === "NETWORK_ERROR" ||
+    error?.message?.includes("Network Error") ||
+    !navigator.onLine;
+
+  return (
+    <div className="flex flex-col items-center justify-center py-16 text-center">
+      <div className="flex items-center justify-center w-20 h-20 mb-6 bg-red-100 rounded-full">
+        {isNetworkError ? (
+          <Wifi className="w-10 h-10 text-red-500" />
+        ) : (
+          <AlertCircle className="w-10 h-10 text-red-500" />
+        )}
+      </div>
+
+      <h3 className="mb-2 text-xl font-bold text-gray-800">
+        {isNetworkError ? "Connection Problem" : "Something went wrong"}
+      </h3>
+
+      <p className="max-w-md mb-6 text-gray-600">
+        {isNetworkError
+          ? "Please check your internet connection and try again."
+          : "We encountered an error while loading the courses. Please try again."}
+      </p>
+
+      <button
+        onClick={onRetry}
+        className="flex items-center gap-2 px-6 py-3 font-semibold text-white transition-all duration-200 rounded-lg shadow-md bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 hover:shadow-lg"
+      >
+        <RefreshCw className="w-4 h-4" />
+        Try Again
+      </button>
+    </div>
+  );
+};
+
+// Empty State Component
+const EmptyState = () => (
+  <div className="flex flex-col items-center justify-center py-16 text-center">
+    <div className="flex items-center justify-center w-20 h-20 mb-6 bg-gray-100 rounded-full">
+      <BookOpen className="w-10 h-10 text-gray-400" />
+    </div>
+
+    <h3 className="mb-2 text-xl font-bold text-gray-800">No Courses Found</h3>
+
+    <p className="max-w-md mb-6 text-gray-600">
+      We don't have any courses available at the moment. Please check back later
+      or contact us for more information.
+    </p>
+
+    <NavLink
+      to="/contact"
+      className="px-6 py-3 font-semibold text-white transition-all duration-200 rounded-lg shadow-md bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 hover:shadow-lg"
+    >
+      Contact Us
+    </NavLink>
+  </div>
+);
+
 const Courses = () => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
   const BASE_URL = "https://noor-ul-quran-backend-gq68.onrender.com";
 
@@ -14,23 +154,50 @@ const Courses = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [pathname]);
 
-  useEffect(() => {
-    const fetchCourses = async () => {
-      try {
-        const res = await axios.get(`${BASE_URL}/admin/courses`);
-        setCourses(res.data); // Adjust depending on your API response shape
-      } catch (err) {
-        console.error("Failed to fetch courses", err);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchCourses = async () => {
+    try {
+      setLoading(true);
+      setError(null);
 
+      const res = await axios.get(`${BASE_URL}/admin/courses`, {
+        timeout: 10000, // 10 second timeout
+      });
+
+      setCourses(res.data || []); // Ensure we have an array
+    } catch (err) {
+      console.error("Failed to fetch courses", err);
+
+      // Determine error type
+      if (!navigator.onLine) {
+        setError({ code: "NETWORK_ERROR", message: "No internet connection" });
+      } else if (
+        err.code === "ECONNABORTED" ||
+        err.message.includes("timeout")
+      ) {
+        setError({ code: "TIMEOUT_ERROR", message: "Request timeout" });
+      } else if (err.response?.status >= 500) {
+        setError({ code: "SERVER_ERROR", message: "Server error" });
+      } else {
+        setError({
+          code: "UNKNOWN_ERROR",
+          message: err.message || "Unknown error occurred",
+        });
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchCourses();
   }, []);
 
   const handleLearnMore = (id) => {
     navigate(`/course-detail/${id}`);
+  };
+
+  const handleRetry = () => {
+    fetchCourses();
   };
 
   return (
@@ -80,8 +247,20 @@ const Courses = () => {
 
           {/* Courses Grid */}
           {loading ? (
-            <div className="text-center text-gray-500">Loading courses...</div>
+            // Loading Skeleton
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {[...Array(6)].map((_, index) => (
+                <CourseSkeleton key={index} />
+              ))}
+            </div>
+          ) : error ? (
+            // Error State
+            <ErrorMessage error={error} onRetry={handleRetry} />
+          ) : courses.length === 0 ? (
+            // Empty State
+            <EmptyState />
           ) : (
+            // Courses Grid
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {courses.map((course) => (
                 <div
@@ -185,16 +364,6 @@ const Courses = () => {
 
                     {/* Enhanced Price Section */}
                     <div className="flex items-center justify-between my-3">
-                      {/* <div className="flex items-baseline gap-2">
-                                      <span className="text-2xl font-bold text-emerald-700">
-                                        ${course.price || "10"}
-                                      </span>
-                                      {course.originalPrice && (
-                                        <span className="text-sm font-medium text-gray-400 line-through">
-                                          ${course.originalPrice}
-                                        </span>
-                                      )}
-                                    </div> */}
                       <div className="text-right">
                         <p className="text-xs font-medium tracking-wide text-gray-500 uppercase">
                           Course Fee
