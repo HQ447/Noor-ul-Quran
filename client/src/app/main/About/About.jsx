@@ -1,12 +1,113 @@
 import React from "react";
-import { BookOpen, Users, Award, Heart, Globe, Star } from "lucide-react";
+import {
+  BookOpen,
+  Users,
+  Award,
+  Heart,
+  Globe,
+  Star,
+  AlertCircle,
+  Wifi,
+  RefreshCw,
+} from "lucide-react";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 
+// Team Member Skeleton Component
+const TeamMemberSkeleton = () => (
+  <div className="relative p-6 transition-all duration-300 border shadow-xl bg-white/95 backdrop-blur-sm rounded-2xl border-emerald-200/50">
+    {/* Role badge skeleton */}
+    <div className="absolute top-4 right-4">
+      <div className="w-16 h-5 rounded-full bg-emerald-100 animate-pulse"></div>
+    </div>
+
+    {/* Main content */}
+    <div className="relative z-10">
+      <div className="flex flex-col items-center mb-6">
+        {/* Avatar skeleton */}
+        <div className="mb-4">
+          <div className="w-16 h-16 border-4 border-green-200 rounded-full md:w-20 md:h-20 bg-emerald-100 animate-pulse"></div>
+        </div>
+
+        {/* Name and email skeleton */}
+        <div className="text-center">
+          <div className="w-24 h-5 mb-2 rounded bg-emerald-100 animate-pulse"></div>
+          <div className="w-32 h-4 mb-3 rounded bg-emerald-100 animate-pulse"></div>
+          <div className="w-20 h-6 rounded-full bg-emerald-100 animate-pulse"></div>
+        </div>
+      </div>
+
+      {/* Action button skeleton */}
+      <div className="flex justify-center">
+        <div className="w-24 h-9 rounded-xl bg-emerald-100 animate-pulse"></div>
+      </div>
+    </div>
+  </div>
+);
+
+// Error Message Component for Team Section
+const TeamErrorMessage = ({ error, onRetry }) => {
+  const isNetworkError =
+    error?.code === "NETWORK_ERROR" ||
+    error?.message?.includes("Network Error") ||
+    !navigator.onLine;
+
+  return (
+    <div className="flex flex-col items-center justify-center py-12 text-center">
+      <div className="flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-emerald-100">
+        {isNetworkError ? (
+          <Wifi className="w-8 h-8 text-emerald-600" />
+        ) : (
+          <AlertCircle className="w-8 h-8 text-emerald-600" />
+        )}
+      </div>
+
+      <h3 className="mb-2 text-lg font-bold text-gray-800">
+        {isNetworkError ? "Connection Problem" : "Unable to Load Team"}
+      </h3>
+
+      <p className="max-w-md mb-4 text-sm text-gray-600">
+        {isNetworkError
+          ? "Please check your internet connection and try again."
+          : "We encountered an error while loading our team members. Please try again."}
+      </p>
+
+      <button
+        onClick={onRetry}
+        className="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white transition-all duration-200 rounded-lg shadow-md bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700"
+      >
+        <RefreshCw className="w-4 h-4" />
+        Try Again
+      </button>
+    </div>
+  );
+};
+
+// Empty Team State Component
+const EmptyTeamState = () => (
+  <div className="flex flex-col items-center justify-center py-12 text-center">
+    <div className="flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-emerald-100">
+      <Users className="w-8 h-8 text-emerald-600" />
+    </div>
+
+    <h3 className="mb-2 text-lg font-bold text-gray-800">
+      No Team Members Found
+    </h3>
+
+    <p className="max-w-md text-sm text-gray-600">
+      Our team information is currently not available. Please check back later
+      or contact us for more information.
+    </p>
+  </div>
+);
+
 function About() {
   const [teamData, setTeamData] = useState([]);
+  const [teamLoading, setTeamLoading] = useState(true);
+  const [teamError, setTeamError] = useState(null);
   const navigate = useNavigate();
   const BASE_URL = "https://noor-ul-quran-backend-gq68.onrender.com";
+
   const stats = [
     { number: "10,000+", label: "Students Worldwide", icon: Users },
     { number: "500+", label: "Certified Teachers", icon: Award },
@@ -14,31 +115,74 @@ function About() {
     { number: "99%", label: "Success Rate", icon: Star },
   ];
 
-  useEffect(() => {
-    fetch(`${BASE_URL}/admin/getAdmins`)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("API Response:", data);
-        // If your API returns { admins: [...] }
-        if (Array.isArray(data)) {
-          setTeamData(data);
-        } else if (Array.isArray(data.admins)) {
-          setTeamData(data.admins);
-        } else {
-          console.warn("Unexpected API shape");
-          setTeamData([]);
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching team data:", error);
-        setTeamData([]);
+  const fetchTeamData = async () => {
+    try {
+      setTeamLoading(true);
+      setTeamError(null);
+
+      const response = await fetch(`${BASE_URL}/admin/getAdmins`, {
+        signal: AbortSignal.timeout(10000), // 10 second timeout
       });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("API Response:", data);
+
+      // Handle different API response shapes
+      if (Array.isArray(data)) {
+        setTeamData(data);
+      } else if (Array.isArray(data.admins)) {
+        setTeamData(data.admins);
+      } else {
+        console.warn("Unexpected API shape");
+        setTeamData([]);
+      }
+    } catch (error) {
+      console.error("Error fetching team data:", error);
+
+      // Determine error type
+      if (!navigator.onLine) {
+        setTeamError({
+          code: "NETWORK_ERROR",
+          message: "No internet connection",
+        });
+      } else if (
+        error.name === "AbortError" ||
+        error.message.includes("timeout")
+      ) {
+        setTeamError({ code: "TIMEOUT_ERROR", message: "Request timeout" });
+      } else if (error.message.includes("HTTP error")) {
+        setTeamError({ code: "SERVER_ERROR", message: "Server error" });
+      } else {
+        setTeamError({
+          code: "UNKNOWN_ERROR",
+          message: error.message || "Unknown error occurred",
+        });
+      }
+
+      setTeamData([]);
+    } finally {
+      setTeamLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchTeamData();
   }, []);
+
+  const handleRetryTeam = () => {
+    fetchTeamData();
+  };
+
   const { pathname } = useLocation();
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [pathname]);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-50">
       {/* Hero Section */}
@@ -69,6 +213,7 @@ function About() {
           </p>
         </div>
       </section>
+
       {/* Team Section */}
       <section className="py-16 bg-gradient-to-br from-green-50 to-emerald-50">
         <div className="max-w-6xl px-6 mx-auto lg:px-12">
@@ -84,146 +229,96 @@ function About() {
             </p>
           </div>
 
-          <div className="grid gap-8 md:grid-cols-3">
-            {teamData.map((member) => (
-              <div
-                key={member._id}
-                className="relative p-6 transition-all duration-300 border shadow-xl bg-white/95 backdrop-blur-sm rounded-2xl border-emerald-200/50 hover:shadow-2xl hover:-translate-y-1 hover:border-emerald-300/70 group"
-              >
-                {/* Decorative Islamic Pattern Overlay - Fixed z-index */}
-                <div className="absolute top-0 right-0 w-20 h-20 transition-opacity duration-300 pointer-events-none opacity-5 group-hover:opacity-10">
-                  <svg
-                    viewBox="0 0 100 100"
-                    className="w-full h-full text-emerald-600"
-                  >
-                    <circle cx="50" cy="20" r="8" fill="currentColor" />
-                    <circle cx="50" cy="50" r="12" fill="currentColor" />
-                    <circle cx="50" cy="80" r="8" fill="currentColor" />
-                    <circle cx="20" cy="35" r="6" fill="currentColor" />
-                    <circle cx="80" cy="35" r="6" fill="currentColor" />
-                    <circle cx="20" cy="65" r="6" fill="currentColor" />
-                    <circle cx="80" cy="65" r="6" fill="currentColor" />
-                  </svg>
-                </div>
-
-                {/* Role badge */}
-                <div className="absolute z-20 px-3 py-1 text-xs font-bold text-white capitalize rounded-full shadow-md top-4 right-4 bg-gradient-to-r from-yellow-500 to-orange-500">
-                  🔰 {member.role === "admin" ? "Teacher" : "Super Admin"}
-                </div>
-
-                {/* Main content with proper z-index */}
-                <div className="relative z-10">
-                  <div className="flex flex-col items-center mb-6">
-                    <div className="mb-4">
-                      {member.img ? (
-                        <img
-                          src={member.img}
-                          alt={member.name}
-                          className="object-cover transition-shadow border-4 border-green-200 rounded-full shadow-lg w-18 h-18 md:w-20 md:h-20 group-hover:shadow-xl"
-                        />
-                      ) : (
-                        <div className="flex items-center justify-center w-16 h-16 text-2xl font-bold text-white transition-shadow rounded-full shadow-lg md:w-20 md:h-20 bg-gradient-to-br from-green-500 to-emerald-600 group-hover:shadow-xl">
-                          {member?.name?.charAt(0).toUpperCase() || "A"}
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="text-center">
-                      <h3 className="mb-1 text-lg font-bold text-green-800">
-                        {member.name}
-                      </h3>
-                      <p className="mb-3 text-sm text-green-600">
-                        {member.email}
-                      </p>
-                      <div className="inline-flex items-center px-3 py-1 text-xs font-semibold text-white rounded-full shadow-md bg-gradient-to-r from-indigo-500 to-purple-600">
-                        <Award className="w-3 h-3 mr-1" />
-                        {member.designation || "Teacher"}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Information Section with better visibility */}
-                  {/* <div className="mb-5 space-y-3">
-                    <div className="p-4 border rounded-xl bg-gradient-to-r from-emerald-50/80 to-teal-50/80 border-emerald-200/60">
-                      <div className="grid grid-cols-1 gap-3 text-xs md:text-sm">
-                        <div className="flex items-center justify-between">
-                          <span className="flex items-center gap-1.5 text-emerald-700 font-semibold">
-                            <span className="text-emerald-600">🌎</span>
-                            Country
-                          </span>
-                          <span className="font-semibold text-right text-emerald-900">
-                            {admin.country || "N/A"}
-                          </span>
-                        </div>
-
-                        <div className="flex items-center justify-between">
-                          <span className="flex items-center gap-1.5 text-emerald-700 font-semibold">
-                            <span className="text-emerald-600">🎓</span>
-                            Qualification
-                          </span>
-                          <span
-                            className="font-semibold text-right text-emerald-900 line-clamp-1"
-                            title={admin.qualification}
-                          >
-                            {admin.qualification || "N/A"}
-                          </span>
-                        </div>
-
-                        <div className="flex items-center justify-between">
-                          <span className="flex items-center gap-1.5 text-emerald-700 font-semibold">
-                            <span className="text-emerald-600">👨‍🏫</span>
-                            Experience
-                          </span>
-                          <span className="font-semibold text-right text-emerald-900">
-                            {admin.experience || "N/A"}
-                          </span>
-                        </div>
-
-                        <div className="flex items-center justify-between">
-                          <span className="flex items-center gap-1.5 text-emerald-700 font-semibold">
-                            <span className="text-emerald-600">📞</span>
-                            Contact
-                          </span>
-                          <span className="font-semibold text-right text-emerald-900">
-                            {admin.whatsapp || "87278328"}
-                          </span>
-                        </div>
-
-                        <div className="flex items-center justify-between">
-                          <span className="flex items-center gap-1.5 text-emerald-700 font-semibold">
-                            <span className="text-emerald-600">📅</span>
-                            Joined
-                          </span>
-                          <span className="font-semibold text-right text-emerald-900">
-                            {admin.createdAt
-                              ? new Date(admin.createdAt).toLocaleString(
-                                  "en-GB",
-                                  {
-                                    day: "2-digit",
-                                    month: "short",
-                                    year: "numeric",
-                                  }
-                                )
-                              : "N/A"}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div> */}
-
-                  {/* Action Buttons with proper z-index and contrast */}
-                  <div className="flex justify-center">
-                    <button
-                      onClick={() => navigate(`/teacher-detail/${member._id}`)}
-                      className="flex items-center justify-center gap-1.5 px-4 py-3 text-xs font-bold text-white transition-all duration-200 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-xl shadow-lg hover:from-emerald-700 hover:to-teal-700 hover:shadow-xl transform hover:scale-105 active:scale-95 cursor-pointer"
+          {/* Team Members Grid */}
+          {teamLoading ? (
+            // Loading Skeleton
+            <div className="grid gap-8 md:grid-cols-3">
+              {[...Array(6)].map((_, index) => (
+                <TeamMemberSkeleton key={index} />
+              ))}
+            </div>
+          ) : teamError ? (
+            // Error State
+            <TeamErrorMessage error={teamError} onRetry={handleRetryTeam} />
+          ) : teamData.length === 0 ? (
+            // Empty State
+            <EmptyTeamState />
+          ) : (
+            // Team Members
+            <div className="grid gap-8 md:grid-cols-3">
+              {teamData.map((member) => (
+                <div
+                  key={member._id}
+                  className="relative p-6 transition-all duration-300 border shadow-xl bg-white/95 backdrop-blur-sm rounded-2xl border-emerald-200/50 hover:shadow-2xl hover:-translate-y-1 hover:border-emerald-300/70 group"
+                >
+                  {/* Decorative Islamic Pattern Overlay - Fixed z-index */}
+                  <div className="absolute top-0 right-0 w-20 h-20 transition-opacity duration-300 pointer-events-none opacity-5 group-hover:opacity-10">
+                    <svg
+                      viewBox="0 0 100 100"
+                      className="w-full h-full text-emerald-600"
                     >
-                      <span>View Details</span>
-                    </button>
+                      <circle cx="50" cy="20" r="8" fill="currentColor" />
+                      <circle cx="50" cy="50" r="12" fill="currentColor" />
+                      <circle cx="50" cy="80" r="8" fill="currentColor" />
+                      <circle cx="20" cy="35" r="6" fill="currentColor" />
+                      <circle cx="80" cy="35" r="6" fill="currentColor" />
+                      <circle cx="20" cy="65" r="6" fill="currentColor" />
+                      <circle cx="80" cy="65" r="6" fill="currentColor" />
+                    </svg>
+                  </div>
+
+                  {/* Role badge */}
+                  <div className="absolute z-20 px-3 py-1 text-xs font-bold text-white capitalize rounded-full shadow-md top-4 right-4 bg-gradient-to-r from-yellow-500 to-orange-500">
+                    🔰 {member.role === "admin" ? "Teacher" : "Super Admin"}
+                  </div>
+
+                  {/* Main content with proper z-index */}
+                  <div className="relative z-10">
+                    <div className="flex flex-col items-center mb-6">
+                      <div className="mb-4">
+                        {member.img ? (
+                          <img
+                            src={member.img}
+                            alt={member.name}
+                            className="object-cover transition-shadow border-4 border-green-200 rounded-full shadow-lg w-18 h-18 md:w-20 md:h-20 group-hover:shadow-xl"
+                          />
+                        ) : (
+                          <div className="flex items-center justify-center w-16 h-16 text-2xl font-bold text-white transition-shadow rounded-full shadow-lg md:w-20 md:h-20 bg-gradient-to-br from-green-500 to-emerald-600 group-hover:shadow-xl">
+                            {member?.name?.charAt(0).toUpperCase() || "A"}
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="text-center">
+                        <h3 className="mb-1 text-lg font-bold text-green-800">
+                          {member.name}
+                        </h3>
+                        <p className="mb-3 text-sm text-green-600">
+                          {member.email}
+                        </p>
+                        <div className="inline-flex items-center px-3 py-1 text-xs font-semibold text-white rounded-full shadow-md bg-gradient-to-r from-indigo-500 to-purple-600">
+                          <Award className="w-3 h-3 mr-1" />
+                          {member.designation || "Teacher"}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Action Buttons with proper z-index and contrast */}
+                    <div className="flex justify-center">
+                      <button
+                        onClick={() =>
+                          navigate(`/teacher-detail/${member._id}`)
+                        }
+                        className="flex items-center justify-center gap-1.5 px-4 py-3 text-xs font-bold text-white transition-all duration-200 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-xl shadow-lg hover:from-emerald-700 hover:to-teal-700 hover:shadow-xl transform hover:scale-105 active:scale-95 cursor-pointer"
+                      >
+                        <span>View Details</span>
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
