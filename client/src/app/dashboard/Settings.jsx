@@ -133,8 +133,8 @@ const Setting = () => {
                     admin?.name?.charAt(0).toUpperCase() || "A"
                   )}
                 </div>
-                <label className="absolute p-2 text-white transition-colors rounded-full shadow-lg cursor-pointer -bottom-2 -right-2 bg-emerald-600 hover:bg-emerald-700">
-                  <Upload className="w-3 h-3 md:w-4 md:h-4" />
+                <label className="absolute p-3 z-10 flex items-center justify-center text-white transition-colors rounded-full shadow-lg cursor-pointer -bottom-2 -right-2 bg-emerald-600 hover:bg-emerald-700 min-w-[2.5rem] min-h-[2.5rem]">
+                  <Upload className="w-4 h-4 md:w-5 md:h-5" />
                   <input
                     type="file"
                     accept="image/*"
