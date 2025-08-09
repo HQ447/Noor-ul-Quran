@@ -5,6 +5,7 @@ import Testimonial from "./Testimonial";
 import Faqs from "./Faqs";
 import whatsapp from "../../../assets/w2.png";
 import { useLocation } from "react-router";
+import { CiChat1 } from "react-icons/ci";
 
 function Home() {
   const phoneNumber = "923411918094";
@@ -22,12 +23,10 @@ function Home() {
         href={`https://wa.me/${phoneNumber}?text=${encodedMessage}`}
         target="_blank"
         rel="noopener noreferrer"
+        className="fixed z-50 flex items-center justify-center transition-all bg-teal-500 rounded-full hover:scale-105 right-10 bottom-7 md:bottom-10 w-13 h-13"
       >
-        <img
-          src={whatsapp}
-          alt=""
-          className="fixed z-50 w-10 h-10 transition-all rounded-full cursor-pointer hover:scale-95 hover:rotate-180 right-6 bottom-3 md:w-15 md:h-15 md:right-10 md:bottom-7"
-        />
+        <CiChat1 className="text-2xl text-white" />
+        {/* <img src={whatsapp} alt="" /> */}
       </a>
       <Hero />
       <ChooseUs />
