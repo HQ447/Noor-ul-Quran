@@ -166,8 +166,9 @@ const Books = () => {
       });
 
       if (res.ok) {
-        fetchBooks();
+        setDeleting((prev) => ({ ...prev, [id]: false }));
         showMessage("success", "Book deleted successfully!");
+        fetchBooks();
       } else {
         const errorData = await res.json();
         showMessage("error", errorData.message || "Failed to delete book");
