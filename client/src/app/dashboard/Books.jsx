@@ -75,54 +75,28 @@ const Message = ({ type, message, onClose }) => {
 
 // Book Skeleton Loader Component
 const BookSkeleton = () => (
-  <div className="relative overflow-hidden transition-all duration-500 transform border shadow-xl bg-white/95 backdrop-blur-sm rounded-2xl border-emerald-200/50 animate-pulse">
-    {/* Decorative Pattern */}
-    <div className="absolute top-0 right-0 w-16 h-16 pointer-events-none opacity-10">
-      <svg viewBox="0 0 100 100" className="w-full h-full text-emerald-500">
-        <circle cx="50" cy="20" r="6" fill="currentColor" />
-        <circle cx="50" cy="50" r="8" fill="currentColor" />
-        <circle cx="50" cy="80" r="6" fill="currentColor" />
-        <circle cx="20" cy="35" r="4" fill="currentColor" />
-        <circle cx="80" cy="35" r="4" fill="currentColor" />
-        <circle cx="20" cy="65" r="4" fill="currentColor" />
-        <circle cx="80" cy="65" r="4" fill="currentColor" />
-      </svg>
-    </div>
-
-    {/* Thumbnail Skeleton */}
-    <div className="relative overflow-hidden">
-      <div className="w-full h-64 bg-gray-300"></div>
-
-      {/* Category Badge Skeleton */}
-      <div className="absolute top-4 left-4">
-        <div className="w-24 h-6 bg-gray-400 rounded-full"></div>
-      </div>
-
-      {/* Delete Button Skeleton */}
-      <div className="absolute p-2 bg-white rounded-md top-4 right-4">
-        <div className="w-5 h-5 bg-gray-300 rounded"></div>
-      </div>
-    </div>
-
-    {/* Content Skeleton */}
-    <div className="relative z-10 px-4 py-3">
-      <div className="mb-2">
-        <div className="w-3/4 h-6 mb-2 bg-gray-300 rounded"></div>
-        <div className="w-1/2 h-4 bg-gray-300 rounded"></div>
-      </div>
-
-      {/* Info Box Skeleton */}
-      <div className="p-3 mb-4 border rounded-xl bg-gradient-to-r from-emerald-50/60 to-teal-50/60 border-emerald-100/60">
-        <div className="flex items-center justify-between">
-          <div className="w-20 h-3 bg-gray-300 rounded"></div>
-          <div className="w-16 h-5 bg-gray-300 rounded-full"></div>
+  <div className="overflow-hidden bg-white rounded-lg shadow-lg animate-pulse">
+    <div className="p-3 mb-4 border rounded-xl bg-gradient-to-r from-emerald-50/60 to-teal-50/60 border-emerald-100/60">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-1">
+          <div className="w-3 h-3 rounded bg-emerald-300"></div>
+          <div className="w-16 h-3 rounded bg-emerald-300"></div>
         </div>
+        <div className="w-16 h-5 rounded-full bg-emerald-300"></div>
+      </div>
+    </div>
+
+    <div className="relative h-48 bg-emerald-200"></div>
+
+    <div className="p-4">
+      <div className="mb-3">
+        <div className="w-3/4 h-5 mb-2 rounded bg-emerald-200"></div>
+        <div className="w-1/2 h-4 rounded bg-emerald-200"></div>
       </div>
 
-      {/* Action Buttons Skeleton */}
-      <div className="grid grid-cols-2 gap-3">
-        <div className="h-10 bg-gray-300 rounded-xl"></div>
-        <div className="h-10 bg-gray-300 rounded-xl"></div>
+      <div className="flex gap-2">
+        <div className="flex-1 h-10 rounded-md bg-emerald-200"></div>
+        <div className="flex-1 h-10 rounded-md bg-emerald-200"></div>
       </div>
     </div>
   </div>
@@ -386,7 +360,7 @@ const Books = () => {
                   <img
                     src={book.thumbnail}
                     alt={book.title}
-                    className="object-cover w-full h-64 transition-transform duration-500 group-hover:scale-105"
+                    className="object-cover w-full transition-transform duration-500 h-50 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
 
