@@ -15,24 +15,24 @@ const BookSkeleton = () => (
     <div className="p-3 mb-4 border rounded-xl bg-gradient-to-r from-emerald-50/60 to-teal-50/60 border-emerald-100/60">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-1">
-          <div className="w-3 h-3 rounded bg-emerald-300"></div>
-          <div className="w-16 h-3 rounded bg-emerald-300"></div>
+          <div className="w-3 h-3 rounded bg-emerald-100"></div>
+          <div className="w-16 h-3 rounded bg-emerald-100"></div>
         </div>
-        <div className="w-16 h-5 rounded-full bg-emerald-300"></div>
+        <div className="w-16 h-5 rounded-full bg-emerald-100"></div>
       </div>
     </div>
 
-    <div className="relative h-48 bg-emerald-200"></div>
+    <div className="relative h-48 bg-emerald-100"></div>
 
     <div className="p-4">
       <div className="mb-3">
-        <div className="w-3/4 h-5 mb-2 rounded bg-emerald-200"></div>
-        <div className="w-1/2 h-4 rounded bg-emerald-200"></div>
+        <div className="w-3/4 h-5 mb-2 rounded bg-emerald-100"></div>
+        <div className="w-1/2 h-4 rounded bg-emerald-100"></div>
       </div>
 
       <div className="flex gap-2">
-        <div className="flex-1 h-10 rounded-md bg-emerald-200"></div>
-        <div className="flex-1 h-10 rounded-md bg-emerald-200"></div>
+        <div className="flex-1 h-10 rounded-md bg-emerald-100"></div>
+        <div className="flex-1 h-10 rounded-md bg-emerald-100"></div>
       </div>
     </div>
   </div>
