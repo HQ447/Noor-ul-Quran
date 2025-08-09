@@ -109,7 +109,7 @@ const IslamicLibrary = () => {
         </div>
       </section>
 
-      <div className="container px-4 py-8 mx-auto md:px-10">
+      <div className="container px-8 py-8 mx-auto md:px-12">
         {/* Loading State with Skeletons */}
         {loading && (
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -157,7 +157,7 @@ const IslamicLibrary = () => {
 
         {/* Books Grid */}
         {!loading && !error && books.length > 0 && (
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {books.map((book) => (
               <div
                 key={book._id}
