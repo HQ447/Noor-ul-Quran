@@ -20,6 +20,8 @@ import {
   Table,
   Loader2,
   MessageCircle,
+  AlertCircle,
+  RefreshCw,
 } from "lucide-react";
 
 // Islamic Pattern Component
@@ -38,6 +40,74 @@ const IslamicPattern = () => (
   </div>
 );
 
+// Skeleton Components
+const TableRowSkeleton = () => (
+  <tr className="animate-pulse">
+    <td className="px-3 py-4 md:px-6 whitespace-nowrap">
+      <div className="flex items-center">
+        <div className="w-8 h-8 mr-3 rounded-full bg-emerald-100"></div>
+        <div className="min-w-0">
+          <div className="w-24 h-4 mb-1 rounded bg-emerald-100"></div>
+          <div className="w-20 h-3 rounded bg-emerald-100 sm:hidden"></div>
+        </div>
+      </div>
+    </td>
+    <td className="hidden px-3 py-4 md:px-6 whitespace-nowrap sm:table-cell">
+      <div className="w-32 h-4 rounded bg-emerald-100"></div>
+    </td>
+    <td className="px-3 py-4 md:px-6 whitespace-nowrap">
+      <div className="w-16 h-6 rounded-full bg-emerald-100"></div>
+    </td>
+    <td className="hidden px-3 py-4 md:px-6 whitespace-nowrap md:table-cell">
+      <div className="w-20 h-4 rounded bg-emerald-100"></div>
+    </td>
+    <td className="flex gap-2 px-3 py-4 md:px-6 whitespace-nowrap">
+      <div className="w-16 h-8 rounded-lg bg-emerald-100"></div>
+      <div className="w-8 h-8 rounded bg-emerald-100"></div>
+      <div className="w-8 h-8 rounded bg-emerald-100"></div>
+    </td>
+  </tr>
+);
+
+const CardSkeleton = () => (
+  <div className="relative overflow-hidden border shadow-lg border-emerald-200/30 bg-gradient-to-br from-emerald-50/90 via-white/95 to-teal-50/90 backdrop-blur-sm rounded-2xl animate-pulse">
+    <div className="relative p-5">
+      {/* Header Section */}
+      <div className="flex flex-col items-center mb-4">
+        <div className="w-16 h-16 mb-3 rounded-full bg-emerald-100"></div>
+        <div className="text-center">
+          <div className="w-24 h-4 mb-2 rounded bg-emerald-100"></div>
+          <div className="w-32 h-3 mb-2 rounded bg-emerald-100"></div>
+          <div className="w-20 h-6 rounded-full bg-emerald-100"></div>
+        </div>
+      </div>
+
+      {/* Information Section */}
+      <div className="mb-5 space-y-3">
+        <div className="p-3 border rounded-xl bg-gradient-to-r from-emerald-50/50 to-teal-50/50 border-emerald-100/50">
+          <div className="grid grid-cols-1 gap-2.5">
+            {[...Array(6)].map((_, i) => (
+              <div key={i} className="flex items-center justify-between">
+                <div className="w-16 h-3 rounded bg-emerald-100"></div>
+                <div className="w-20 h-3 rounded bg-emerald-100"></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Action Buttons */}
+      <div className="space-y-3">
+        <div className="w-full h-10 rounded-xl bg-emerald-100"></div>
+        <div className="grid grid-cols-2 gap-2">
+          <div className="h-10 rounded-xl bg-emerald-100"></div>
+          <div className="h-10 rounded-xl bg-emerald-100"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
 const StudentManagement = () => {
   const BASE_URL = "https://noor-ul-quran-backend-gq68.onrender.com";
   const [searchTerm, setSearchTerm] = useState("");
@@ -46,15 +116,22 @@ const StudentManagement = () => {
   const [statusFilter, setStatusFilter] = useState("all"); // all, registered, pending
   const [loadingStates, setLoadingStates] = useState({}); // Track loading for individual students
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   const fetchStudents = async () => {
-    setLoading(true); // Start loading
+    setLoading(true);
+    setError("");
     try {
       const response = await fetch(`${BASE_URL}/admin/students`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
       const result = await response.json();
       const studentList = Array.isArray(result)
         ? result
@@ -62,8 +139,9 @@ const StudentManagement = () => {
       setStudents(studentList);
     } catch (error) {
       console.error("Error fetching students:", error);
+      setError("Failed to load students. Please try again.");
     } finally {
-      setLoading(false); // End loading
+      setLoading(false);
     }
   };
 
@@ -158,22 +236,237 @@ const StudentManagement = () => {
 
     return matchesSearch && matchesStatus;
   });
+
+  // Loading state
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-64 text-emerald-600">
-        <Loader2 className="w-6 h-6 mr-2 animate-spin" />
-        Loading students...
+      <div className="p-6 bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
+        <IslamicPattern />
+
+        {/* Header with skeleton */}
+        <div className="flex flex-col mb-6 space-y-4 md:flex-row md:justify-between md:items-center md:space-y-0">
+          <div className="relative">
+            <div className="flex items-center gap-3 mb-3">
+              <div>
+                <h2 className="text-xl font-bold text-transparent md:text-2xl bg-gradient-to-r from-green-700 to-emerald-800 bg-clip-text">
+                  Your Students
+                </h2>
+                <div className="flex items-center gap-2 mt-1">
+                  <Sparkles className="w-4 h-4 text-green-500" />
+                  <p className="text-xs font-medium text-green-600 md:text-sm">
+                    Manage Your Students Registration
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="w-24 h-1 rounded-full bg-gradient-to-r from-green-500 to-emerald-600"></div>
+          </div>
+          <div className="flex flex-col space-y-4 md:flex-row md:items-center md:space-y-0 md:space-x-4">
+            <div className="flex space-x-2">
+              <button className="px-3 py-1 text-xs text-white rounded-lg md:text-sm bg-emerald-600">
+                All
+              </button>
+              <button className="px-3 py-1 text-xs rounded-lg md:text-sm bg-emerald-50 text-emerald-800">
+                Registered
+              </button>
+              <button className="px-3 py-1 text-xs rounded-lg md:text-sm bg-emerald-50 text-emerald-800">
+                Pending
+              </button>
+            </div>
+            <div className="relative">
+              <Search className="absolute w-4 h-4 transform -translate-y-1/2 left-3 top-1/2 text-emerald-500" />
+              <input
+                type="text"
+                placeholder="Search students..."
+                className="w-full py-2 pl-10 pr-4 text-sm border rounded-lg border-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 md:w-auto"
+                disabled
+              />
+            </div>
+            <button className="flex items-center px-3 py-2 text-sm transition-colors rounded-lg text-emerald-800 bg-emerald-100 hover:bg-emerald-200">
+              <Grid className="w-4 h-4 mr-2" />
+              Grid View
+            </button>
+          </div>
+        </div>
+
+        {/* Skeleton loaders */}
+        {viewMode === "table" ? (
+          <div className="overflow-hidden border shadow-lg bg-white/80 backdrop-blur-sm rounded-xl border-emerald-200/20">
+            <div className="overflow-x-auto">
+              <table className="w-full min-w-full">
+                <thead className="bg-emerald-100/50">
+                  <tr>
+                    <th className="px-3 py-3 text-xs font-medium tracking-wider text-left uppercase md:px-6 text-emerald-800">
+                      Student
+                    </th>
+                    <th className="hidden px-3 py-3 text-xs font-medium tracking-wider text-left uppercase md:px-6 text-emerald-800 sm:table-cell">
+                      Email
+                    </th>
+                    <th className="px-3 py-3 text-xs font-medium tracking-wider text-left uppercase md:px-6 text-emerald-800">
+                      Status
+                    </th>
+                    <th className="hidden px-3 py-3 text-xs font-medium tracking-wider text-left uppercase md:px-6 text-emerald-800 md:table-cell">
+                      Join Date
+                    </th>
+                    <th className="px-3 py-3 text-xs font-medium tracking-wider text-left uppercase md:px-6 text-emerald-800">
+                      Actions
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-emerald-100">
+                  {[...Array(6)].map((_, i) => (
+                    <TableRowSkeleton key={i} />
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {[...Array(6)].map((_, i) => (
+              <CardSkeleton key={i} />
+            ))}
+          </div>
+        )}
       </div>
     );
   }
 
-  if (!loading && filteredStudents.length === 0) {
+  // Error state
+  if (error) {
     return (
-      <div className="flex items-center justify-center h-64 text-emerald-600">
-        No student found
+      <div className="p-6 bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
+        <IslamicPattern />
+        <div className="flex flex-col items-center justify-center h-64 text-emerald-600">
+          <AlertCircle className="w-12 h-12 mb-4 text-red-500" />
+          <h3 className="mb-2 text-lg font-semibold text-red-600">
+            Error Loading Students
+          </h3>
+          <p className="mb-4 text-sm text-center text-red-500">{error}</p>
+          <button
+            onClick={fetchStudents}
+            className="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white transition-colors rounded-lg bg-emerald-600 hover:bg-emerald-700"
+          >
+            <RefreshCw className="w-4 h-4" />
+            Try Again
+          </button>
+        </div>
       </div>
     );
   }
+
+  // No students found state
+  if (!loading && filteredStudents.length === 0) {
+    return (
+      <div className="p-6 bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
+        <IslamicPattern />
+
+        {/* Header */}
+        <div className="flex flex-col mb-6 space-y-4 md:flex-row md:justify-between md:items-center md:space-y-0">
+          <div className="relative">
+            <div className="flex items-center gap-3 mb-3">
+              <div>
+                <h2 className="text-xl font-bold text-transparent md:text-2xl bg-gradient-to-r from-green-700 to-emerald-800 bg-clip-text">
+                  Your Students
+                </h2>
+                <div className="flex items-center gap-2 mt-1">
+                  <Sparkles className="w-4 h-4 text-green-500" />
+                  <p className="text-xs font-medium text-green-600 md:text-sm">
+                    Manage Your Students Registration
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="w-24 h-1 rounded-full bg-gradient-to-r from-green-500 to-emerald-600"></div>
+          </div>
+          <div className="flex flex-col space-y-4 md:flex-row md:items-center md:space-y-0 md:space-x-4">
+            <div className="flex space-x-2">
+              <button
+                onClick={() => handleFilterChange("all")}
+                className={`px-3 py-1 text-xs md:text-sm rounded-lg transition-colors ${
+                  statusFilter === "all"
+                    ? "bg-emerald-600 text-white"
+                    : "bg-emerald-50 text-emerald-800 hover:bg-emerald-200"
+                }`}
+              >
+                All
+              </button>
+              <button
+                onClick={() => handleFilterChange("registered")}
+                className={`px-3 py-1 text-xs md:text-sm rounded-lg transition-colors ${
+                  statusFilter === "registered"
+                    ? "bg-emerald-600 text-white"
+                    : "bg-emerald-50 text-emerald-800 hover:bg-emerald-200"
+                }`}
+              >
+                Registered
+              </button>
+              <button
+                onClick={() => handleFilterChange("pending")}
+                className={`px-3 py-1 text-xs md:text-sm rounded-lg transition-colors ${
+                  statusFilter === "pending"
+                    ? "bg-emerald-600 text-white"
+                    : "bg-emerald-50 text-emerald-800 hover:bg-emerald-200"
+                }`}
+              >
+                Pending
+              </button>
+            </div>
+            <div className="relative">
+              <Search className="absolute w-4 h-4 transform -translate-y-1/2 left-3 top-1/2 text-emerald-500" />
+              <input
+                type="text"
+                placeholder="Search students..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full py-2 pl-10 pr-4 text-sm border rounded-lg border-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 md:w-auto"
+              />
+            </div>
+            <button
+              onClick={handleViewToggle}
+              className="flex items-center px-3 py-2 text-sm transition-colors rounded-lg text-emerald-800 bg-emerald-100 hover:bg-emerald-200"
+            >
+              {viewMode === "table" ? (
+                <>
+                  <Grid className="w-4 h-4 mr-2" />
+                  Grid View
+                </>
+              ) : (
+                <>
+                  <Table className="w-4 h-4 mr-2" />
+                  Table View
+                </>
+              )}
+            </button>
+          </div>
+        </div>
+
+        {/* No students found message */}
+        <div className="flex flex-col items-center justify-center h-64 text-emerald-600">
+          <Users className="w-16 h-16 mb-4 text-emerald-300" />
+          <h3 className="mb-2 text-xl font-semibold">
+            {students.length === 0
+              ? "No Students Found"
+              : "No Students Match Your Search"}
+          </h3>
+          <p className="mb-4 text-sm text-center text-emerald-500">
+            {students.length === 0
+              ? "There are no students registered yet. Students will appear here once they join."
+              : "Try adjusting your search or filter criteria to find students."}
+          </p>
+          {searchTerm && (
+            <button
+              onClick={() => setSearchTerm("")}
+              className="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white transition-colors rounded-lg bg-emerald-600 hover:bg-emerald-700"
+            >
+              Clear Search
+            </button>
+          )}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="p-6 bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
       <IslamicPattern />
@@ -198,7 +491,7 @@ const StudentManagement = () => {
           <div className="flex space-x-2">
             <button
               onClick={() => handleFilterChange("all")}
-              className={`px-3 py-1 text-xs md:text-sm rounded-lg transition-colors ${
+              className={`px-3 py-2 text-xs md:text-sm rounded-lg transition-colors ${
                 statusFilter === "all"
                   ? "bg-emerald-600 text-white"
                   : "bg-emerald-50 text-emerald-800 hover:bg-emerald-200"
@@ -208,7 +501,7 @@ const StudentManagement = () => {
             </button>
             <button
               onClick={() => handleFilterChange("registered")}
-              className={`px-3 py-1 text-xs md:text-sm rounded-lg transition-colors ${
+              className={`px-3 py-2 text-xs md:text-sm rounded-lg transition-colors ${
                 statusFilter === "registered"
                   ? "bg-emerald-600 text-white"
                   : "bg-emerald-50 text-emerald-800 hover:bg-emerald-200"
@@ -221,7 +514,7 @@ const StudentManagement = () => {
                 console.log("click");
                 handleFilterChange("pending");
               }}
-              className={`px-3 py-1 text-xs md:text-sm rounded-lg transition-colors ${
+              className={`px-3 py-2 text-xs md:text-sm rounded-lg transition-colors ${
                 statusFilter === "pending"
                   ? "bg-emerald-600 text-white"
                   : "bg-emerald-50 text-emerald-800 hover:bg-emerald-200"
