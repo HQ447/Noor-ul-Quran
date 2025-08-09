@@ -25,42 +25,42 @@ const __dirname = path.dirname(__filename);
 app.use(express.json());
 
 // Must come BEFORE routes
-// app.use(
-//   cors({
-//     origin: "*",
-//     methods: "GET,POST,PUT,DELETE",
-//     allowedHeaders: ["Content-Type", "Authorization"],
-//   })
-// );
-
-// // Explicitly handle preflight
-// app.options(
-//   "*",
-//   cors({
-//     origin: "*",
-//     methods: "GET,POST,PUT,DELETE",
-//     allowedHeaders: ["Content-Type", "Authorization"],
-//   })
-// );
-
-//✅ Enable CORS for all main requests
 app.use(
   cors({
-    origin: ["https://islamic-center-beta.vercel.app"],
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
+    origin: "*",
+    methods: "GET,POST,PUT,DELETE",
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
-// ✅ Enable CORS for preflight (OPTIONS) requests
+// Explicitly handle preflight
 app.options(
   "*",
   cors({
-    origin: ["https://islamic-center-beta.vercel.app"],
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
+    origin: "*",
+    methods: "GET,POST,PUT,DELETE",
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+
+//✅ Enable CORS for all main requests
+// app.use(
+//   cors({
+//     origin: ["https://islamic-center-beta.vercel.app"],
+//     methods: ["GET", "POST", "PUT", "DELETE"],
+//     credentials: true,
+//   })
+// );
+
+// // ✅ Enable CORS for preflight (OPTIONS) requests
+// app.options(
+//   "*",
+//   cors({
+//     origin: ["https://islamic-center-beta.vercel.app"],
+//     methods: ["GET", "POST", "PUT", "DELETE"],
+//     credentials: true,
+//   })
+// );
 
 process.on("uncaughtException", (err) => {
   console.error("Uncaught Exception:", err);

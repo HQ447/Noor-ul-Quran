@@ -273,7 +273,7 @@ const RegStudent = () => {
         </div>
 
         {/* Registration Form */}
-        <div className="container px-2 mx-auto md:px-4">
+        <div className="container px-4 mx-auto">
           <div className="max-w-6xl mx-auto">
             <div className="overflow-hidden border shadow-2xl bg-white/95 backdrop-blur-xl rounded-3xl border-emerald-100/50">
               {/* Progress Steps */}
