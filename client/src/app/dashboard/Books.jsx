@@ -169,8 +169,8 @@ const Books = () => {
 
       if (res.ok) {
         showMessage("success", "Book deleted successfully!");
-        // ✅ Remove the deleted book from state immediately (no need to refetch)
-        setBooks((prevBooks) => prevBooks.filter((book) => book._id !== id));
+        fetchBooks();
+        setDeleting((prev) => ({ ...prev, [id]: false }));
       } else {
         showMessage("error", data.message || "Failed to delete book");
       }
