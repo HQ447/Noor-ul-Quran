@@ -153,13 +153,6 @@ const Books = () => {
     }
   };
   const handleDeleteBook = async (id) => {
-    console.log("Starting deletion for book ID:", id); // Debug: Confirm function is called
-    setDeleting((prev) => {
-      const newState = { ...prev, [id]: true };
-      console.log("Updated deleting state:", newState); // Debug: Verify state update
-      return newState;
-    });
-
     try {
       const res = await fetch(`${BASE_URL}/api/deleteBook/${id}`, {
         method: "DELETE",
@@ -173,12 +166,9 @@ const Books = () => {
 
       if (res.ok) {
         // Update books state to remove the deleted book
-        setBooks((prevBooks) => {
-          const updatedBooks = prevBooks.filter((book) => book.id !== id);
-          console.log("Updated books state:", updatedBooks); // Debug: Verify books update
-          return updatedBooks;
-        });
+
         showMessage("success", "Book deleted successfully!");
+        fetchBooks();
       } else {
         console.error("Delete API error:", data);
         showMessage(
@@ -189,13 +179,6 @@ const Books = () => {
     } catch (error) {
       console.error("Network error deleting book:", error);
       showMessage("error", "Network error occurred while deleting book");
-    } finally {
-      // Reset deleting state
-      setDeleting((prev) => {
-        const newState = { ...prev, [id]: false };
-        console.log("Reset deleting state:", newState); // Debug: Verify reset
-        return newState;
-      });
     }
   };
 
