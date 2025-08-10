@@ -177,7 +177,7 @@ const Books = () => {
       showMessage("error", "Network error occurred while deleting book");
     } finally {
       // ✅ Clear deleting state after operation completes
-      setDeleting((prev) => ({ ...prev, [id]: false }));
+      setDeleting({ [id]: false });
     }
   };
 
