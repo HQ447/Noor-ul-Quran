@@ -157,6 +157,8 @@ const Books = () => {
   }, []);
 
   const handleDeleteBook = async (id) => {
+    setDeleting((prev) => ({ ...prev, [id]: true }));
+
     try {
       const res = await fetch(`${BASE_URL}/api/deleteBook/${id}`, {
         method: "DELETE",
@@ -171,7 +173,7 @@ const Books = () => {
       if (res.ok) {
         // Update books state to remove the deleted book
         setBooks((prevBooks) => {
-          const updatedBooks = prevBooks.filter((book) => book.id !== id);
+          const updatedBooks = prevBooks.filter((book) => book._id !== id);
           console.log("Updated books state:", updatedBooks); // Debug: Verify books update
           return updatedBooks;
         });
