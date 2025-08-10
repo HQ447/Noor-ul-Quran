@@ -153,8 +153,6 @@ const Books = () => {
     }
   };
   const handleDeleteBook = async (id) => {
-    setDeleting((prev) => ({ ...prev, [id]: true }));
-
     try {
       const res = await fetch(`${BASE_URL}/api/deleteBook/${id}`, {
         method: "DELETE",
@@ -167,25 +165,15 @@ const Books = () => {
       const data = await res.json();
 
       if (res.ok) {
-        showMessage("success", "Book deleted successfully!");
-        await fetchBooks();
+        // Remove book from UI instantly
+        setBooks((prev) => prev.filter((book) => book._id !== id));
+        showMessage("success", data.message || "Book deleted successfully!");
       } else {
-        console.error("Delete API error:", data);
-        showMessage(
-          "error",
-          `Failed to delete book: ${data.message || "Unknown error"}`
-        );
+        showMessage("error", data.message || "Failed to delete book.");
       }
     } catch (error) {
-      console.error("Network error deleting book:", error);
-      showMessage("error", "Network error occurred while deleting book");
-    } finally {
-      // Always clear deleting state for that book ID
-      setDeleting((prev) => {
-        const updated = { ...prev };
-        delete updated[id];
-        return updated;
-      });
+      console.error("Error deleting book:", error);
+      showMessage("error", "Something went wrong.");
     }
   };
 
