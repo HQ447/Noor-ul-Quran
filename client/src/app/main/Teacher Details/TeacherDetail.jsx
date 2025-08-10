@@ -139,11 +139,27 @@ function TeacherDetail() {
   }
 
   return (
-    <div className="min-h-screen p-4 bg-gradient-to-br from-emerald-50 to-teal-50 sm:p-6 lg:p-8">
+    <div className="min-h-screen p-7 bg-gradient-to-br from-emerald-50 to-teal-50 lg:p-8">
       <div className="max-w-4xl mx-auto">
         {/* Header Section */}
         <div className="mb-5 overflow-hidden bg-white shadow-xl rounded-2xl">
-          <div className="px-8 py-6 bg-gradient-to-r from-emerald-600 to-teal-600">
+          <div className="relative px-8 py-6 bg-gradient-to-r bg-gray-50">
+            <div className="absolute top-0 right-0 w-32 h-32 transition-opacity duration-300 pointer-events-none opacity-5 group-hover:opacity-10">
+              <svg
+                viewBox="0 0 100 100"
+                className="w-full h-full text-indigo-600"
+              >
+                <circle cx="20" cy="20" r="4" fill="currentColor" />
+                <circle cx="50" cy="20" r="4" fill="currentColor" />
+                <circle cx="80" cy="20" r="4" fill="currentColor" />
+                <circle cx="20" cy="50" r="4" fill="currentColor" />
+                <circle cx="50" cy="50" r="6" fill="currentColor" />
+                <circle cx="80" cy="50" r="4" fill="currentColor" />
+                <circle cx="20" cy="80" r="4" fill="currentColor" />
+                <circle cx="50" cy="80" r="4" fill="currentColor" />
+                <circle cx="80" cy="80" r="4" fill="currentColor" />
+              </svg>
+            </div>
             <div className="flex flex-col items-center gap-2 md:gap-6 md:flex-row">
               {/* <div className="relative">
                 <img
@@ -152,30 +168,42 @@ function TeacherDetail() {
                   className="object-cover border-4 border-white rounded-full shadow-lg w-22 h-22 md:w-32 md:h-32"
                 />
               </div> */}
-              <div className="relative">
-                {teacher.img ? (
-                  <img
-                    src={teacher.img}
-                    alt={teacher.name}
-                    className="object-cover border-4 border-white rounded-full shadow-lg w-22 h-22 md:w-32 md:h-32"
-                  />
-                ) : (
-                  <div className="flex items-center justify-center text-2xl font-bold text-white transition-shadow rounded-full shadow-lg w-14 h-14 md:w-20 md:h-20 bg-gradient-to-br from-green-500 to-emerald-600 group-hover:shadow-xl">
-                    {teacher?.name?.charAt(0).toUpperCase() || "A"}
-                  </div>
-                )}
+              <div className="p-1 transition-all duration-300 rounded-full w-22 h-22 md:w-32 md:h-32 group-hover:scale-105">
+                {/* <img
+                              src={developer}
+                              alt="Developer Profile"
+                              className="object-cover w-full h-full border-4 border-white rounded-full shadow-lg"
+                            /> */}
+                <div className="">
+                  {teacher.img ? (
+                    <div className="p-1 rounded-full bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500">
+                      <img
+                        src={teacher.img}
+                        alt={teacher.name}
+                        className="object-cover transition-shadow rounded-full shadow-lg group-hover:shadow-xl"
+                      />
+                    </div>
+                  ) : (
+                    <div className="flex items-center justify-center w-20 h-20 text-2xl font-bold text-white transition-shadow rounded-full shadow-lg md:w-26 md:h-26 bg-gradient-to-br from-green-500 to-emerald-600 group-hover:shadow-xl">
+                      {teacher?.name?.charAt(0).toUpperCase() || "A"}
+                    </div>
+                  )}
+                </div>
               </div>
 
-              <div className="flex-1 text-center md:text-left">
-                <h1 className="mb-2 text-2xl font-bold text-white md:text-3xl">
+              <div className="flex flex-col text-center md:text-left ">
+                <h1 className="mb-2 text-2xl font-bold md:text-3xl">
                   {teacher?.name}
                 </h1>
-                <p className="mb-1 text-sm md:text-lg text-emerald-100">
-                  {teacher?.designation || "Teacher"}
-                </p>
-                <p className="text-sm text-emerald-200">
-                  {teacher?.qualification || "Expert in Quranic Education"}
-                </p>
+                <div className="flex flex-col items-center gap-2 md:items-start">
+                  <div className="flex items-center px-3 py-1 text-xs font-semibold text-white rounded-full shadow-md w-fit bg-gradient-to-r from-indigo-500 to-purple-600">
+                    <Award className="w-3 h-3 mr-1" />
+                    {teacher.designation || "Teacher"}
+                  </div>
+                  <span className="px-3 py-1 text-xs font-semibold text-white rounded-full w-fit bg-gradient-to-r from-emerald-500 to-teal-600">
+                    {teacher?.qualification || "Expert in Quranic Education"}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
@@ -207,9 +235,9 @@ function TeacherDetail() {
               </div>
               <div className="flex items-center gap-3">
                 <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
-                <span className="text-sm text-gray-600">Role:</span>
+                <span className="text-sm text-gray-600">Contact:</span>
                 <span className="text-sm font-medium text-gray-800 capitalize">
-                  {teacher?.role}
+                  {teacher?.whatsapp || "N/A"}
                 </span>
               </div>
             </div>
@@ -233,7 +261,7 @@ function TeacherDetail() {
                 <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
                 <span className="text-sm text-gray-600">Qualification:</span>
                 <span className="text-sm font-medium text-gray-800">
-                  {teacher?.qualification}
+                  {teacher?.qualification || "Expert in Islamic Education"}
                 </span>
               </div>
             </div>

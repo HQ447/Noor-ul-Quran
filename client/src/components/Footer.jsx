@@ -135,7 +135,7 @@ export default function Footer() {
       <div className="flex justify-center gap-1 px-3 py-4 text-xs text-center text-gray-400 bg-black ">
         © 2025 Noor ul Quran . All rights reserved. Designed by{" "}
         <a
-          href="https://hamad-1.vercel.app/"
+          href="https://hamadahmad.online"
           target="_blank"
           className="flex gap-1 font-bold text-green-500"
         >

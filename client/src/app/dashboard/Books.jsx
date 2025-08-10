@@ -165,19 +165,19 @@ const Books = () => {
         },
       });
 
+      const data = await res.json();
+
       if (res.ok) {
-        setDeleting((prev) => ({ ...prev, [id]: false }));
         showMessage("success", "Book deleted successfully!");
-        fetchBooks();
+        await fetchBooks(); // ✅ Ensure books list refreshes after deletion
       } else {
-        const errorData = await res.json();
-        showMessage("error", errorData.message || "Failed to delete book");
+        showMessage("error", data.message || "Failed to delete book");
       }
     } catch (error) {
       console.error("Error deleting book:", error);
       showMessage("error", "Network error occurred while deleting book");
     } finally {
-      setDeleting((prev) => ({ ...prev, [id]: false }));
+      setDeleting((prev) => ({ ...prev, [id]: false })); // ✅ Only set deleting state once
     }
   };
 

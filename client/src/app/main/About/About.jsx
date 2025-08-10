@@ -276,32 +276,54 @@ function About() {
 
                   {/* Main content with proper z-index */}
                   <div className="relative z-10">
-                    <div className="flex flex-col items-center mb-6">
-                      <div className="mb-4">
-                        {member.img ? (
-                          <img
-                            src={member.img}
-                            alt={member.name}
-                            className="object-cover transition-shadow border-4 border-green-200 rounded-full shadow-lg w-18 h-18 md:w-20 md:h-20 group-hover:shadow-xl"
-                          />
-                        ) : (
-                          <div className="flex items-center justify-center w-16 h-16 text-2xl font-bold text-white transition-shadow rounded-full shadow-lg md:w-20 md:h-20 bg-gradient-to-br from-green-500 to-emerald-600 group-hover:shadow-xl">
-                            {member?.name?.charAt(0).toUpperCase() || "A"}
+                    <div className="flex flex-col items-center ">
+                      <div className="flex-shrink-0 ">
+                        <div className="relative">
+                          <div className="w-20 h-20 p-1 transition-all duration-300 rounded-full md:w-24 md:h-24 group-hover:scale-105">
+                            {/* <img
+                              src={developer}
+                              alt="Developer Profile"
+                              className="object-cover w-full h-full border-4 border-white rounded-full shadow-lg"
+                            /> */}
+                            <div className="">
+                              {member.img ? (
+                                <div className="p-1 rounded-full bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500">
+                                  <img
+                                    src={member.img}
+                                    alt={member.name}
+                                    className="object-cover transition-shadow rounded-full shadow-lg group-hover:shadow-xl"
+                                  />
+                                </div>
+                              ) : (
+                                <div className="flex items-center justify-center w-16 h-16 text-2xl font-bold text-white transition-shadow rounded-full shadow-lg md:w-20 md:h-20 bg-gradient-to-br from-green-500 to-emerald-600 group-hover:shadow-xl">
+                                  {member?.name?.charAt(0).toUpperCase() || "A"}
+                                </div>
+                              )}
+                            </div>
                           </div>
-                        )}
+                          {/* Status Indicator */}
+                          <div className="absolute flex items-center justify-center w-6 h-6 bg-green-500 border-white rounded-full bottom-1 right-1 border-3">
+                            <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                          </div>
+                        </div>
                       </div>
 
                       <div className="text-center">
                         <h3 className="mb-1 text-lg font-bold text-green-800">
                           {member.name}
                         </h3>
-                        <p className="mb-3 text-sm text-green-600">
-                          {member.email}
-                        </p>
                         <div className="inline-flex items-center px-3 py-1 text-xs font-semibold text-white rounded-full shadow-md bg-gradient-to-r from-indigo-500 to-purple-600">
                           <Award className="w-3 h-3 mr-1" />
                           {member.designation || "Teacher"}
                         </div>
+                        <p className="my-2 text-xs text-gray-500">
+                          "Dedicated to teaching the Quran with clarity and
+                          patience, guiding learners of all ages through
+                          personalized online sessions."
+                        </p>
+                        <p className="mb-3 text-sm text-green-600">
+                          {member.email}
+                        </p>
                       </div>
                     </div>
 
@@ -557,7 +579,7 @@ function About() {
                     </a>
 
                     <a
-                      href="https://hamad-1.vercel.app/"
+                      href="https://hamadahmad.online"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center justify-center w-10 h-10 text-gray-600 transition-all duration-300 bg-gray-100 rounded-full hover:bg-indigo-600 hover:text-white hover:scale-110"
