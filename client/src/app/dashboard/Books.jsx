@@ -169,8 +169,6 @@ const Books = () => {
 
       if (res.ok) {
         showMessage("success", "Book deleted successfully!");
-        fetchBooks();
-        setDeleting((prev) => ({ ...prev, [id]: false }));
       } else {
         showMessage("error", data.message || "Failed to delete book");
       }
