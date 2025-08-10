@@ -152,7 +152,6 @@ const Books = () => {
       setLoading(false);
     }
   };
-
   const handleDeleteBook = async (id) => {
     setDeleting((prev) => ({ ...prev, [id]: true }));
 
@@ -168,16 +167,18 @@ const Books = () => {
       const data = await res.json();
 
       if (res.ok) {
+        // Update the books state to remove the deleted book
+        setBooks((prevBooks) => prevBooks.filter((book) => book.id !== id));
         showMessage("success", "Book deleted successfully!");
       } else {
-        showMessage("error", data.message || "Failed to delete book");
+        showMessage("error", "Failed to delete book");
       }
     } catch (error) {
       console.error("Error deleting book:", error);
       showMessage("error", "Network error occurred while deleting book");
     } finally {
-      // ✅ Clear deleting state after operation completes
-      setDeleting({ [id]: false });
+      // Reset deleting state for the specific book
+      setDeleting((prev) => ({ ...prev, [id]: false }));
     }
   };
 
