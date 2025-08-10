@@ -153,7 +153,6 @@ const Books = () => {
     }
   };
   const handleDeleteBook = async (id) => {
-    // Mark the book as deleting
     setDeleting((prev) => ({ ...prev, [id]: true }));
 
     try {
@@ -169,7 +168,6 @@ const Books = () => {
 
       if (res.ok) {
         showMessage("success", "Book deleted successfully!");
-        // Fetch updated list after deletion
         await fetchBooks();
       } else {
         console.error("Delete API error:", data);
@@ -182,7 +180,7 @@ const Books = () => {
       console.error("Network error deleting book:", error);
       showMessage("error", "Network error occurred while deleting book");
     } finally {
-      // Remove deleting state for this book
+      // Always clear deleting state for that book ID
       setDeleting((prev) => {
         const updated = { ...prev };
         delete updated[id];
@@ -190,6 +188,7 @@ const Books = () => {
       });
     }
   };
+
   useEffect(() => {
     fetchBooks();
   }, []);
