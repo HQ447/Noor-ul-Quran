@@ -47,7 +47,7 @@ It also includes a **teacher dashboard** for managing students and resources, an
 
 ## 📂 Demo
 
----
+## <img width="1920" height="1080" alt="Screenshot (672)" src="https://github.com/user-attachments/assets/26bf0f01-7442-4f47-86a2-227ced915888" />
 
 ## 📧 Contact
 
