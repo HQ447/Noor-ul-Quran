@@ -169,7 +169,8 @@ const Books = () => {
 
       if (res.ok) {
         showMessage("success", "Book deleted successfully!");
-        await fetchBooks(); // ✅ Ensure books list refreshes after deletion
+        // ✅ Remove the deleted book from state immediately (no need to refetch)
+        setBooks((prevBooks) => prevBooks.filter((book) => book._id !== id));
       } else {
         showMessage("error", data.message || "Failed to delete book");
       }
@@ -177,7 +178,8 @@ const Books = () => {
       console.error("Error deleting book:", error);
       showMessage("error", "Network error occurred while deleting book");
     } finally {
-      setDeleting((prev) => ({ ...prev, [id]: false })); // ✅ Only set deleting state once
+      // ✅ Clear deleting state after operation completes
+      setDeleting((prev) => ({ ...prev, [id]: false }));
     }
   };
 
