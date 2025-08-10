@@ -2,7 +2,7 @@ import Book from "../models/Book.js";
 
 export const addBook = async (req, res) => {
   try {
-    const { title, author, description } = req.body;
+    const { title, author } = req.body;
     const thumbnail = req.files["thumbnail"]?.[0]?.path;
     const pdf = req.files["pdf"]?.[0]?.path; // Use Cloudinary URL directly
 
@@ -28,7 +28,6 @@ export const addBook = async (req, res) => {
       title,
       author,
       thumbnail,
-      description,
       pdf,
     });
 

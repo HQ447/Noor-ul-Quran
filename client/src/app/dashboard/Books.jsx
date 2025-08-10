@@ -108,7 +108,6 @@ const Books = () => {
   const [newBook, setNewBook] = useState({
     title: "",
     author: "",
-    description: "",
     thumbnail: null,
     pdf: null,
   });
@@ -217,7 +216,6 @@ const Books = () => {
     if (
       !newBook.title ||
       !newBook.author ||
-      !newBook.description ||
       !newBook.thumbnail ||
       !newBook.pdf
     ) {
@@ -234,7 +232,6 @@ const Books = () => {
       const formData = new FormData();
       formData.append("title", newBook.title);
       formData.append("author", newBook.author);
-      formData.append("description", newBook.description);
       formData.append("thumbnail", newBook.thumbnail);
       formData.append("pdf", newBook.pdf);
 
@@ -517,23 +514,6 @@ const Books = () => {
                     value={newBook.title}
                     onChange={(e) =>
                       setNewBook({ ...newBook, title: e.target.value })
-                    }
-                  />
-                </div>
-
-                <div>
-                  <label className="block mb-1 text-xs font-medium text-gray-700">
-                    Description *
-                  </label>
-                  <textarea
-                    placeholder="Enter book description"
-                    rows={1}
-                    required
-                    disabled={uploading}
-                    className="w-full px-3 py-2 text-sm text-gray-900 placeholder-gray-500 transition-colors border-2 border-gray-200 rounded-xl focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
-                    value={newBook.description}
-                    onChange={(e) =>
-                      setNewBook({ ...newBook, description: e.target.value })
                     }
                   />
                 </div>
