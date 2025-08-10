@@ -130,28 +130,32 @@ const Books = () => {
     setTimeout(() => setMessage(null), 5000);
   };
 
-  const fetchBooks = async () => {
-    try {
-      setLoading(true);
-      const res = await fetch(`${BASE_URL}/api/books`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+  useEffect(() => {
+    const fetchBooks = async () => {
+      try {
+        setLoading(true);
+        const res = await fetch(`${BASE_URL}/api/books`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
 
-      if (res.ok) {
-        const data = await res.json();
-        setBooks(data.books || []);
-      } else {
-        showMessage("error", "Failed to fetch books");
+        if (res.ok) {
+          const data = await res.json();
+          setBooks(data.books || []);
+        } else {
+          showMessage("error", "Failed to fetch books");
+        }
+      } catch (error) {
+        console.error("Error fetching books:", error);
+        showMessage("error", "Network error occurred while fetching books");
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.error("Error fetching books:", error);
-      showMessage("error", "Network error occurred while fetching books");
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
+    fetchBooks();
+  }, []);
+
   const handleDeleteBook = async (id) => {
     try {
       const res = await fetch(`${BASE_URL}/api/deleteBook/${id}`, {
@@ -165,21 +169,32 @@ const Books = () => {
       const data = await res.json();
 
       if (res.ok) {
-        // Remove book from UI instantly
-        setBooks((prev) => prev.filter((book) => book._id !== id));
-        showMessage("success", data.message || "Book deleted successfully!");
+        // Update books state to remove the deleted book
+        setBooks((prevBooks) => {
+          const updatedBooks = prevBooks.filter((book) => book.id !== id);
+          console.log("Updated books state:", updatedBooks); // Debug: Verify books update
+          return updatedBooks;
+        });
+        showMessage("success", "Book deleted successfully!");
       } else {
-        showMessage("error", data.message || "Failed to delete book.");
+        console.error("Delete API error:", data);
+        showMessage(
+          "error",
+          `Failed to delete book: ${data.message || "Unknown error"}`
+        );
       }
     } catch (error) {
-      console.error("Error deleting book:", error);
-      showMessage("error", "Something went wrong.");
+      console.error("Network error deleting book:", error);
+      showMessage("error", "Network error occurred while deleting book");
+    } finally {
+      // Reset deleting state
+      setDeleting((prev) => {
+        const newState = { ...prev, [id]: false };
+        console.log("Reset deleting state:", newState); // Debug: Verify reset
+        return newState;
+      });
     }
   };
-
-  useEffect(() => {
-    fetchBooks();
-  }, []);
 
   const simulateUploadProgress = () => {
     setUploadProgress(0);
