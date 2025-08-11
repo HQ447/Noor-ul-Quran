@@ -64,4 +64,6 @@ It also includes a **teacher dashboard** for managing students and resources, an
 
 ## 📧 Contact
 
-Hammad Ahmad – www.hamadahmad.online
+Hammad Ahmad
+www.hamadahmad.online
+hamadqur447@gmail.com
