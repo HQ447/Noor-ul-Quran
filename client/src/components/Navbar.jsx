@@ -36,7 +36,7 @@ function Navbar() {
   return (
     <>
       <nav className="sticky top-0 z-50 bg-white border-b-2 border-gray-200 shadow-lg">
-        <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-12">
+        <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-10">
           <div className="flex items-center justify-between h-16 lg:h-20">
             {/* Mobile Menu Button */}
             <div className="lg:hidden ">

@@ -157,7 +157,7 @@ const IslamicLibrary = () => {
 
         {/* Books Grid */}
         {!loading && !error && books.length > 0 && (
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {books.map((book) => (
               <div
                 key={book._id}

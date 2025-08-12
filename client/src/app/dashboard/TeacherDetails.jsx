@@ -450,7 +450,7 @@ function TeacherDetails() {
 
             {students.length > 0 ? (
               <div className="p-6">
-                <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
                   {students.map((student, index) => (
                     <div
                       key={student._id || index}
