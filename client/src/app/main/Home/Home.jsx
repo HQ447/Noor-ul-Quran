@@ -8,7 +8,7 @@ import { useLocation } from "react-router";
 import { CiChat1 } from "react-icons/ci";
 
 function Home() {
-  const phoneNumber = "923411918094";
+  const phoneNumber = "923367191936";
   const message = "Assalam O Alikum! I’m interested in your services.";
   const encodedMessage = encodeURIComponent(message);
 
