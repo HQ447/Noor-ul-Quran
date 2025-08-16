@@ -593,7 +593,7 @@ function About() {
                 {/* Call to Action */}
                 <div className="flex flex-col items-center gap-3 pt-6 mt-6 text-center border-t border-gray-100 sm:flex-row sm:justify-center">
                   <a
-                    href="https://johndeveloper-portfolio.com"
+                    href="https://hamadahmad.online"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-2 px-6 py-3 text-sm font-semibold text-white transition-all duration-300 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 hover:shadow-lg hover:scale-105"
@@ -603,7 +603,7 @@ function About() {
                   </a>
 
                   <a
-                    href="mailto:john.alexander@developer.com"
+                    href="mailto:hamadqur447@gmail.com"
                     className="flex items-center gap-2 px-6 py-3 text-sm font-semibold text-indigo-600 transition-all duration-300 border-2 border-indigo-600 rounded-xl hover:bg-indigo-600 hover:text-white hover:shadow-lg hover:scale-105"
                   >
                     <Mail className="w-4 h-4" />
