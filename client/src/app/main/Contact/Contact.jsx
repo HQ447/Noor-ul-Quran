@@ -56,22 +56,22 @@ function Contact() {
     {
       icon: Mail,
       title: "Email Us",
-      primary: "info@islamiccenter.com",
-      secondary: "support@islamiccenter.com",
+      primary: "info@noorislamiccenter.com",
+      secondary: "support@noorislamiccenter.com",
       description: "Send us an email anytime",
     },
     {
       icon: Phone,
       title: "Call Us",
-      primary: "+1 (555) 123-4567",
-      secondary: "+1 (555) 987-6543",
+      primary: "+92 336 7191936",
+      secondary: "+92 336 7191936",
       description: "24/7 Support Available",
     },
     {
       icon: MapPin,
       title: "Visit Us",
       primary: "123 Islamic Center St.",
-      secondary: "City, State 12345",
+      secondary: "Islamad, Pakistan",
       description: "Main Campus Location",
     },
     {
