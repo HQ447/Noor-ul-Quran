@@ -53,16 +53,6 @@ export default function Faqs() {
       answer:
         "If you inform us at least 2 hours before the class, it can be rescheduled without any penalty. Emergency situations are handled case-by-case. We also provide recorded sessions for review when possible.",
     },
-    {
-      question: "How do you track student progress?",
-      answer:
-        "We maintain detailed progress reports for each student, including lesson summaries, areas of improvement, and achievements. Parents receive monthly progress updates, and students can access their learning dashboard anytime.",
-    },
-    {
-      question: "Is there a money-back guarantee?",
-      answer:
-        "Yes, we offer a 30-day satisfaction guarantee. If you're not completely satisfied with our teaching quality within the first month, we'll provide a full refund. Your satisfaction and learning progress are our top priorities.",
-    },
   ];
 
   return (
