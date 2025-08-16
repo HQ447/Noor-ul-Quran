@@ -42,7 +42,7 @@ const registerStudent = async (req, res) => {
   <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden;">
     <!-- Header -->
     <div style="background-color: #004225; color: #ffffff; padding: 20px; text-align: center;">
-      <h1 style="margin: 0; font-size: 24px;">Noor ul Quran</h1>
+      <h1 style="margin: 0; font-size: 24px;">Noor Islamic Center</h1>
       <p style="margin: 5px 0 0; font-size: 14px;">Distance Learning Platform</p>
     </div>
 

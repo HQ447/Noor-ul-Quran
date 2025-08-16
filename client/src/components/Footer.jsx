@@ -39,7 +39,7 @@ export default function Footer() {
             className="object-contain w-32 h-32 mx-auto bg-transparent md:mx-0"
           />
           <p className="mt-4 text-sm text-justify text-gray-300">
-            <strong>Noor ul Quran</strong> offers personalized, one-on-one
+            <strong>Noor Islamic Center</strong> offers personalized, one-on-one
             online Quran classes with certified male and female tutors. Learn
             Quran with Tajweed, Hifz, and Islamic studies from the comfort of
             your home.
