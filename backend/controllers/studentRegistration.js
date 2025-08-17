@@ -50,16 +50,16 @@ const registerStudent = async (req, res) => {
     <div style="padding: 30px;">
       <h2 style="color: #333;">Hi ${name},</h2>
       <p style="font-size: 16px; color: #555;">
-        Your registration application has been submitted to ${teacherName}.
+        Your registration application has been submitted with our instructor <span style="font-weight:bold;">${teacherName}</span>.
       </p>
       <p style="font-size: 16px; color: #555;">
-        We will inform you once it is approved by an instructor. Thank you for joining Noor ul Quran.
+        We will inform you once it is approved by an instructor. Thank you for joining Noor Islamic Center.
       </p>
     </div>
 
     <!-- Footer -->
     <div style="background-color: #f9f9f9; padding: 15px; text-align: center; font-size: 12px; color: #888;">
-      &copy; ${new Date().getFullYear()} Noor ul Quran. All rights reserved.
+      &copy; ${new Date().getFullYear()} Noor Islamic Center. All rights reserved.
     </div>
   </div>
 `;
